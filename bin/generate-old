@@ -133,10 +133,10 @@ foreach($scrape_apis as $scrape_api) {
         $current_tag = $node->getNode(0)->tagName;
 
         //don't start till there's a section
-        if(!isset($section_name) && !in_array($current_tag, array('h3', 'h4')))
-            return false;
-
-        switch($current_tag){
+//        if(!isset($section_name) && !in_array($current_tag, array('h3', 'h4')))
+//            return false;
+//
+//        switch($current_tag){
 //            case 'h3':
 //            case 'h4':
 //                $section_name = str_replace(' ', '', $node->text());
@@ -168,40 +168,40 @@ foreach($scrape_apis as $scrape_api) {
 //                }
 //
 //                break;
-            case 'table':
-                $possible_name_override = null;
-                $node->filter('tr')->each(function(Crawler $node, $row_index) use($current_object, &$possible_name_override){
-
-                    //Why is this table different to every other one in the docs?
-                    $swap_name_description = $current_object->getName() == 'SystemAccounts';
-                    $skip_first_row = $current_object->getName() == 'SystemAccounts';
-
-                    if($skip_first_row && $row_index == 0)
-                        return false;
-
-                    $children = $node->children();
-                    $has_description = count($children) > 1;
-
-                    $name = $children->eq(0)->text();
-                    $description =  $has_description ? $children->eq(1)->text() : null;
-
-                    if($swap_name_description)
-                        list($name, $description) = array($description, $name);
-
-                    if($current_object instanceof Model){
-                        //if there are commas in the name, it needs splitting.  eg. AddressLine 1,2,3,4
-                        if(false !== strpos($name, ',')){
-                            list($name, $suffixes) = explode(' ', $name);
-                            foreach(explode(',', $suffixes) as $suffix){
-                                $current_object->addProperty(new Property($name.$suffix, $description));
-                            }
-                        } else {
-                            //this is the normal case, where there's only one property
-                            $current_object->addProperty(new Property($name, $description));
-                        }
-
-                    } elseif($current_object instanceof Enum) {
-
+//            case 'table':
+//                $possible_name_override = null;
+//                $node->filter('tr')->each(function(Crawler $node, $row_index) use($current_object, &$possible_name_override){
+//
+//                    //Why is this table different to every other one in the docs?
+//                    $swap_name_description = $current_object->getName() == 'SystemAccounts';
+//                    $skip_first_row = $current_object->getName() == 'SystemAccounts';
+//
+//                    if($skip_first_row && $row_index == 0)
+//                        return false;
+//
+//                    $children = $node->children();
+//                    $has_description = count($children) > 1;
+//
+//                    $name = $children->eq(0)->text();
+//                    $description =  $has_description ? $children->eq(1)->text() : null;
+//
+//                    if($swap_name_description)
+//                        list($name, $description) = array($description, $name);
+//
+//                    if($current_object instanceof Model){
+//                        //if there are commas in the name, it needs splitting.  eg. AddressLine 1,2,3,4
+//                        if(false !== strpos($name, ',')){
+//                            list($name, $suffixes) = explode(' ', $name);
+//                            foreach(explode(',', $suffixes) as $suffix){
+//                                $current_object->addProperty(new Property($name.$suffix, $description));
+//                            }
+//                        } else {
+//                            //this is the normal case, where there's only one property
+//                            $current_object->addProperty(new Property($name, $description));
+//                        }
+//
+//                    } elseif($current_object instanceof Enum) {
+//
 //                        //Override the enum name if it is bold only in the first row (and it's a 2 column table)
 //                        if($row_index === 0 && $children->count() === 2 && $children->eq(1)->filter('strong')->count() !== 0){
 //                            $possible_name_override = $children->eq(0)->text();
@@ -215,23 +215,23 @@ foreach($scrape_apis as $scrape_api) {
 //                        } else {
 //                            $current_object->addValue($name, $description);
 //                        }
-                    }
-
-                    return null;
-                });
-
-                //Add here
-                if($current_object instanceof Model){
-                    $api->addModel($current_object);
-                    //debug
-                    /** @var Model $current_object */
-                    $current_object->printPropertyTable();
-                } elseif($current_object instanceof Enum) {
-                    $api->addEnum($current_object);
-                }
-
-                break;
-        }
+//                    }
+//
+//                    return null;
+//                });
+//
+//                //Add here
+//                if($current_object instanceof Model){
+//                    $api->addModel($current_object);
+//                    //debug
+//                    /** @var Model $current_object */
+//                    $current_object->printPropertyTable();
+//                } elseif($current_object instanceof Enum) {
+//                    $api->addEnum($current_object);
+//                }
+//
+//                break;
+//        }
 
         return null;
     });
@@ -255,16 +255,16 @@ foreach($scrape_apis as $scrape_api) {
             $current_tag = $node->getNode(0)->tagName;
 
             switch($current_tag) {
-                case 'h1':
-                    $h1_parts = explode("\n", $node->text());
-                    $page_heading = trim($h1_parts[0]);
-                    break;
-                case 'h3':
-                case 'h4':
-                    if(false === stripos($node->text(), 'optional')){
-                        $section_name = str_replace("\xc2\xa0", ' ', $node->text()); //remove &nbsp;
-                    }
-                    break;
+//                case 'h1':
+//                    $h1_parts = explode("\n", $node->text());
+//                    $page_heading = trim($h1_parts[0]);
+//                    break;
+//                case 'h3':
+//                case 'h4':
+//                    if(false === stripos($node->text(), 'optional')){
+//                        $section_name = str_replace("\xc2\xa0", ' ', $node->text()); //remove &nbsp;
+//                    }
+//                    break;
                 case 'p':
                     $node->filter('strong')->each(function(Crawler $node) use (&$section_name){
                         if($node->parents()->getNode(0)->tagName != 'em')
@@ -281,66 +281,66 @@ foreach($scrape_apis as $scrape_api) {
 
                     break;
                 case 'table':
-                    //If no section, we're in the overview table.
-                    if($current_model === null){
+//                    //If no section, we're in the overview table.
+//                    if($current_model === null){
+//
+//                        //The primary model
+//                        $primary_model = new Model();
+//                        $current_model = $primary_model;
+//
+//                        $node->filter('tr')->each(function(Crawler $node) use($primary_model){
+//                            $columns = $node->children();
+//                            if(count($columns) == 0)
+//                                return;
+//                            switch(strtolower($columns->eq(0)->text())){
+//                                case 'url':
+//                                    $primary_model->setUrl($columns->eq(1)->text());
+//                                    break;
+//                                case 'methods supported':
+//                                    $primary_model->setMethods($columns->eq(1)->text());
+//                                    break;
+//                            }
+//                        });
+//                        return;
+//                    }
 
-                        //The primary model
-                        $primary_model = new Model();
-                        $current_model = $primary_model;
+//                    if(strpos($section_name, 'Example') === 0){
+//                        return;
+//                    }
 
-                        $node->filter('tr')->each(function(Crawler $node) use($primary_model){
-                            $columns = $node->children();
-                            if(count($columns) == 0)
-                                return;
-                            switch(strtolower($columns->eq(0)->text())){
-                                case 'url':
-                                    $primary_model->setUrl($columns->eq(1)->text());
-                                    break;
-                                case 'methods supported':
-                                    $primary_model->setMethods($columns->eq(1)->text());
-                                    break;
-                            }
-                        });
-                        return;
-                    }
-
-                    if(strpos($section_name, 'Example') === 0){
-                        return;
-                    }
-
-                    //try to work out what's next
-                    if(preg_match('/(xml )?elements( returned)? for( adding)?( an| get| a)? (?<model_name>[\w\s]+)/i', $section_name, $matches)){
-
-                        //too messy to add to the above regex - juse override model name.  This will pick off any lower case words preceding the actual name.
-                        if(preg_match('/^[a-z\s]+(?<model_name>[A-Z][\w\s]+)/', $matches['model_name'], $uc_words_matches))
-                            $matches = $uc_words_matches;
-
-                        $exploded_name = preg_split('/\b(and|or)\b/', $matches['model_name']);
-                        $model_name = str_replace(' ', '', ucwords($exploded_name[0]));
-
-                        $current_model->rawHTML = $crawler->filter('body')->text();
-
-                        //if it hasn't been set, set it.
-                        if($primary_model->getName() === null){
-                            $primary_model_name = str_replace(' ', '', $page_heading);
-                            $primary_model->setName($primary_model_name);
-                            $api->addModel($primary_model);
-                        } elseif($current_model->getName() !== $model_name){
-                            //If its not the same, we've reached a new one
-                            //create the sub one and add its parent
-                            $current_model = new Model();
-                            $current_model->setName($model_name);
-                            $api->addModel($current_model);
-
-                            $current_model->setParentModel($primary_model);
-
-                            if(isset($exploded_name[1])){
-                                //there are two models with the same format.
-                                //only allow for sub models
-                                $api->addModelAlias($current_model, str_replace(' ', '', ucwords($exploded_name[1])));
-                            }
-                        }
-                    }
+//                    //try to work out what's next
+//                    if(preg_match('/(xml )?elements( returned)? for( adding)?( an| get| a)? (?<model_name>[\w\s]+)/i', $section_name, $matches)){
+//
+//                        //too messy to add to the above regex - juse override model name.  This will pick off any lower case words preceding the actual name.
+//                        if(preg_match('/^[a-z\s]+(?<model_name>[A-Z][\w\s]+)/', $matches['model_name'], $uc_words_matches))
+//                            $matches = $uc_words_matches;
+//
+//                        $exploded_name = preg_split('/\b(and|or)\b/', $matches['model_name']);
+//                        $model_name = str_replace(' ', '', ucwords($exploded_name[0]));
+//
+//                        $current_model->rawHTML = $crawler->filter('body')->text();
+//
+//                        //if it hasn't been set, set it.
+//                        if($primary_model->getName() === null){
+//                            $primary_model_name = str_replace(' ', '', $page_heading);
+//                            $primary_model->setName($primary_model_name);
+//                            $api->addModel($primary_model);
+//                        } elseif($current_model->getName() !== $model_name){
+//                            //If its not the same, we've reached a new one
+//                            //create the sub one and add its parent
+//                            $current_model = new Model();
+//                            $current_model->setName($model_name);
+//                            $api->addModel($current_model);
+//
+//                            $current_model->setParentModel($primary_model);
+//
+//                            if(isset($exploded_name[1])){
+//                                //there are two models with the same format.
+//                                //only allow for sub models
+//                                $api->addModelAlias($current_model, str_replace(' ', '', ucwords($exploded_name[1])));
+//                            }
+//                        }
+//                    }
 
                     $finished_scraping = preg_match('/^GET (?<model_name>[\w\s]+)/i', $section_name, $matches);
 

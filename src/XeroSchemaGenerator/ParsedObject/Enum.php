@@ -15,7 +15,9 @@ class Enum extends ParsedObject {
      */
     private $values;
 
-    public function __construct() {
+    public function __construct($raw_name) {
+        parent::__construct($raw_name);
+
         $this->values = [];
     }
 

@@ -17,10 +17,10 @@ $scraper->scrapeModels($accounting_api, 'api', [
     'bank-transfers',
     'branding-themes',
     'contacts',
-    'contactgroups',
-    'credit-notes',
-    'currencies',
-    'employees',
+//    'contactgroups',
+//    'credit-notes',
+//    'currencies',
+//    'employees',
 //    'expense-claims',
 //    'invoices',
 //    'items',
@@ -41,7 +41,10 @@ $scraper->scrapeModels($accounting_api, 'api', [
 //    'users'
 ]);
 
-//exit;
+print_r($accounting_api);
+
+
+exit;
 
 $payroll_api = new API('Payroll - AU', 'PayrollAU');
 $scraper->scrapeEnums($payroll_api, 'payroll-api/types-and-codes');
