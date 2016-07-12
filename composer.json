@@ -1,0 +1,29 @@
+{
+    "name": "calcinai/xero-schemas",
+    "type": "library",
+    "description": "Documentation parser and schema generator for the Xero APIs.",
+    "homepage": "https://github.com/calcinai/xero-schemas",
+    "license": "MIT",
+
+    "require": {
+        "php": ">=5.5.0",
+        "ext-curl": "*",
+        "ext-openssl": "*"
+    },
+
+    "require-dev": {
+        "phpunit/phpunit": "~4.7",
+        "fabpot/goutte": "~2.0",
+        "twig/twig": "1.16.2"
+    },
+
+    "repositories": [
+    ],
+
+    "autoload": {
+        "psr-4": {
+            "Calcinai\\XeroSchemaGenerator\\": "src/XeroSchemaGenerator/"
+        }
+    }
+
+}
