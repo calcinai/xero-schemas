@@ -7,14 +7,12 @@
 
     "require": {
         "php": ">=5.5.0",
-        "ext-curl": "*",
-        "ext-openssl": "*"
+        "fabpot/goutte": "~2.0",
+        "calcinai/strut": "dev-master@dev"
     },
 
     "require-dev": {
-        "phpunit/phpunit": "~4.7",
-        "fabpot/goutte": "~2.0",
-        "twig/twig": "1.16.2"
+        "phpunit/phpunit": "~4.7"
     },
 
     "repositories": [

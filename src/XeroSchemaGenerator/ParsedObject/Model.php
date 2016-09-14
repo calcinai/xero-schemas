@@ -14,12 +14,20 @@ class Model extends ParsedObject {
     private $methods;
     private $url;
 
+    private $parent_model;
+
+    public $is_pagable;
+    public $supports_pdf;
+
     public function __construct($raw_name) {
         parent::__construct($raw_name);
 
         $this->url = null;
         $this->methods = [];
         $this->properties = [];
+
+        $this->is_pagable = false;
+        $this->supports_pdf = false;
     }
 
     public function addProperty(ParsedObject\Model\Property $property) {
@@ -80,7 +88,31 @@ class Model extends ParsedObject {
 
     //Compare a string and see if it's the same name
     public function matchName($model_name) {
-        return in_array($this->name, self::parseRawName($model_name));
+        $parsed = self::parseRawName($model_name);
+        return in_array($this->name, $parsed) || in_array($this->collective_name, $parsed);
+    }
+
+    /**
+     * @param $property_name
+     * @return bool
+     */
+    public function hasProperty($property_name) {
+        return isset($this->properties[$property_name]);
+    }
+
+    /**
+     * @param $property_name
+     * @return ParsedObject\Model\Property
+     */
+    public function getProperty($property_name) {
+        return $this->properties[$property_name];
+    }
+
+    /**
+     * @param Model $parent_model
+     */
+    public function setParentModel(Model $parent_model) {
+        $this->parent_model = $parent_model;
     }
 
 }

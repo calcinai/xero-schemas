@@ -271,13 +271,13 @@ foreach($scrape_apis as $scrape_api) {
                             $section_name = $node->text();
                     });
 
-                    //filtering for properties that have special PUT/DELETE URI
-                    if(preg_match('/PUT\s\/?(?<primary_model>[a-z]+)\/[a-z0-9\-]+\/(?<secondary_model>[a-z]+)/i', $node->text(), $matches)){
-                        /** @var Model $primary_model */
-                        if($matches['primary_model'] === $primary_model->getName() && $primary_model->hasProperty($matches['secondary_model'])){
-                            $primary_model->getProperty($matches['secondary_model'])->save_directly = true;
-                        }
-                    }
+//                    //filtering for properties that have special PUT/DELETE URI
+//                    if(preg_match('/PUT\s\/?(?<primary_model>[a-z]+)\/[a-z0-9\-]+\/(?<secondary_model>[a-z]+)/i', $node->text(), $matches)){
+//                        /** @var Model $primary_model */
+//                        if($matches['primary_model'] === $primary_model->getName() && $primary_model->hasProperty($matches['secondary_model'])){
+//                            $primary_model->getProperty($matches['secondary_model'])->save_directly = true;
+//                        }
+//                    }
 
                     break;
                 case 'table':
@@ -341,108 +341,108 @@ foreach($scrape_apis as $scrape_api) {
 //                            }
 //                        }
 //                    }
+//
+//                    $finished_scraping = preg_match('/^GET (?<model_name>[\w\s]+)/i', $section_name, $matches);
 
-                    $finished_scraping = preg_match('/^GET (?<model_name>[\w\s]+)/i', $section_name, $matches);
+//                    //At this point, we will have a $current_model, so parse properties
+//                    $node->filter('tr')->each(function(Crawler $node) use ($current_model, $primary_model, $finished_scraping){
+//                        static $mandatory, $read_only, $get_only, $skip_next;
+//
+//                        //this is for skipping rowspans
+//                        if(isset($skip_next) && $skip_next){
+//                            $skip_next = false;
+//                            return;
+//                        }
+//
+//                        $children = $node->children();
+//                        $num_children = count($children);
+//
+//                        //Breaks in the table with colspans
+//                        if($num_children === 1){
+//                            $get_only = false;
+//                            //best that can be done really..
+//                            if(preg_match('/at least (one|two)/i', $children->eq(0)->text())){
+//                                $mandatory = false;
+//                                $read_only = false;
+//                            } elseif(preg_match('/^Either/i', $children->eq(0)->text())){
+//                                $mandatory = false;
+//                                $read_only = false;
+//                            } elseif(preg_match('/(required|mandatory)/i', $children->eq(0)->text())){
+//                                $mandatory = true;
+//                                $read_only = false;
+//                            }
+//
+//                            if(preg_match('/(optional|recommended)/i', $children->eq(0)->text())){
+//                                $mandatory = false;
+//                                $read_only = false;
+//                            } elseif(preg_match('/(updatable)/i', $children->eq(0)->text())){
+//                                $read_only = false;
+//                                $mandatory = false;
+//                            } elseif(preg_match('/(only )?returned on (a )?GET requests?( only)?\.?$/i', $children->eq(0)->text())){
+//                                $read_only = true;
+//                                $mandatory = false;
+//                                $get_only = true;
+//                            }
+//                            if(preg_match('/(PUT|POST)/i', $children->eq(0)->text())){
+//                                $read_only = false;
+//                            }
+//                        } else {
+//                            if(!isset($mandatory)){
+//                                $mandatory = false;
+//                            }
+//
+//                            if(!isset($read_only)){
+//                                $read_only = false;
+//                            }
+//
+//                            if(!isset($get_only)){
+//                                $get_only = false;
+//                            }
+//
+//                            //Handle tables with rowspans
+//                            if($num_children === 2){
+//                                $column_name = trim($children->eq(0)->text(), "<> \n");
+//                                $column_description = trim($children->eq(1)->text());
+//                            } elseif($num_children === 0) {
+//                                return;
+//                            } else {
+//                                //at least 3 children in here
+//                                $skip_next = true;
+//                                return;
+//                            }
 
-                    //At this point, we will have a $current_model, so parse properties
-                    $node->filter('tr')->each(function(Crawler $node) use ($current_model, $primary_model, $finished_scraping){
-                        static $mandatory, $read_only, $get_only, $skip_next;
+//                            //@todo Here should handle making these methods available on the models
+//                            if(preg_match('/^(?<special_function>where|order|sort|filter|page|offset|pagesize|modified( after)?|record filter|include ?archived)$/i', $column_name, $matches) || $finished_scraping || strpos($column_name, '–') !== false){
+//
+//                                if(isset($matches['special_function'])){
+//                                    switch($matches['special_function']){
+//                                        case 'page':
+//                                            $primary_model->setIsPagable(true);
+//                                            break;
+//                                    }
+//                                }
+//
+//                                return;
+//                            }
 
-                        //this is for skipping rowspans
-                        if(isset($skip_next) && $skip_next){
-                            $skip_next = false;
-                            return;
-                        }
-
-                        $children = $node->children();
-                        $num_children = count($children);
-
-                        //Breaks in the table with colspans
-                        if($num_children === 1){
-                            $get_only = false;
-                            //best that can be done really..  
-                            if(preg_match('/at least (one|two)/i', $children->eq(0)->text())){
-                                $mandatory = false;
-                                $read_only = false;
-                            } elseif(preg_match('/^Either/i', $children->eq(0)->text())){
-                                $mandatory = false;
-                                $read_only = false;
-                            } elseif(preg_match('/(required|mandatory)/i', $children->eq(0)->text())){
-                                $mandatory = true;
-                                $read_only = false;
-                            }
-
-                            if(preg_match('/(optional|recommended)/i', $children->eq(0)->text())){
-                                $mandatory = false;
-                                $read_only = false;
-                            } elseif(preg_match('/(updatable)/i', $children->eq(0)->text())){
-                                $read_only = false;
-                                $mandatory = false;
-                            } elseif(preg_match('/(only )?returned on (a )?GET requests?( only)?\.?$/i', $children->eq(0)->text())){
-                                $read_only = true;
-                                $mandatory = false;
-                                $get_only = true;
-                            }
-                            if(preg_match('/(PUT|POST)/i', $children->eq(0)->text())){
-                                $read_only = false;
-                            }
-                        } else {
-                            if(!isset($mandatory)){
-                                $mandatory = false;
-                            }
-
-                            if(!isset($read_only)){
-                                $read_only = false;
-                            }
-
-                            if(!isset($get_only)){
-                                $get_only = false;
-                            }
-
-                            //Handle tables with rowspans
-                            if($num_children === 2){
-                                $column_name = trim($children->eq(0)->text(), "<> \n");
-                                $column_description = trim($children->eq(1)->text());
-                            } elseif($num_children === 0) {
-                                return;
-                            } else {
-                                //at least 3 children in here
-                                $skip_next = true;
-                                return;
-                            }
-
-                            //@todo Here should handle making these methods available on the models
-                            if(preg_match('/^(?<special_function>where|order|sort|filter|page|offset|pagesize|modified( after)?|record filter|include ?archived)$/i', $column_name, $matches) || $finished_scraping || strpos($column_name, '–') !== false){
-
-                                if(isset($matches['special_function'])){
-                                    switch($matches['special_function']){
-                                        case 'page':
-                                            $primary_model->setIsPagable(true);
-                                            break;
-                                    }
-                                }
-
-                                return;
-                            }
-
-                            $property = null;
-                            foreach(preg_split('/(>\s*or\s*<|\s&\s)/', $column_name) as $column_name){
-                                //make it into another param
-                                $column_name = str_replace(' ', '', $column_name);
-                                $tmp_ro = $read_only;
-                                // Don't make Primary GUID readonly
-                                if($column_name === $current_model->getClassName() . 'ID') {
-                                    $read_only = false;
-                                }
-                                $property = new Property($column_name, $column_description, $mandatory, $read_only);
-                                $current_model->addProperty($property, null, $get_only);
-                                $read_only = $tmp_ro;
-                            }
-
-                            //add links to property (for parsing types)
-                            $children->eq(1)->filter('a')->each(function(Crawler $node) use($property){
-                                $property->addLink($node->text(), $node->attr('href'));
-                            });
+//                            $property = null;
+//                            foreach(preg_split('/(>\s*or\s*<|\s&\s)/', $column_name) as $column_name){
+//                                //make it into another param
+//                                $column_name = str_replace(' ', '', $column_name);
+//                                $tmp_ro = $read_only;
+//                                // Don't make Primary GUID readonly
+//                                if($column_name === $current_model->getClassName() . 'ID') {
+//                                    $read_only = false;
+//                                }
+//                                $property = new Property($column_name, $column_description, $mandatory, $read_only);
+//                                $current_model->addProperty($property, null, $get_only);
+//                                $read_only = $tmp_ro;
+//                            }
+//
+//                            //add links to property (for parsing types)
+//                            $children->eq(1)->filter('a')->each(function(Crawler $node) use($property){
+//                                $property->addLink($node->text(), $node->attr('href'));
+//                            });
 
                         }
                     });
@@ -453,27 +453,27 @@ foreach($scrape_apis as $scrape_api) {
             }
 
             // Do some processing once we are at the last node.
-            if($node->getNode(0)->nodeValue === $last->getNode(0)->nodeValue && $primary_model instanceof ParsedObjectInterface) {
-                $models = array($primary_model);
-                if($primary_model->getName() !== $current_model->getName()) {$models[] = $current_model;}
-                foreach($models as $model) {
-                    /** @var Model $model */
-                    // If we don't have a GUID make a last ditch effort to get one...
-                    if ($model->hasProperty($model->getClassName() . 'ID') === false && isset($model->rawHTML)) {
-                        if (preg_match('/' . $model->getClassName() . 'ID/', $model->rawHTML)) {
-                            $property = new Property($model->getClassName() . 'ID', 'Xero identifier', false, false, false);
-                            $model->addProperty($property, 0);
-                        }
-                    }
+//            if($node->getNode(0)->nodeValue === $last->getNode(0)->nodeValue && $primary_model instanceof ParsedObjectInterface) {
+//                $models = array($primary_model);
+//                if($primary_model->getName() !== $current_model->getName()) {$models[] = $current_model;}
+//                foreach($models as $model) {
+//                    /** @var Model $model */
+//                    // If we don't have a GUID make a last ditch effort to get one...
+//                    if ($model->hasProperty($model->getClassName() . 'ID') === false && isset($model->rawHTML)) {
+//                        if (preg_match('/' . $model->getClassName() . 'ID/', $model->rawHTML)) {
+//                            $property = new Property($model->getClassName() . 'ID', 'Xero identifier', false, false, false);
+//                            $model->addProperty($property, 0);
+//                        }
+//                    }
+//
+//                    //Debug
+//                    $model->printPropertyTable();
+//                }
 
-                    //Debug
-                    $model->printPropertyTable();
-                }
-
-                if(strpos($primary_model->rawHTML, 'returned as PDF') !== false){
-                    //Assume that it does support it.
-                    $primary_model->setSupportsPDF(true);
-                }
+//                if(strpos($primary_model->rawHTML, 'returned as PDF') !== false){
+//                    //Assume that it does support it.
+//                    $primary_model->setSupportsPDF(true);
+//                }
             }
 
         });

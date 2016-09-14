@@ -42,4 +42,11 @@ class API {
     public function addEnum(Enum $enum) {
         $this->enums[$enum->getName()] = $enum;
     }
+
+    /**
+     * @return ParsedObject\Model[]
+     */
+    public function getModels() {
+        return $this->models;
+    }
 }

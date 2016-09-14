@@ -14,7 +14,7 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class Scraper {
 
-    const USER_AGENT = 'XeroSchemaGenerator/1.0 (https://github.com/calcinai/xero-schemas)';
+    const USER_AGENT = 'Mozilla/5.0 (compatible; XeroSchemaGenerator/1.0; +https://github.com/calcinai/xero-schemas)';
 
     private $documentation_base;
     private $client;
@@ -25,6 +25,7 @@ class Scraper {
         $this->client = new Client();
         $this->client->setHeader('User-Agent', self::USER_AGENT);
     }
+
 
     /**
      * @param API $api
@@ -42,7 +43,7 @@ class Scraper {
             $subsection_node = $table_node->previousAll()->filter('p')->first();
 
             if(strlen($subsection_node->text()) > 100){
-                //If the name is too long, it's probably a description, so go back tot he last strong (and hope).
+                //If the name is too long, it's probably a description, so go back to the last strong (and hope).
                 $subsection_node = $table_node->previousAll()->filter('strong')->first();
             }
 
@@ -154,9 +155,14 @@ class Scraper {
                     return;
                 }
 
+                //Go backward to find headings
+                $section_nodes = $table_node->previousAll()->filter('h3,h4');
+                if($section_nodes->count() === 0){
+                    return;
+                }
 
-                $section_name = $table_node->previousAll()->filter('h3,h4')->first()->text();
-//                $subsection_name = $table_node->previousAll()->filter('p')->first()->text();
+                $section_name = $section_nodes->first()->text();
+//              $subsection_name = $table_node->previousAll()->filter('p')->first()->text();
 
                 if(stripos($section_name, 'example') === 0){
                     return;
@@ -172,6 +178,7 @@ class Scraper {
                     //If the table that's being processed os for a different model, create a new one
                     if(false === $current_model->matchName($matches['model_name'])){
                         $current_model = new Model($matches['model_name']);
+                        $current_model->setParentModel($primary_model);
                     }
 
                     $this->parseModelTable($current_model, $table_node);
@@ -181,6 +188,24 @@ class Scraper {
                 $api->addModel($current_model);
 
             });
+
+            //Have a look on the page for any hints that a sub object has a URI
+            //PUT CreditNotes/{CreditNoteID}/Allocations
+            $crawler->filter('p')->each(function(Crawler $p_node) use($primary_model) {
+                if(preg_match('#(?<method>GET|PUT|DELETE)\s?/?(?<primary_model>[a-z]+)/[^/]+/(?<secondary_model>[a-z]+)/?#i', $p_node->text(), $matches)){
+                    if($primary_model->getCollectiveName() === $matches['primary_model'] && $primary_model->hasProperty($matches['secondary_model'])){
+                        $primary_model->getProperty($matches['secondary_model'])->saves_directly = true;
+                    }
+                }
+
+                if(strpos($p_node->text(), 'returned as PDF') !== false){
+                    //Assume that it does support it.
+                    $primary_model->supports_pdf = true;
+                }
+            });
+
+
+
         }
     }
 
@@ -189,25 +214,94 @@ class Scraper {
 
     private function parseModelTable(Model $model, Crawler $table_node) {
 
-        $table_node->filter('tr')->each(function (Crawler $table_row_node, $row_index) use ($model) {
+        $mandatory = false;
+        $read_only = false;
+
+        $table_node->filter('tr')->each(function (Crawler $table_row_node) use ($model, &$mandatory, &$read_only) {
 
             $table_column_nodes = $table_row_node->filter('td');
 
+            //Breaks in the table with colspans
+            if($table_column_nodes->count() === 0) {
+                return;
+            } elseif($table_column_nodes->count() !== 2) {
+
+                $row_text = $table_column_nodes->text();
+
+                //best that can be done really..
+                if(preg_match('/at least (one|two)/i', $row_text)) {
+                    $mandatory = false;
+                    $read_only = false;
+                } elseif(preg_match('/^Either/i', $row_text)) {
+                    $mandatory = false;
+                    $read_only = false;
+                } elseif(preg_match('/(required|mandatory)/i', $row_text)) {
+                    $mandatory = true;
+                    $read_only = false;
+                }
+
+                if(preg_match('/(optional|recommended)/i', $row_text)) {
+                    $mandatory = false;
+                    $read_only = false;
+                } elseif(preg_match('/(updatable)/i', $row_text)) {
+                    $read_only = false;
+                    $mandatory = false;
+                } elseif(preg_match('/(only )?returned on (a )?GET requests?( only)?\.?$/i', $row_text)) {
+                    $read_only = true;
+                    $mandatory = false;
+                }
+
+                if(preg_match('/(PUT|POST)/i', $row_text)) {
+                    $read_only = false;
+                }
+
+                //Stop processing.
+                return;
+            }
+
+
             //Get name from first column
-            $name = $table_column_nodes->eq(0)->text();
+            $property_name = $table_column_nodes->eq(0)->text();
             //If there's a second, use it as description
             $description = $table_column_nodes->count() > 1 ? $table_column_nodes->eq(1)->text() : null;
 
 
+            //@todo Here should handle making these methods available on the models
+            if(preg_match('/^(?<special_function>where|order|sort|filter|page|offset|pagesize|modified( after)?|record filter|include ?archived)$/i', $property_name, $matches) !== 0){
+
+                if(isset($matches['special_function'])){
+                    switch($matches['special_function']){
+                        case 'page':
+                            $model->is_pagable = true;
+                            break;
+                    }
+                }
+
+                return;
+            }
+
+
             //if there are commas in the name, it needs splitting.  eg. AddressLine 1,2,3,4
-            if(false !== strpos($name, ',')) {
-                list($name, $suffixes) = explode(' ', $name);
+            if(false !== strpos($property_name, ',')) {
+                list($property_name, $suffixes) = explode(' ', $property_name);
                 foreach(explode(',', $suffixes) as $suffix) {
-                    $model->addProperty(new Model\Property($name . $suffix, $description));
+                    $model->addProperty(new Model\Property($property_name . $suffix, $description));
                 }
             } else {
-                //this is the normal case, where there's only one property
-                $model->addProperty(new Model\Property($name, $description));
+                //this is the normal case, where there's only one property (or <X> or <Y>)
+                foreach(preg_split('/(>\s*or\s*<|\s&\s)/', $property_name) as $column_name){
+                    //make it into another param
+                    $property = new Model\Property($column_name, $description);
+
+                    //add links to property (for parsing types)
+                    $table_column_nodes->filter('a')->each(function(Crawler $node) use($property){
+                        $property->addLink($node->text(), $node->attr('href'));
+                    });
+
+                    $model->addProperty($property);
+                }
+
+
             }
 
         });

@@ -16,6 +16,8 @@ class Enum extends ParsedObject {
     private $values;
 
     public function __construct($raw_name) {
+        //Stop enum names being split up
+        $raw_name = str_replace(' ', '', $raw_name);
         parent::__construct($raw_name);
 
         $this->values = [];
