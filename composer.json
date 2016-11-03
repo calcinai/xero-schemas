@@ -8,7 +8,7 @@
     "require": {
         "php": ">=5.5.0",
         "fabpot/goutte": "~2.0",
-        "calcinai/strut": "dev-master@dev"
+        "calcinai/strut": "^0.2.0"
     },
 
     "require-dev": {
