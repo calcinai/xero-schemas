@@ -3,7 +3,6 @@
 
 include __DIR__.'/../vendor/autoload.php';
 
-use Calcinai\Strut\Object\Schema;
 use Calcinai\XeroSchemaGenerator\API;
 use Calcinai\XeroSchemaGenerator\Scraper;
 
@@ -83,8 +82,4 @@ $scraper->scrapeModels($accounting_api, 'api', [
 //    'folders',
 //    'associations'
 ]);
-
-
-
-$swagger = new Schema();
 
