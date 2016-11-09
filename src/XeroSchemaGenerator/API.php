@@ -10,43 +10,67 @@ namespace Calcinai\XeroSchemaGenerator;
 use Calcinai\XeroSchemaGenerator\ParsedObject\Enum;
 use Calcinai\XeroSchemaGenerator\ParsedObject\Model;
 
-class API {
+class API
+{
+
+    /**
+     * @var string
+     */
+    private $name;
+
+    /**
+     * @var string
+     */
+    private $namespace;
+
 
     /**
      * @var Model[]
      */
-    private $models;
+    private $models = [];
 
     /**
      * @var Enum[]
      */
-    private $enums;
+    private $enums = [];
 
 
-    public function __construct() {
-        $this->models = [];
-        $this->enums = [];
+    public function __construct($name, $namespace)
+    {
+        $this->name = $name;
+        $this->namespace = $namespace;
     }
 
 
     /**
      * @param Model $model
      */
-    public function addModel(Model $model) {
+    public function addModel(Model $model)
+    {
         $this->models[$model->getName()] = $model;
+
+        //For debugging
+        $model->printPropertyTable();
     }
 
     /**
      * @param Enum $enum
      */
-    public function addEnum(Enum $enum) {
+    public function addEnum(Enum $enum)
+    {
         $this->enums[$enum->getName()] = $enum;
     }
 
     /**
      * @return ParsedObject\Model[]
      */
-    public function getModels() {
+    public function getModels()
+    {
         return $this->models;
+    }
+
+    public function getName()
+    {
+        return $this->name;
     }
 }

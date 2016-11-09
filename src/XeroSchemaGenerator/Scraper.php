@@ -12,14 +12,16 @@ use Calcinai\XeroSchemaGenerator\ParsedObject\Model;
 use Goutte\Client;
 use Symfony\Component\DomCrawler\Crawler;
 
-class Scraper {
+class Scraper
+{
 
     const USER_AGENT = 'Mozilla/5.0 (compatible; XeroSchemaGenerator/1.0; +https://github.com/calcinai/xero-schemas)';
 
     private $documentation_base;
     private $client;
 
-    public function __construct($documentation_base) {
+    public function __construct($documentation_base)
+    {
         $this->documentation_base = $documentation_base;
 
         $this->client = new Client();
@@ -31,51 +33,53 @@ class Scraper {
      * @param API $api
      * @param $types_uri
      */
-    public function scrapeEnums(API $api, $types_uri) {
+    public function scrapeEnums(API $api, $types_uri)
+    {
 
         $crawler = $this->client->request('GET', sprintf('%s/%s', $this->documentation_base, $types_uri));
 
         $crawler->filter('.apidoc-table')->each(
             function (Crawler $table_node) use ($api) {
 
-            //Unfortunately I couldn't get consistent results with xpath.
-            $section_name = $table_node->previousAll()->filter('h3,h4')->first()->text();
-            $subsection_node = $table_node->previousAll()->filter('p')->first();
+                //Unfortunately I couldn't get consistent results with xpath.
+                $section_name = $table_node->previousAll()->filter('h3,h4')->first()->text();
+                $subsection_node = $table_node->previousAll()->filter('p')->first();
 
-            if(strlen($subsection_node->text()) > 100){
-                //If the name is too long, it's probably a description, so go back to the last strong (and hope).
-                $subsection_node = $table_node->previousAll()->filter('strong')->first();
-            }
+                $section_name = str_replace("\xc2\xa0", ' ', $section_name); //remove &nbsp;
 
-            $subsection_name = $subsection_node->text();
+                if (strlen($subsection_node->text()) > 100) {
+                    //If the name is too long, it's probably a description, so go back to the last strong (and hope).
+                    $subsection_node = $table_node->previousAll()->filter('strong')->first();
+                }
 
-            //Save anchors for search keys
-            $subsection_anchors = [];
-            $subsection_node->filter('a[name]')->each(function(Crawler $node) use(&$subsection_anchors){
-                $subsection_anchors[] = $node->attr('name');
-            });
+                $subsection_name = $subsection_node->text();
 
-            //Skip empty sections
-            if(empty($subsection_name)){
-                //Equivalent of continue; from closure context.
+                //Save anchors for search keys
+                $subsection_anchors = [];
+                $subsection_node->filter('a[name]')->each(function (Crawler $node) use (&$subsection_anchors) {
+                    $subsection_anchors[] = $node->attr('name');
+                });
+
+                //Skip empty sections
+                if (empty($subsection_name)) {
+                    //Equivalent of continue; from closure context.
+                    return;
+                }
+
+                //This is all we have to go by at the moment!
+                if ($section_name === $subsection_name) {
+                    $model = new Model($section_name);
+                    $api->addModel($model);
+                    $this->parseModelTable($model, $table_node);
+                } else {
+                    $enum = new Enum($section_name);
+                    $api->addEnum($enum);
+                    $this->parseEnumTable($enum, $table_node);
+                }
+
+
                 return;
-            }
-
-            //This is all we have to go by at the moment!
-            if($section_name === $subsection_name){
-                $model = new Model($section_name);
-                $api->addModel($model);
-                $this->parseModelTable($model, $table_node);
-            } else {
-                $enum = new Enum($section_name);
-                $api->addEnum($enum);
-                $this->parseEnumTable($enum, $table_node);
-            }
-
-
-
-            return;
-        });
+            });
     }
 
 
@@ -83,31 +87,32 @@ class Scraper {
      * @param Enum $enum
      * @param Crawler $table_node
      */
-    private function parseEnumTable(Enum $enum, Crawler $table_node){
+    private function parseEnumTable(Enum $enum, Crawler $table_node)
+    {
 
-        $table_node->filter('tr')->each(function(Crawler $table_row_node, $row_index) use($enum){
+        $table_node->filter('tr')->each(function (Crawler $table_row_node, $row_index) use ($enum) {
 
             static $swap_columns = false;
 
             $table_column_nodes = $table_row_node->filter('td');
 
             //On the first row, check that it's not a header.  Docs don't use headers so this is crude.
-            if($row_index === 0 && false !== strpos($table_column_nodes->eq(0)->attr('style'), 'background')){
+            if ($row_index === 0 && false !== strpos($table_column_nodes->eq(0)->attr('style'), 'background')) {
                 $swap_columns = true;
                 return;
             }
 
             //If there's a description half way down the table, skip.
-            if($table_column_nodes->eq(0)->filter('em')->count()){
+            if ($table_column_nodes->eq(0)->filter('em')->count()) {
                 return;
             }
 
             //Get name from first column
             $name = $table_column_nodes->eq(0)->text();
             //If there's a second, use it as description
-            $description =  $table_column_nodes->count() > 1 ? $table_column_nodes->eq(1)->text() : null;
+            $description = $table_column_nodes->count() > 1 ? $table_column_nodes->eq(1)->text() : null;
 
-            if($swap_columns){
+            if ($swap_columns) {
                 list($description, $name) = [$name, $description];
             }
 
@@ -119,10 +124,10 @@ class Scraper {
     }
 
 
+    public function scrapeModels(API $api, $model_base_uri, $model_uris)
+    {
 
-    public function scrapeModels(API $api, $model_base_uri, $model_uris) {
-
-        foreach($model_uris as $model_uri){
+        foreach ($model_uris as $model_uri) {
 
             $full_uri = sprintf('%s/%s/%s/', $this->documentation_base, $model_base_uri, $model_uri);
             $crawler = $this->client->request('GET', $full_uri);
@@ -136,14 +141,14 @@ class Scraper {
             $crawler->filter('.apidoc-table')->each(function (Crawler $table_node, $table_index) use ($api, $page_heading, $primary_model, &$current_model) {
 
                 //This is the header table with meta inf
-                if($table_index === 0){
-                    $table_node->filter('tr')->each(function(Crawler $table_row) use($primary_model){
+                if ($table_index === 0) {
+                    $table_node->filter('tr')->each(function (Crawler $table_row) use ($primary_model) {
                         $table_columns = $table_row->children();
-                        if($table_columns->count() == 0){
+                        if ($table_columns->count() == 0) {
                             return;
                         }
 
-                        switch(strtolower($table_columns->eq(0)->text())){
+                        switch (strtolower($table_columns->eq(0)->text())) {
                             case 'url':
                                 $primary_model->setUrl($table_columns->eq(1)->text());
                                 break;
@@ -157,26 +162,26 @@ class Scraper {
 
                 //Go backward to find headings
                 $section_nodes = $table_node->previousAll()->filter('h3,h4');
-                if($section_nodes->count() === 0){
+                if ($section_nodes->count() === 0) {
                     return;
                 }
 
-                $section_name = $section_nodes->first()->text();
+                $section_name = str_replace("\xc2\xa0", ' ', $section_nodes->first()->text()); //remove &nbsp;
 //              $subsection_name = $table_node->previousAll()->filter('p')->first()->text();
 
-                if(stripos($section_name, 'example') === 0){
+                if (stripos($section_name, 'example') === 0) {
                     return;
                 }
 
-                if(preg_match('/(xml )?elements( returned)? for( adding)?( an| get| a)? (?<model_name>[\w\s]+)/i', $section_name, $matches)){
+                if (preg_match('/(xml )?elements( returned)? for( adding)?( an| get| a)? (?<model_name>[\w\s]+)/i', $section_name, $matches)) {
 
                     //too messy to add to the above regex - juse override model name.  This will pick off any lower case words preceding the actual name.
-                    if(preg_match('/^[a-z\s]+(?<model_name>[A-Z][\w\s]+)/', $matches['model_name'], $uc_matches)){
+                    if (preg_match('/^[a-z\s]+(?<model_name>[A-Z][\w\s]+)/', $matches['model_name'], $uc_matches)) {
                         $matches = $uc_matches;
                     }
 
                     //If the table that's being processed os for a different model, create a new one
-                    if(false === $current_model->matchName($matches['model_name'])){
+                    if (false === $current_model->matchName($matches['model_name'])) {
                         $current_model = new Model($matches['model_name']);
                         $current_model->setParentModel($primary_model);
                     }
@@ -191,28 +196,25 @@ class Scraper {
 
             //Have a look on the page for any hints that a sub object has a URI
             //PUT CreditNotes/{CreditNoteID}/Allocations
-            $crawler->filter('p')->each(function(Crawler $p_node) use($primary_model) {
-                if(preg_match('#(?<method>GET|PUT|DELETE)\s?/?(?<primary_model>[a-z]+)/[^/]+/(?<secondary_model>[a-z]+)/?#i', $p_node->text(), $matches)){
-                    if($primary_model->getCollectiveName() === $matches['primary_model'] && $primary_model->hasProperty($matches['secondary_model'])){
+            $crawler->filter('p')->each(function (Crawler $p_node) use ($primary_model) {
+                if (preg_match('#(?<method>GET|PUT|DELETE)\s?/?(?<primary_model>[a-z]+)/[^/]+/(?<secondary_model>[a-z]+)/?#i', $p_node->text(), $matches)) {
+                    if ($primary_model->getCollectiveName() === $matches['primary_model'] && $primary_model->hasProperty($matches['secondary_model'])) {
                         $primary_model->getProperty($matches['secondary_model'])->saves_directly = true;
                     }
                 }
 
-                if(strpos($p_node->text(), 'returned as PDF') !== false){
+                if (strpos($p_node->text(), 'returned as PDF') !== false) {
                     //Assume that it does support it.
                     $primary_model->supports_pdf = true;
                 }
             });
 
-
-
         }
     }
 
 
-
-
-    private function parseModelTable(Model $model, Crawler $table_node) {
+    private function parseModelTable(Model $model, Crawler $table_node)
+    {
 
         $mandatory = false;
         $read_only = false;
@@ -222,36 +224,36 @@ class Scraper {
             $table_column_nodes = $table_row_node->filter('td');
 
             //Breaks in the table with colspans
-            if($table_column_nodes->count() === 0) {
+            if ($table_column_nodes->count() === 0) {
                 return;
-            } elseif($table_column_nodes->count() !== 2) {
+            } elseif ($table_column_nodes->count() !== 2) {
 
                 $row_text = $table_column_nodes->text();
 
                 //best that can be done really..
-                if(preg_match('/at least (one|two)/i', $row_text)) {
+                if (preg_match('/at least (one|two)/i', $row_text)) {
                     $mandatory = false;
                     $read_only = false;
-                } elseif(preg_match('/^Either/i', $row_text)) {
+                } elseif (preg_match('/^Either/i', $row_text)) {
                     $mandatory = false;
                     $read_only = false;
-                } elseif(preg_match('/(required|mandatory)/i', $row_text)) {
+                } elseif (preg_match('/(required|mandatory)/i', $row_text)) {
                     $mandatory = true;
                     $read_only = false;
                 }
 
-                if(preg_match('/(optional|recommended)/i', $row_text)) {
+                if (preg_match('/(optional|recommended)/i', $row_text)) {
                     $mandatory = false;
                     $read_only = false;
-                } elseif(preg_match('/(updatable)/i', $row_text)) {
+                } elseif (preg_match('/(updatable)/i', $row_text)) {
                     $read_only = false;
                     $mandatory = false;
-                } elseif(preg_match('/(only )?returned on (a )?GET requests?( only)?\.?$/i', $row_text)) {
+                } elseif (preg_match('/(only )?returned on (a )?GET requests?( only)?\.?$/i', $row_text)) {
                     $read_only = true;
                     $mandatory = false;
                 }
 
-                if(preg_match('/(PUT|POST)/i', $row_text)) {
+                if (preg_match('/(PUT|POST)/i', $row_text)) {
                     $read_only = false;
                 }
 
@@ -267,10 +269,10 @@ class Scraper {
 
 
             //@todo Here should handle making these methods available on the models
-            if(preg_match('/^(?<special_function>where|order|sort|filter|page|offset|pagesize|modified( after)?|record filter|include ?archived)$/i', $property_name, $matches) !== 0){
+            if (preg_match('/^(?<special_function>where|order|sort|filter|page|offset|pagesize|modified( after)?|record filter|include ?archived)$/i', $property_name, $matches) !== 0) {
 
-                if(isset($matches['special_function'])){
-                    switch($matches['special_function']){
+                if (isset($matches['special_function'])) {
+                    switch ($matches['special_function']) {
                         case 'page':
                             $model->is_pagable = true;
                             break;
@@ -282,19 +284,19 @@ class Scraper {
 
 
             //if there are commas in the name, it needs splitting.  eg. AddressLine 1,2,3,4
-            if(false !== strpos($property_name, ',')) {
+            if (false !== strpos($property_name, ',')) {
                 list($property_name, $suffixes) = explode(' ', $property_name);
-                foreach(explode(',', $suffixes) as $suffix) {
+                foreach (explode(',', $suffixes) as $suffix) {
                     $model->addProperty(new Model\Property($property_name . $suffix, $description));
                 }
             } else {
                 //this is the normal case, where there's only one property (or <X> or <Y>)
-                foreach(preg_split('/(>\s*or\s*<|\s&\s)/', $property_name) as $column_name){
+                foreach (preg_split('/(>\s*or\s*<|\s&\s)/', $property_name) as $column_name) {
                     //make it into another param
                     $property = new Model\Property($column_name, $description);
 
                     //add links to property (for parsing types)
-                    $table_column_nodes->filter('a')->each(function(Crawler $node) use($property){
+                    $table_column_nodes->filter('a')->each(function (Crawler $node) use ($property) {
                         $property->addLink($node->text(), $node->attr('href'));
                     });
 

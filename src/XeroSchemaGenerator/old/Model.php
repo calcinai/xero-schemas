@@ -4,7 +4,8 @@ use XeroPHP\Helpers;
 use XeroPHP\Remote\Object;
 use XeroPHP\Remote\Request;
 
-class Model implements ParsedObjectInterface {
+class Model implements ParsedObjectInterface
+{
 
     private $name;
     private $properties;
@@ -41,7 +42,8 @@ class Model implements ParsedObjectInterface {
     /**
      * No args in constructor.  Most things are not known when it's built
      */
-    public function __construct(){
+    public function __construct()
+    {
 
         $this->properties = array();
         $this->methods = array();
@@ -55,7 +57,8 @@ class Model implements ParsedObjectInterface {
      *
      * @param API $api
      */
-    public function setAPI(API $api){
+    public function setAPI(API $api)
+    {
         //called by the api.
         $this->api = $api;
     }
@@ -65,7 +68,8 @@ class Model implements ParsedObjectInterface {
      *
      * @return API
      */
-    public function getAPI(){
+    public function getAPI()
+    {
         return $this->api;
     }
 
@@ -75,7 +79,8 @@ class Model implements ParsedObjectInterface {
      *
      * @return mixed
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
@@ -85,7 +90,8 @@ class Model implements ParsedObjectInterface {
      *
      * @param $name
      */
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
     }
 
@@ -96,11 +102,12 @@ class Model implements ParsedObjectInterface {
      * @param bool $with_ns
      * @return mixed
      */
-    public function getClassName($with_ns = false){
+    public function getClassName($with_ns = false)
+    {
 
         $class_name = Helpers::singularize($this->getName());
 
-        if($with_ns)
+        if ($with_ns)
             return sprintf('%s\\%s', $this->getNamespace(), $class_name);
         else
             return $class_name;
@@ -111,8 +118,9 @@ class Model implements ParsedObjectInterface {
      *
      * @return string
      */
-    public function getNamespace(){
-        if(isset($this->parent_model)){
+    public function getNamespace()
+    {
+        if (isset($this->parent_model)) {
             return sprintf('%s\\%s', $this->getAPI()->getNamespace(), $this->parent_model->getClassName());
         } else {
             return $this->getAPI()->getNamespace();
@@ -124,12 +132,13 @@ class Model implements ParsedObjectInterface {
      *
      * @return array
      */
-    public function getUsedClasses(){
+    public function getUsedClasses()
+    {
 
         $classes = array();
-        foreach($this->getProperties() as $property){
-            if($property->getType() === Object::PROPERTY_TYPE_OBJECT) {
-                if($property->getRelatedObject()->getNamespace() !== $this->getNamespace()){
+        foreach ($this->getProperties() as $property) {
+            if ($property->getType() === Object::PROPERTY_TYPE_OBJECT) {
+                if ($property->getRelatedObject()->getNamespace() !== $this->getNamespace()) {
                     $key = $property->getRelatedObject()->getClassName(true);
                     $classes[$key] = $key;
                 }
@@ -144,31 +153,32 @@ class Model implements ParsedObjectInterface {
      * It's not crucial that the order stays the same either.
      *
      * @param Property $property
-	 * @param null $insert_position
-	 * @param boolean $get_only
+     * @param null $insert_position
+     * @param boolean $get_only
      */
-    public function addProperty(Property $property, $insert_position = null, $get_only = false) {
+    public function addProperty(Property $property, $insert_position = null, $get_only = false)
+    {
         $key_name = strtolower($property->getName());
 
-        if(isset($this->properties[$key_name]) && $get_only) {
+        if (isset($this->properties[$key_name]) && $get_only) {
             return;
         }
 
         $property->setModel($this);
 
         //This is so it can be retrospectively added in the case of deprecation.
-        if($insert_position !== null){
+        if ($insert_position !== null) {
             $properties = array();
             $property_position = 0;
-            foreach($this->properties as $existing_name => $existing_property){
-                if($property_position++ === $insert_position){
+            foreach ($this->properties as $existing_name => $existing_property) {
+                if ($property_position++ === $insert_position) {
                     $properties[$key_name] = $property;
                 }
                 $properties[$existing_name] = $existing_property;
             }
 
             //Otherwise it's at the end (or after)
-            if($insert_position >= $property_position)
+            if ($insert_position >= $property_position)
                 $properties[$key_name] = $property;
 
             $this->properties = $properties;
@@ -179,7 +189,8 @@ class Model implements ParsedObjectInterface {
     }
 
 
-    public function hasProperty($property_name){
+    public function hasProperty($property_name)
+    {
         return isset($this->properties[strtolower($property_name)]);
     }
 
@@ -189,7 +200,8 @@ class Model implements ParsedObjectInterface {
      * @param $property_name
      * @return Property
      */
-    public function getProperty($property_name) {
+    public function getProperty($property_name)
+    {
         return $this->properties[strtolower($property_name)];
     }
 
@@ -199,7 +211,8 @@ class Model implements ParsedObjectInterface {
      *
      * @return array
      */
-    public function getProperties() {
+    public function getProperties()
+    {
         return $this->properties;
     }
 
@@ -207,7 +220,8 @@ class Model implements ParsedObjectInterface {
     /**
      * @return mixed
      */
-    public function getMethods() {
+    public function getMethods()
+    {
         return $this->methods;
     }
 
@@ -216,9 +230,10 @@ class Model implements ParsedObjectInterface {
      *
      * @param mixed $methods
      */
-    public function setMethods($methods) {
+    public function setMethods($methods)
+    {
 
-        if(is_array($methods)){
+        if (is_array($methods)) {
             $this->methods = $methods;
         } else {
             preg_match_all('/(?<methods>GET|PUT|POST|DELETE)/', $methods, $matches);
@@ -229,13 +244,14 @@ class Model implements ParsedObjectInterface {
     /**
      * @return null
      */
-    public function getGUIDProperty(){
-        if(isset($this->guid_property))
+    public function getGUIDProperty()
+    {
+        if (isset($this->guid_property))
             return $this->guid_property;
 
         //Otherwise just pick one.  This will only happen if the property isn't called [Model]ID
-        foreach($this->properties as $property){
-            if($property->getType() === Object::PROPERTY_TYPE_GUID)
+        foreach ($this->properties as $property) {
+            if ($property->getType() === Object::PROPERTY_TYPE_GUID)
                 return $property;
         }
 
@@ -248,7 +264,8 @@ class Model implements ParsedObjectInterface {
      *
      * @param Property $property
      */
-    public function setGUIDProperty(Property $property){
+    public function setGUIDProperty(Property $property)
+    {
         $this->guid_property = $property;
     }
 
@@ -256,14 +273,16 @@ class Model implements ParsedObjectInterface {
     /**
      * @return mixed
      */
-    public function getUrl() {
+    public function getUrl()
+    {
         return $this->url;
     }
 
     /**
      * @param mixed $url
      */
-    public function setUrl($url) {
+    public function setUrl($url)
+    {
         $this->url = $url;
     }
 
@@ -273,35 +292,40 @@ class Model implements ParsedObjectInterface {
      *
      * @return boolean
      */
-    public function getSupportsAttachments() {
+    public function getSupportsAttachments()
+    {
         return $this->hasProperty('HasAttachments');
     }
 
     /**
      * @return boolean
      */
-    public function getSupportsPDF() {
+    public function getSupportsPDF()
+    {
         return $this->supports_pdf;
     }
 
     /**
      * @param boolean $supports_pdf
      */
-    public function setSupportsPDF($supports_pdf) {
+    public function setSupportsPDF($supports_pdf)
+    {
         $this->supports_pdf = $supports_pdf;
     }
 
     /**
      * @return boolean
      */
-    public function isPageable() {
+    public function isPageable()
+    {
         return $this->is_pageable;
     }
 
     /**
      * @param boolean $is_pageable
      */
-    public function setIsPagable($is_pageable) {
+    public function setIsPagable($is_pageable)
+    {
         $this->is_pageable = $is_pageable;
     }
 
@@ -311,25 +335,28 @@ class Model implements ParsedObjectInterface {
      *
      * @return Enum[]
      */
-    public function getEnums(){
+    public function getEnums()
+    {
         return $this->getAPI()->getEnumsByGroup($this->getName());
     }
 
     /**
      * @return string
      */
-    public function getResourceName(){
+    public function getResourceName()
+    {
 
-        if(!isset($this->url))
+        if (!isset($this->url))
             return null;
 
-        return substr($this->url, strrpos($this->url, '/')+1);
+        return substr($this->url, strrpos($this->url, '/') + 1);
     }
 
     //https://api.xero.com/api.xro/2.0/Contacts
-    public function getResourceURI(){
+    public function getResourceURI()
+    {
 
-        if(preg_match('#/[a-z]+.xro/[0-9\.]+/(?<uri>.+)#', $this->url, $matches))
+        if (preg_match('#/[a-z]+.xro/[0-9\.]+/(?<uri>.+)#', $this->url, $matches))
             return $matches['uri'];
 
         //Otherwise default to name of object
@@ -339,13 +366,15 @@ class Model implements ParsedObjectInterface {
     /**
      * @param Model $model
      */
-    public function setParentModel(Model $model){
+    public function setParentModel(Model $model)
+    {
         $this->parent_model = $model;
     }
 
-    public function isWritable(){
+    public function isWritable()
+    {
         return in_array(Request::METHOD_POST, $this->methods) ||
-            in_array(Request::METHOD_PUT, $this->methods);
+        in_array(Request::METHOD_PUT, $this->methods);
     }
 
     /**
@@ -353,30 +382,31 @@ class Model implements ParsedObjectInterface {
      * For debugging
      *
      */
-    public function printPropertyTable(){
+    public function printPropertyTable()
+    {
         $rows = array();
         $column_sizes = array();
 
-        foreach($this->getProperties() as $key => $property){
+        foreach ($this->getProperties() as $key => $property) {
             $rows[$key] = array($property->getName(), $string = substr(preg_replace('/[^\w\s.\-\(\)]|\n/', '', $property->getDescription()), 0, 100));
 
-            foreach($rows[$key] as $column_index => $column){
+            foreach ($rows[$key] as $column_index => $column) {
                 $column_sizes[$column_index] = max(isset($column_sizes[$column_index]) ? $column_sizes[$column_index] : 0, iconv_strlen($column));
             }
         }
         //Cannot echo the data types here.  They are lazily calculated after all the models are aware of each other.
         $total_row_width = array_sum($column_sizes) + count($column_sizes) * 3 + 1;
-        echo str_repeat('-', $total_row_width)."\n";
-        printf("| %-".($total_row_width - 4)."s |\n", $this->getName());
-        echo str_repeat('-', $total_row_width)."\n";
-        foreach($rows as $row){
+        echo str_repeat('-', $total_row_width) . "\n";
+        printf("| %-" . ($total_row_width - 4) . "s |\n", $this->getName());
+        echo str_repeat('-', $total_row_width) . "\n";
+        foreach ($rows as $row) {
             echo '|';
-            foreach($row as $column_index => $column) {
+            foreach ($row as $column_index => $column) {
                 printf(' %-' . $column_sizes[$column_index] . 's |', $column);
             }
             echo "\n";
         }
-        echo str_repeat('-', $total_row_width)."\n\n";
+        echo str_repeat('-', $total_row_width) . "\n\n";
 
 
     }

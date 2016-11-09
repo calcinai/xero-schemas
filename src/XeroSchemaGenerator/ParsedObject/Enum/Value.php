@@ -6,17 +6,20 @@
  */
 namespace Calcinai\XeroSchemaGenerator\ParsedObject\Enum;
 
-class Value {
+class Value
+{
 
     private $name;
     private $description;
 
-    public function __construct($name, $description) {
+    public function __construct($name, $description)
+    {
         $this->name = $name;
         $this->description = $description;
     }
 
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 }

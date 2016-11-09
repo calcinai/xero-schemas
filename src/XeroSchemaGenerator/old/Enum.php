@@ -1,6 +1,7 @@
 <?php
 
-class Enum implements ParsedObjectInterface {
+class Enum implements ParsedObjectInterface
+{
 
     private $group;
     private $name;
@@ -20,7 +21,8 @@ class Enum implements ParsedObjectInterface {
      * @param $anchor string Any links found in the docs.  Used to track which values are being referred to
      * @param $raw_name string Raw name as in docs, used for generating constant name
      */
-    public function __construct($group, $name, $anchor, $raw_name){
+    public function __construct($group, $name, $anchor, $raw_name)
+    {
         $this->group = $group;
         $this->name = $name;
         $this->raw_name = $raw_name;
@@ -35,14 +37,15 @@ class Enum implements ParsedObjectInterface {
      * @param $name
      * @param $description
      */
-    public function addValue($name, $description){
+    public function addValue($name, $description)
+    {
         $this->values[$name] = array(
             'name' => $name,
             'description' => $description
         );
 
         $name_length = strlen($name);
-        if($name_length > $this->longest_name)
+        if ($name_length > $this->longest_name)
             $this->longest_name = $name_length;
     }
 
@@ -52,7 +55,8 @@ class Enum implements ParsedObjectInterface {
      * @param $name
      * @param $description
      */
-    public function removeValue($name){
+    public function removeValue($name)
+    {
         unset($this->values[$name]);
     }
 
@@ -61,10 +65,11 @@ class Enum implements ParsedObjectInterface {
      *
      * @return array
      */
-    public function getValues(){
+    public function getValues()
+    {
 
         $values = array();
-        foreach($this->values as $value){
+        foreach ($this->values as $value) {
             $values[] = array(
                 'constant_name' => $this->getConstantName($value['name']),
                 'value' => $value['name'],
@@ -81,14 +86,15 @@ class Enum implements ParsedObjectInterface {
      * @param bool $with_padding
      * @return string
      */
-    public function getConstantName($value, $with_padding = true){
+    public function getConstantName($value, $with_padding = true)
+    {
         $constant_name = strtoupper(sprintf('%s_%s', preg_replace('/[^a-z0-9]+/i', '_', trim($this->getConstantPrefix())), preg_replace('/[^a-z0-9]+/i', '_', $value)));
 
-        if($with_padding !== true)
+        if ($with_padding !== true)
             return $constant_name;
 
         $padding = str_repeat(' ', $this->longest_name - strlen($value));
-        return $constant_name.$padding;
+        return $constant_name . $padding;
     }
 
     /**
@@ -97,7 +103,8 @@ class Enum implements ParsedObjectInterface {
      *
      * @return mixed
      */
-    public function getConstantPrefix(){
+    public function getConstantPrefix()
+    {
         $sane_name = preg_replace('/\([\w\s]+\)/', '', $this->raw_name);
         return \XeroPHP\Helpers::singularize(preg_replace('/(\b(code)s?)/i', '', trim($sane_name)));
     }
@@ -105,7 +112,8 @@ class Enum implements ParsedObjectInterface {
     /**
      * @param The raw name
      */
-    public function setRawName($name) {
+    public function setRawName($name)
+    {
         $this->raw_name = $name;
     }
 
@@ -114,7 +122,8 @@ class Enum implements ParsedObjectInterface {
      *
      * @return mixed
      */
-    public function getGroup(){
+    public function getGroup()
+    {
         return $this->group;
     }
 
@@ -123,7 +132,8 @@ class Enum implements ParsedObjectInterface {
      *
      * @return mixed
      */
-    public function getName(){
+    public function getName()
+    {
         return $this->name;
     }
 
@@ -131,7 +141,8 @@ class Enum implements ParsedObjectInterface {
      * Setter for Enum name
      * @param $name
      */
-    public function setName($name){
+    public function setName($name)
+    {
         $this->name = $name;
     }
 
@@ -140,13 +151,15 @@ class Enum implements ParsedObjectInterface {
      *
      * @return mixed
      */
-    public function getAnchor(){
+    public function getAnchor()
+    {
         return $this->anchor;
     }
 
-    public function hasValue($string) {
-        foreach($this->getValues() as $value) {
-            if($value['value'] === $string){
+    public function hasValue($string)
+    {
+        foreach ($this->getValues() as $value) {
+            if ($value['value'] === $string) {
                 return true;
             }
         }
