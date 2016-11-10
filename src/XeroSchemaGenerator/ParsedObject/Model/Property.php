@@ -189,24 +189,24 @@ class Property extends ParsedObject
         $result = null;
 
         if (!isset($type)) {
-            //The ns hint for searching, look for subclasses of this first.
-            $ns_hint = sprintf('%s\\%s', $this->getParentModel()->getNamespace(), $this->getParentModel()->getClassName());
-
-            if (preg_match('/see\s(?<model>[^.]+)/i', $this->getDescription(), $matches)) {
-
-                //Try NS'ing it with existing models... MNA htis is getting ugly.
-                foreach ($this->getParentModel()->getAPI()->getModels() as $model) {
-                    $class_name = $model->getClassName();
-                    $model_name = $matches['model'];
-                    if (strpos($model_name, $class_name) === 0) {
-                        //this means it starts with the model name
-                        $search_text = sprintf('%s\\%s', substr($model_name, 0, strlen($class_name)), substr($model_name, strlen($class_name)));
-                        $result = $this->getParentModel()->getAPI()->searchByKey(str_replace(' ', '', ucwords($search_text)), $this->getParentModel()->getNamespace());
-
-                    }
-                }
-
-            }
+//            //The ns hint for searching, look for subclasses of this first.
+//            $ns_hint = sprintf('%s\\%s', $this->getParentModel()->getNamespace(), $this->getParentModel()->getClassName());
+//
+//            if (preg_match('/see\s(?<model>[^.]+)/i', $this->getDescription(), $matches)) {
+//
+//                //Try NS'ing it with existing models... MNA htis is getting ugly.
+//                foreach ($this->getParentModel()->getAPI()->getModels() as $model) {
+//                    $class_name = $model->getClassName();
+//                    $model_name = $matches['model'];
+//                    if (strpos($model_name, $class_name) === 0) {
+//                        //this means it starts with the model name
+//                        $search_text = sprintf('%s\\%s', substr($model_name, 0, strlen($class_name)), substr($model_name, strlen($class_name)));
+//                        $result = $this->getParentModel()->getAPI()->searchByKey(str_replace(' ', '', ucwords($search_text)), $this->getParentModel()->getNamespace());
+//
+//                    }
+//                }
+//
+//            }
 //
 //            if ($result === null && substr_count($ns_hint, '\\') > 1) {
 //                $parent_ns_hint = substr($ns_hint, 0, strrpos($ns_hint, '\\'));

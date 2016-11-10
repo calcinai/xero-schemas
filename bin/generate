@@ -116,7 +116,9 @@ $swagger->setInfo(
     ->setProduces(['text/xml', 'application/json']);
 
 
+$paths = Paths::create();
 $definitions = Definitions::create();
+
 
 foreach ($accounting_api->getModels() as $model) {
 
@@ -124,7 +126,7 @@ foreach ($accounting_api->getModels() as $model) {
 
 
     if($model->getResourceURI() !== null){
-        
+
         $path_item_schema = PathItem::create();
         $path_item_schema->setGet(Operation::create()
             ->setSummary($model->getDescription())
@@ -156,7 +158,7 @@ foreach ($accounting_api->getModels() as $model) {
 //        )
         );
 
-        Paths::create()->set($model->getResourceURI(), $path_item_schema);
+        $paths->set($model->getResourceURI(), $path_item_schema);
 
     }
 
@@ -221,5 +223,6 @@ foreach ($accounting_api->getModels() as $model) {
 
 }
 
+$swagger->setPaths($paths);
 $swagger->setDefinitions($definitions);
 print_r(json_encode($swagger, JSON_PRETTY_PRINT));

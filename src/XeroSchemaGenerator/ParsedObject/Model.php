@@ -98,7 +98,7 @@ class Model extends ParsedObject
     {
         $this->full_url = $full_url;
 
-        if (preg_match('#(?<base_path>/[a-z]+.xro)/(?<version>[0-9\.]+)/(?<uri>.+)#', $this->full_url, $matches)){
+        if (preg_match('#(?<base_path>/[a-z]+.xro)/(?<version>[0-9\.]+)(?<uri>/.+)#', $this->full_url, $matches)){
             $this->base_path = $matches['base_path'];
             $this->version = $matches['version'];
             $this->resource_uri = $matches['uri'];
