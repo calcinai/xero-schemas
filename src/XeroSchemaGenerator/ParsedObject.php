@@ -11,11 +11,37 @@ abstract class ParsedObject
      * @var string
      */
     protected $singular_name;
+
+    /**
+     * @var string
+     */
     protected $collective_name;
+
+    /**
+     * @var string
+     */
     protected $raw_name;
 
+    /**
+     * @var string[]
+     */
     protected $aliases = [];
 
+    /**
+     * @var string
+     */
+    protected $name;
+
+    /**
+     * @var string
+     */
+    protected $description;
+
+
+    /**
+     * ParsedObject constructor.
+     * @param $raw_name
+     */
     public function __construct($raw_name)
     {
         $this->raw_name = $raw_name;
@@ -23,6 +49,7 @@ abstract class ParsedObject
         $parsed = self::parseRawName($raw_name);
 
         $this->name = array_shift($parsed);
+
         $this->collective_name = Inflector::get()->pluralize($this->name);
         $this->singular_name = Inflector::get()->singularize($this->name);
 
@@ -50,14 +77,23 @@ abstract class ParsedObject
         return $this->collective_name;
     }
 
+
     /**
-     * @param string $singular_name
-     * @return static
+     * @param mixed $description
+     * @return ParsedObject
      */
-    public function setSingularName($singular_name)
+    public function setDescription($description)
     {
-        $this->singular_name = $singular_name;
+        $this->description = $description;
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 
     /**

@@ -51,7 +51,7 @@ class Model extends ParsedObject
     /**
      * @var string
      */
-    private $uri;
+    private $resource_uri;
 
     /**
      * @var Model
@@ -101,7 +101,7 @@ class Model extends ParsedObject
         if (preg_match('#(?<base_path>/[a-z]+.xro)/(?<version>[0-9\.]+)/(?<uri>.+)#', $this->full_url, $matches)){
             $this->base_path = $matches['base_path'];
             $this->version = $matches['version'];
-            $this->uri = $matches['uri'];
+            $this->resource_uri = $matches['uri'];
         }
 
     }
@@ -136,7 +136,7 @@ class Model extends ParsedObject
     //https://api.xero.com/api.xro/2.0/Contacts
     public function getResourceURI()
     {
-        return $this->uri;
+        return $this->resource_uri;
     }
 
 
@@ -231,7 +231,6 @@ class Model extends ParsedObject
 
 
     }
-
 
 
 }

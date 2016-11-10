@@ -155,6 +155,9 @@ class Scraper
                             case 'methods supported':
                                 $primary_model->setMethods($table_columns->eq(1)->text());
                                 break;
+                            case 'description':
+                                $primary_model->setDescription($table_columns->eq(1)->text());
+                                break;
                         }
                     });
                     return;

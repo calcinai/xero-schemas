@@ -19,8 +19,8 @@ class Property extends ParsedObject
     const TYPE_BOOLEAN   = 'bool';
     const TYPE_DATE      = 'date';
     const TYPE_DATETIME  = 'datetime';
+    const TYPE_GUID      = 'guid';
 
-    private $description;
     private $links;
     private $type;
 
@@ -49,6 +49,9 @@ class Property extends ParsedObject
      */
     private $is_read_only;
 
+
+    private $max_length;
+
     public function __construct($name, $description, $mandatory = false, $read_only = false, $deprecated = false)
     {
 
@@ -66,11 +69,8 @@ class Property extends ParsedObject
         $this->is_deprecated = $deprecated;
         $this->is_read_only = $read_only;
         $this->is_mandatory = $mandatory;
-    }
 
-    public function getDescription()
-    {
-        return $this->description;
+        $this->parseDescription();
     }
 
     public function addLink($name, $href)
@@ -125,6 +125,19 @@ class Property extends ParsedObject
     }
 
 
+    private function parseDescription(){
+
+        if (strpos($this->description, 'read only')) {
+            $this->is_read_only = true;
+        }
+
+        if(preg_match('/max length\s?=\s?(?<length>\d+)/', $this->description, $matches)){
+            $this->max_length = $matches['length'];
+        }
+
+    }
+
+
     /**
      * A very ugly function to parse the property type based on a massive arbitrary set of rules.
      *
@@ -139,59 +152,61 @@ class Property extends ParsedObject
 
         //Spelling errors in the docs
         if (preg_match('/UTC$/', $this->getName()))
-            $type = self::TYPE_TIMESTAMP;
+            $type = self::TYPE_DATETIME;
 
         if (preg_match('/^Has[A-Z]\w+/', $this->getName()))
             $type = self::TYPE_BOOLEAN;
 
         if (preg_match('/(^sum\b|decimal|the\stotal|total\s(of|tax)|rate\b|amount\b)/i', $this->description)) {
             //If not the name of the field itself and not an 'amount type'
-            if (stripos($this->name, 'name') === false && stripos($this->name, 'description') === false && stripos($this->description, 'amount type') === false) {
-                $type = self::TYPE_FLOAT;
+            if (stripos($this->name, 'name') === false &&
+                stripos($this->name, 'description') === false &&
+                stripos($this->description, 'amount type') === false) {
+                    $type = self::TYPE_FLOAT;
             }
         }
 
         if (preg_match('/(alpha numeric)/i', $this->description))
             $type = self::TYPE_STRING;
 
-        if (preg_match('/(^int(eger)?\b)/i', $this->description))
+        if (preg_match('/(^int(eger)?\b)/i', $this->description)){
             $type = self::TYPE_INT;
+        }
 
-        if (!isset($type) && preg_match('/(\bdate\b)/i', $this->description))
+        if (!isset($type) && preg_match('/(\bdate\b)/i', $this->description)){
             $type = self::TYPE_DATE;
+        }
 
-        if (preg_match('/Xero (generated )?(unique )?identifier/i', $this->description))
+        if (preg_match('/Xero (generated )?(unique )?identifier/i', $this->description)){
             $type = self::TYPE_GUID;
+        }
 
         if ($this->getParentModel()->getSingularName() . 'ID' == $this->getName()) {
             $type = self::TYPE_GUID;
             $this->getParentModel()->setGUIDProperty($this);
         }
 
-        if (preg_match('/(Code|ID)$/', $this->getName()))
-            $type = self::TYPE_STRING;
-
         $result = null;
 
-//        if (!isset($type)) {
-//            //The ns hint for searching, look for subclasses of this first.
-//            $ns_hint = sprintf('%s\\%s', $this->getParentModel()->getNamespace(), $this->getParentModel()->getClassName());
-//
-//            if (preg_match('/see\s(?<model>[^.]+)/i', $this->getDescription(), $matches)) {
-//
-//                //Try NS'ing it with existing models... MNA htis is getting ugly.
-//                foreach ($this->getParentModel()->getAPI()->getModels() as $model) {
-//                    $class_name = $model->getClassName();
-//                    $model_name = $matches['model'];
-//                    if (strpos($model_name, $class_name) === 0) {
-//                        //this means it starts with the model name
-//                        $search_text = sprintf('%s\\%s', substr($model_name, 0, strlen($class_name)), substr($model_name, strlen($class_name)));
-//                        $result = $this->getParentModel()->getAPI()->searchByKey(str_replace(' ', '', ucwords($search_text)), $this->getParentModel()->getNamespace());
-//
-//                    }
-//                }
-//
-//            }
+        if (!isset($type)) {
+            //The ns hint for searching, look for subclasses of this first.
+            $ns_hint = sprintf('%s\\%s', $this->getParentModel()->getNamespace(), $this->getParentModel()->getClassName());
+
+            if (preg_match('/see\s(?<model>[^.]+)/i', $this->getDescription(), $matches)) {
+
+                //Try NS'ing it with existing models... MNA htis is getting ugly.
+                foreach ($this->getParentModel()->getAPI()->getModels() as $model) {
+                    $class_name = $model->getClassName();
+                    $model_name = $matches['model'];
+                    if (strpos($model_name, $class_name) === 0) {
+                        //this means it starts with the model name
+                        $search_text = sprintf('%s\\%s', substr($model_name, 0, strlen($class_name)), substr($model_name, strlen($class_name)));
+                        $result = $this->getParentModel()->getAPI()->searchByKey(str_replace(' ', '', ucwords($search_text)), $this->getParentModel()->getNamespace());
+
+                    }
+                }
+
+            }
 //
 //            if ($result === null && substr_count($ns_hint, '\\') > 1) {
 //                $parent_ns_hint = substr($ns_hint, 0, strrpos($ns_hint, '\\'));
@@ -238,7 +253,7 @@ class Property extends ParsedObject
 //                }
 //            }
 
-//        }
+        }
 
 
 //        if ($result instanceof Enum)
@@ -254,8 +269,9 @@ class Property extends ParsedObject
 //
 //        }
 
-        if (!isset($type))
+        if (!isset($type)){
             $type = self::TYPE_STRING;
+        }
 
         return $type;
     }
@@ -263,6 +279,19 @@ class Property extends ParsedObject
     public function isMandatory()
     {
         return $this->is_mandatory;
+    }
+
+    public function isReadOnly()
+    {
+        return $this->is_read_only;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getMaxLength()
+    {
+        return $this->max_length;
     }
 
 }

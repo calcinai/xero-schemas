@@ -5,6 +5,9 @@ include __DIR__ . '/../vendor/autoload.php';
 
 use Calcinai\Strut\Definitions\Definitions;
 use Calcinai\Strut\Definitions\Info;
+use Calcinai\Strut\Definitions\Operation;
+use Calcinai\Strut\Definitions\PathItem;
+use Calcinai\Strut\Definitions\Paths;
 use Calcinai\Strut\Definitions\Schema;
 use Calcinai\Strut\Definitions\Schema\Properties\Properties;
 use Calcinai\Strut\Swagger;
@@ -117,11 +120,55 @@ $definitions = Definitions::create();
 
 foreach ($accounting_api->getModels() as $model) {
 
-    $schema_properties = Properties::create();
     $schema_model = Schema::create();
+
+
+    if($model->getResourceURI() !== null){
+        
+        $path_item_schema = PathItem::create();
+        $path_item_schema->setGet(Operation::create()
+            ->setSummary($model->getDescription())
+
+//        ->addParameter(QueryParameterSubSchema::create()
+//            ->setName('Limit')
+//            ->setDescription('How many items to return at one time (max 100)')
+//            ->setRequired(false)
+//            ->setType('integer')
+//            ->setFormat('int32')
+//
+//        )
+//
+//        ->setResponses(Responses::create()
+//            ->set('200', Response::create()
+//                ->setDescription('A paged array of pets')
+//                ->setHeaders(Headers::create()
+//                    ->set('x-next', Header::create()
+//                        ->setType('string')
+//                        ->setDescription('A link to the next page of responses')
+//                    )
+//                )
+//                ->setSchema($pets->getId())
+//            )
+//            ->set('default', Response::create()
+//                ->setDescription('Unexpected error')
+//                ->setSchema($error)
+//            )
+//        )
+        );
+
+        Paths::create()->set($model->getResourceURI(), $path_item_schema);
+
+    }
+
+
+
+
+
+    $schema_properties = Properties::create();
 
     foreach($model->getProperties() as $property_name => $property){
 
+        //Container for the property of the model
         $schema_property = Schema::create();
 
         switch($property->getType()){
@@ -144,15 +191,31 @@ foreach ($accounting_api->getModels() as $model) {
             case Property::TYPE_DATETIME:
                 $schema_property->setType('string')->setFormat('date-time');
                 break;
+            case Property::TYPE_GUID:
+                $schema_property->setType('string')->setFormat('uuid');
+                break;
         }
 
         if($property->isMandatory()){
             $schema_model->addRequired($property_name);
         }
 
-        $schema_properties->set($property_name, $property);
+        if($property->isReadOnly()){
+            $schema_property->setReadOnly(true);
+        }
+
+        if($property->getMaxLength() !== null){
+            $schema_property->setMaxLength($property->getMaxLength());
+        }
+
+        //Add the property to the property set
+        $schema_properties->set($property_name, $schema_property);
     }
 
+    //Add the property set to the model
+    $schema_model->setProperties($schema_properties);
+
+    //add the model to the definitions.
     $definitions->set($model->getSingularName(), $schema_model);
 
 
