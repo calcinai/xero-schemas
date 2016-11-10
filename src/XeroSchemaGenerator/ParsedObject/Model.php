@@ -68,6 +68,22 @@ class Model extends ParsedObject
      */
     public $supports_pdf;
 
+
+    const METHOD_GET    = 'GET';
+    const METHOD_PUT    = 'PUT';
+    const METHOD_POST   = 'POST';
+    const METHOD_DELETE = 'DELETE';
+
+    /**
+     * @var array
+     */
+    static $ALL_METHODS = [
+        self::METHOD_GET,
+        self::METHOD_PUT,
+        self::METHOD_POST,
+        self::METHOD_DELETE
+    ];
+
     public function __construct($raw_name)
     {
         parent::__construct($raw_name);
@@ -127,7 +143,8 @@ class Model extends ParsedObject
         if (is_array($methods)) {
             $this->methods = $methods;
         } else {
-            preg_match_all('/(?<methods>GET|PUT|POST|DELETE)/', $methods, $matches);
+            $all_methods = implode('|', self::$ALL_METHODS);
+            preg_match_all("/(?<methods>$all_methods)/", $methods, $matches);
             $this->methods = array_unique($matches['methods']);
         }
     }
@@ -198,6 +215,34 @@ class Model extends ParsedObject
         return $this->guid_property;
     }
 
+
+    public function getDescriptionForMethod($method)
+    {
+        switch($method){
+            case self::METHOD_GET:
+                preg_match('/.*(retrieve|get).*/i', $this->description, $matches);
+                break;
+            case self::METHOD_PUT:
+                preg_match('/.*create.*/i', $this->description, $matches);
+                break;
+            case self::METHOD_POST:
+                preg_match('/.*update.*/i', $this->description, $matches);
+                break;
+            case self::METHOD_DELETE:
+                preg_match('/.*delete.*/i', $this->description, $matches);
+                break;
+        }
+
+        //If a keyword is found, return that line
+        if(isset($matches[0])){
+            return $matches[0];
+        }
+
+        //Generic description
+        return sprintf('%s a %s', ucfirst($method), $this->getSingularName());
+    }
+
+
     /**
      * Pretty ugly eh!
      * For debugging
@@ -230,6 +275,11 @@ class Model extends ParsedObject
         echo str_repeat('-', $total_row_width) . "\n\n";
 
 
+    }
+
+    public function supportsMethod($method)
+    {
+        return in_array($method, $this->methods);
     }
 
 

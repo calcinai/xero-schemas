@@ -1,0 +1,2112 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Accounting API",
+        "version": "1.0.0"
+    },
+    "host": "api.xero.com",
+    "basePath": "\/api.xro",
+    "schemes": [
+        "https"
+    ],
+    "consumes": [
+        "text\/xml"
+    ],
+    "produces": [
+        "text\/xml",
+        "application\/json"
+    ],
+    "paths": {
+        "\/Accounts": {
+            "get": {
+                "summary": "Allows you to retrieve the full chart of accounts",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "collectionFormat": "csv",
+                        "name": "Limit",
+                        "description": "How many items to return at one time (max 100)",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A paged array of pets",
+                        "schema": {
+                            "$ref": "#\/definitions\/Account"
+                        }
+                    }
+                }
+            }
+        },
+        "\/BankTransactions": {
+            "get": {
+                "summary": "Allows you to retrieve any spend or receive money transactions",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "collectionFormat": "csv",
+                        "name": "Limit",
+                        "description": "How many items to return at one time (max 100)",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A paged array of pets",
+                        "schema": {
+                            "$ref": "#\/definitions\/BankTransaction"
+                        }
+                    }
+                }
+            }
+        },
+        "\/BankTransfers": {
+            "get": {
+                "summary": "Allows you to retrieve any bank transfersAllows you to create bank transfers (Beta)Allows you to attach files to bank transfers",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "collectionFormat": "csv",
+                        "name": "Limit",
+                        "description": "How many items to return at one time (max 100)",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A paged array of pets",
+                        "schema": {
+                            "$ref": "#\/definitions\/BankTransfer"
+                        }
+                    }
+                }
+            }
+        },
+        "\/BrandingThemes": {
+            "get": {
+                "summary": "GET a BrandingTheme",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "collectionFormat": "csv",
+                        "name": "Limit",
+                        "description": "How many items to return at one time (max 100)",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A paged array of pets",
+                        "schema": {
+                            "$ref": "#\/definitions\/BrandingTheme"
+                        }
+                    }
+                }
+            }
+        },
+        "\/Contacts": {
+            "get": {
+                "summary": "Allows you to retrieve, add and update contacts in a Xero organisation",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "collectionFormat": "csv",
+                        "name": "Limit",
+                        "description": "How many items to return at one time (max 100)",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A paged array of pets",
+                        "schema": {
+                            "$ref": "#\/definitions\/Contact"
+                        }
+                    }
+                }
+            }
+        },
+        "\/ContactGroups": {
+            "get": {
+                "summary": "Allows you to retrieve the ContactID and Name of all the contacts in a contact groupAllows you to create contact groupsAllows you to rename contact groupsAllows you to update the status (delete) contact groupsAllows you to add contacts to a contact groupAllows you to remove a contact from a contact groupAllows you to remove all contacts from a contact group",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "collectionFormat": "csv",
+                        "name": "Limit",
+                        "description": "How many items to return at one time (max 100)",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A paged array of pets",
+                        "schema": {
+                            "$ref": "#\/definitions\/ContactGroup"
+                        }
+                    }
+                }
+            }
+        },
+        "\/CreditNotes": {
+            "get": {
+                "summary": "Allows you to retrieve any credit notes",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "collectionFormat": "csv",
+                        "name": "Limit",
+                        "description": "How many items to return at one time (max 100)",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A paged array of pets",
+                        "schema": {
+                            "$ref": "#\/definitions\/CreditNote"
+                        }
+                    }
+                }
+            }
+        },
+        "\/Currencies": {
+            "get": {
+                "summary": "Allows you to retrieve currencies for your organisation",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "collectionFormat": "csv",
+                        "name": "Limit",
+                        "description": "How many items to return at one time (max 100)",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A paged array of pets",
+                        "schema": {
+                            "$ref": "#\/definitions\/Currency"
+                        }
+                    }
+                }
+            }
+        },
+        "\/Employees": {
+            "get": {
+                "summary": "Allows you to retrieve, add and update employees used in Xero payrun functionality",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "collectionFormat": "csv",
+                        "name": "Limit",
+                        "description": "How many items to return at one time (max 100)",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A paged array of pets",
+                        "schema": {
+                            "$ref": "#\/definitions\/Employee"
+                        }
+                    }
+                }
+            }
+        },
+        "\/ExpenseClaims": {
+            "get": {
+                "summary": "Allows you to retrieve expense claims to see their status",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "collectionFormat": "csv",
+                        "name": "Limit",
+                        "description": "How many items to return at one time (max 100)",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A paged array of pets",
+                        "schema": {
+                            "$ref": "#\/definitions\/ExpenseClaim"
+                        }
+                    }
+                }
+            }
+        },
+        "\/Items": {
+            "get": {
+                "summary": "Allows you to retrieve any itemsAllows you to add or update tracked itemsAllows you to add or update untracked itemsAllows you to delete items",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "collectionFormat": "csv",
+                        "name": "Limit",
+                        "description": "How many items to return at one time (max 100)",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A paged array of pets",
+                        "schema": {
+                            "$ref": "#\/definitions\/Item"
+                        }
+                    }
+                }
+            }
+        },
+        "\/Journals": {
+            "get": {
+                "summary": "Allows you to retrieve any journals.See Manual Journals if you need to create journals in Xero",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "collectionFormat": "csv",
+                        "name": "Limit",
+                        "description": "How many items to return at one time (max 100)",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A paged array of pets",
+                        "schema": {
+                            "$ref": "#\/definitions\/Journal"
+                        }
+                    }
+                }
+            }
+        },
+        "\/LinkedTransactions": {
+            "get": {
+                "summary": "Retrieve linked transactions (billable expenses)Create linked transactionsUpdate linked transactionsDelete linked transactions",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "collectionFormat": "csv",
+                        "name": "Limit",
+                        "description": "How many items to return at one time (max 100)",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A paged array of pets",
+                        "schema": {
+                            "$ref": "#\/definitions\/LinkedTransaction"
+                        }
+                    }
+                }
+            }
+        },
+        "\/ManualJournals": {
+            "get": {
+                "summary": "Allows you to retrieve any manual journals",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "collectionFormat": "csv",
+                        "name": "Limit",
+                        "description": "How many items to return at one time (max 100)",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A paged array of pets",
+                        "schema": {
+                            "$ref": "#\/definitions\/ManualJournal"
+                        }
+                    }
+                }
+            }
+        },
+        "\/Organisation": {
+            "get": {
+                "summary": "GET a Organisation",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "collectionFormat": "csv",
+                        "name": "Limit",
+                        "description": "How many items to return at one time (max 100)",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A paged array of pets",
+                        "schema": {
+                            "$ref": "#\/definitions\/Organisation"
+                        }
+                    }
+                }
+            }
+        },
+        "\/Overpayments": {
+            "get": {
+                "summary": "Allows you to retrieve overpayments",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "collectionFormat": "csv",
+                        "name": "Limit",
+                        "description": "How many items to return at one time (max 100)",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A paged array of pets",
+                        "schema": {
+                            "$ref": "#\/definitions\/Overpayment"
+                        }
+                    }
+                }
+            }
+        },
+        "\/Payments": {
+            "get": {
+                "summary": "Retrieve either one or many payments for invoices and credit notesApply payments to approved AR and AP invoicesAllow you to refund credit notesDelete (reverse) a paymentAllows you to refund prepayments and overpayments",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "collectionFormat": "csv",
+                        "name": "Limit",
+                        "description": "How many items to return at one time (max 100)",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A paged array of pets",
+                        "schema": {
+                            "$ref": "#\/definitions\/Payment"
+                        }
+                    }
+                }
+            }
+        },
+        "\/Prepayments": {
+            "get": {
+                "summary": "Allows you to retrieve prepayments",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "collectionFormat": "csv",
+                        "name": "Limit",
+                        "description": "How many items to return at one time (max 100)",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A paged array of pets",
+                        "schema": {
+                            "$ref": "#\/definitions\/Prepayment"
+                        }
+                    }
+                }
+            }
+        },
+        "\/PurchaseOrders": {
+            "get": {
+                "summary": "Allows you to retrieve purchase orders",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "collectionFormat": "csv",
+                        "name": "Limit",
+                        "description": "How many items to return at one time (max 100)",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A paged array of pets",
+                        "schema": {
+                            "$ref": "#\/definitions\/PurchaseOrder"
+                        }
+                    }
+                }
+            }
+        },
+        "\/Receipts": {
+            "get": {
+                "summary": "Allows you to retrieve draft expense claim receipts for any userAllows you to add or update draft expense claim receiptsAllows you to attach images to draft expense claim receiptsAllows you to delete draft expense claim receipts",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "collectionFormat": "csv",
+                        "name": "Limit",
+                        "description": "How many items to return at one time (max 100)",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A paged array of pets",
+                        "schema": {
+                            "$ref": "#\/definitions\/Receipt"
+                        }
+                    }
+                }
+            }
+        },
+        "\/TaxRates": {
+            "get": {
+                "summary": "GET a TaxRate",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "collectionFormat": "csv",
+                        "name": "Limit",
+                        "description": "How many items to return at one time (max 100)",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A paged array of pets",
+                        "schema": {
+                            "$ref": "#\/definitions\/TaxRate"
+                        }
+                    }
+                }
+            }
+        },
+        "\/TrackingCategories": {
+            "get": {
+                "summary": "Retrieve tracking categories and options for a Xero organisation",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "collectionFormat": "csv",
+                        "name": "Limit",
+                        "description": "How many items to return at one time (max 100)",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A paged array of pets",
+                        "schema": {
+                            "$ref": "#\/definitions\/TrackingCategory"
+                        }
+                    }
+                }
+            }
+        },
+        "\/Users": {
+            "get": {
+                "summary": "GET a User",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "collectionFormat": "csv",
+                        "name": "Limit",
+                        "description": "How many items to return at one time (max 100)",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A paged array of pets",
+                        "schema": {
+                            "$ref": "#\/definitions\/User"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Address": {
+            "properties": {
+                "AddressLine": {
+                    "type": "string",
+                    "maxLength": 500
+                },
+                "City": {
+                    "type": "string",
+                    "maxLength": 255
+                },
+                "Region": {
+                    "type": "string",
+                    "maxLength": 255
+                },
+                "PostalCode": {
+                    "type": "string",
+                    "maxLength": 50
+                },
+                "Country": {
+                    "type": "string",
+                    "maxLength": 50
+                },
+                "AttentionTo": {
+                    "type": "string",
+                    "maxLength": 255
+                }
+            }
+        },
+        "Phone": {
+            "properties": {
+                "PhoneNumber": {
+                    "type": "string",
+                    "maxLength": 50
+                },
+                "PhoneAreaCode": {
+                    "type": "string",
+                    "maxLength": 10
+                },
+                "PhoneCountryCode": {
+                    "type": "string",
+                    "maxLength": 20
+                }
+            }
+        },
+        "Account": {
+            "properties": {
+                "Code": {
+                    "type": "string",
+                    "maxLength": 10
+                },
+                "Name": {
+                    "type": "string",
+                    "maxLength": 150
+                },
+                "Type": {
+                    "type": "string"
+                },
+                "BankAccountNumber": {
+                    "type": "string"
+                },
+                "Status": {
+                    "type": "string"
+                },
+                "Description": {
+                    "type": "string",
+                    "maxLength": 4000
+                },
+                "BankAccountType": {
+                    "type": "string"
+                },
+                "CurrencyCode": {
+                    "type": "string"
+                },
+                "TaxType": {
+                    "type": "string"
+                },
+                "EnablePaymentsToAccount": {
+                    "type": "boolean"
+                },
+                "ShowInExpenseClaims": {
+                    "type": "boolean"
+                },
+                "AccountID": {
+                    "type": "string",
+                    "format": "uuid",
+                    "readOnly": true
+                },
+                "Class": {
+                    "type": "string",
+                    "readOnly": true
+                },
+                "SystemAccount": {
+                    "type": "string",
+                    "readOnly": true
+                },
+                "ReportingCode": {
+                    "type": "string",
+                    "readOnly": true
+                },
+                "ReportingCodeName": {
+                    "type": "string",
+                    "readOnly": true
+                },
+                "HasAttachments": {
+                    "type": "boolean",
+                    "readOnly": true
+                },
+                "UpdatedDateUTC": {
+                    "type": "string",
+                    "format": "date-time",
+                    "readOnly": true
+                }
+            }
+        },
+        "BankTransaction": {
+            "required": [
+                "Type",
+                "Contact",
+                "Lineitems",
+                "BankAccount"
+            ],
+            "properties": {
+                "Type": {
+                    "type": "string"
+                },
+                "Contact": {
+                    "type": "string"
+                },
+                "Lineitems": {
+                    "type": "string"
+                },
+                "BankAccount": {
+                    "type": "string"
+                },
+                "IsReconciled": {
+                    "type": "boolean"
+                },
+                "Date": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "Reference": {
+                    "type": "string"
+                },
+                "CurrencyCode": {
+                    "type": "string"
+                },
+                "CurrencyRate": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "Url": {
+                    "type": "string"
+                },
+                "Status": {
+                    "type": "string"
+                },
+                "LineAmountTypes": {
+                    "type": "string"
+                },
+                "SubTotal": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "TotalTax": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "Total": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "BankTransactionID": {
+                    "type": "string",
+                    "format": "uuid",
+                    "readOnly": true
+                },
+                "PrepaymentID": {
+                    "type": "string",
+                    "format": "uuid",
+                    "readOnly": true
+                },
+                "OverpaymentID": {
+                    "type": "string",
+                    "format": "uuid",
+                    "readOnly": true
+                },
+                "UpdatedDateUTC": {
+                    "type": "string",
+                    "format": "date-time",
+                    "readOnly": true
+                },
+                "HasAttachments": {
+                    "type": "boolean",
+                    "readOnly": true
+                }
+            }
+        },
+        "LineItem": {
+            "properties": {
+                "Description": {
+                    "type": "string"
+                },
+                "Quantity": {
+                    "type": "string"
+                },
+                "UnitAmount": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "ItemCode": {
+                    "type": "string"
+                },
+                "AccountCode": {
+                    "type": "string"
+                },
+                "TaxType": {
+                    "type": "string"
+                },
+                "TaxAmount": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "LineAmount": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "Tracking": {
+                    "type": "string"
+                },
+                "DiscountRate": {
+                    "type": "string"
+                }
+            }
+        },
+        "BankAccount": {
+            "properties": {
+                "Code": {
+                    "type": "string"
+                },
+                "AccountID": {
+                    "type": "string"
+                },
+                "Name": {
+                    "type": "string",
+                    "readOnly": true
+                }
+            }
+        },
+        "BankTransfer": {
+            "required": [
+                "FromBankAccount",
+                "ToBankAccount",
+                "Amount"
+            ],
+            "properties": {
+                "FromBankAccount": {
+                    "type": "string"
+                },
+                "ToBankAccount": {
+                    "type": "string"
+                },
+                "Amount": {
+                    "type": "string"
+                },
+                "Date": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "BankTransferID": {
+                    "type": "string",
+                    "format": "uuid",
+                    "readOnly": true
+                },
+                "CurrencyRate": {
+                    "type": "number",
+                    "format": "float",
+                    "readOnly": true
+                },
+                "FromBankTransactionID": {
+                    "type": "string",
+                    "readOnly": true
+                },
+                "ToBankTransactionID": {
+                    "type": "string",
+                    "readOnly": true
+                },
+                "HasAttachments": {
+                    "type": "boolean",
+                    "readOnly": true
+                },
+                "CreatedDateUTC": {
+                    "type": "string",
+                    "format": "date-time",
+                    "readOnly": true
+                }
+            }
+        },
+        "BrandingTheme": {
+            "properties": {
+                "BrandingThemeID": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "Name": {
+                    "type": "string"
+                },
+                "SortOrder": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "CreatedDateUTC": {
+                    "type": "string",
+                    "format": "date-time"
+                }
+            }
+        },
+        "Contact": {
+            "properties": {
+                "ContactID": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "ContactNumber": {
+                    "type": "string",
+                    "readOnly": true,
+                    "maxLength": 50
+                },
+                "AccountNumber": {
+                    "type": "string",
+                    "maxLength": 50
+                },
+                "ContactStatus": {
+                    "type": "string"
+                },
+                "Name": {
+                    "type": "string",
+                    "maxLength": 255
+                },
+                "FirstName": {
+                    "type": "string",
+                    "maxLength": 255
+                },
+                "LastName": {
+                    "type": "string",
+                    "maxLength": 255
+                },
+                "EmailAddress": {
+                    "type": "string",
+                    "maxLength": 255
+                },
+                "SkypeUserName": {
+                    "type": "string"
+                },
+                "ContactPersons": {
+                    "type": "string"
+                },
+                "BankAccountDetails": {
+                    "type": "string"
+                },
+                "TaxNumber": {
+                    "type": "string",
+                    "maxLength": 50
+                },
+                "AccountsReceivableTaxType": {
+                    "type": "string"
+                },
+                "AccountsPayableTaxType": {
+                    "type": "string"
+                },
+                "Addresses": {
+                    "type": "string"
+                },
+                "Phones": {
+                    "type": "string"
+                },
+                "IsSupplier": {
+                    "type": "boolean"
+                },
+                "IsCustomer": {
+                    "type": "boolean"
+                },
+                "DefaultCurrency": {
+                    "type": "string"
+                },
+                "XeroNetworkKey": {
+                    "type": "string"
+                },
+                "SalesDefaultAccountCode": {
+                    "type": "string"
+                },
+                "PurchasesDefaultAccountCode": {
+                    "type": "string"
+                },
+                "SalesTrackingCategories": {
+                    "type": "string"
+                },
+                "PurchasesTrackingCategories": {
+                    "type": "string"
+                },
+                "TrackingCategoryName": {
+                    "type": "string"
+                },
+                "TrackingCategoryOption": {
+                    "type": "string"
+                },
+                "PaymentTerms": {
+                    "type": "string"
+                },
+                "UpdatedDateUTC": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "ContactGroups": {
+                    "type": "string"
+                },
+                "Website": {
+                    "type": "string",
+                    "readOnly": true
+                },
+                "BrandingTheme": {
+                    "type": "string",
+                    "readOnly": true
+                },
+                "BatchPayments": {
+                    "type": "string",
+                    "readOnly": true
+                },
+                "Discount": {
+                    "type": "number",
+                    "format": "float",
+                    "readOnly": true
+                },
+                "Balances": {
+                    "type": "string",
+                    "readOnly": true
+                },
+                "HasAttachments": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "ContactPerson": {
+            "properties": {
+                "FirstName": {
+                    "type": "string"
+                },
+                "LastName": {
+                    "type": "string"
+                },
+                "EmailAddress": {
+                    "type": "string"
+                },
+                "IncludeInEmails": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "ContactGroup": {
+            "properties": {
+                "Name": {
+                    "type": "string"
+                },
+                "Status": {
+                    "type": "string"
+                },
+                "ContactGroupID": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "Contacts": {
+                    "type": "string"
+                }
+            }
+        },
+        "CreditNote": {
+            "properties": {
+                "Type": {
+                    "type": "string"
+                },
+                "Contact": {
+                    "type": "string"
+                },
+                "Date": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "Status": {
+                    "type": "string"
+                },
+                "LineAmountTypes": {
+                    "type": "string"
+                },
+                "LineItems": {
+                    "type": "string"
+                },
+                "SubTotal": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "TotalTax": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "Total": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "UpdatedDateUTC": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "CurrencyCode": {
+                    "type": "string"
+                },
+                "FullyPaidOnDate": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "CreditNoteID": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "CreditNoteNumber": {
+                    "type": "string"
+                },
+                "Reference": {
+                    "type": "string"
+                },
+                "SentToContact": {
+                    "type": "boolean",
+                    "readOnly": true
+                },
+                "CurrencyRate": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "RemainingCredit": {
+                    "type": "string"
+                },
+                "Allocations": {
+                    "type": "string"
+                },
+                "BrandingThemeID": {
+                    "type": "string"
+                },
+                "HasAttachments": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "Allocation": {
+            "properties": {
+                "Invoice": {
+                    "type": "string"
+                },
+                "AppliedAmount": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "Date": {
+                    "type": "string",
+                    "format": "date"
+                }
+            }
+        },
+        "Currency": {
+            "properties": {
+                "Code": {
+                    "type": "string"
+                },
+                "Description": {
+                    "type": "string"
+                }
+            }
+        },
+        "Employee": {
+            "properties": {
+                "EmployeeID": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "Status": {
+                    "type": "string"
+                },
+                "FirstName": {
+                    "type": "string",
+                    "maxLength": 255
+                },
+                "LastName": {
+                    "type": "string",
+                    "maxLength": 255
+                },
+                "ExternalLink": {
+                    "type": "string"
+                }
+            }
+        },
+        "ExpenseClaim": {
+            "required": [
+                "User",
+                "Receipts",
+                "ReceiptID"
+            ],
+            "properties": {
+                "User": {
+                    "type": "string"
+                },
+                "Receipts": {
+                    "type": "string"
+                },
+                "ExpenseClaimID": {
+                    "type": "string",
+                    "format": "uuid",
+                    "readOnly": true
+                },
+                "Payments": {
+                    "type": "string",
+                    "readOnly": true
+                },
+                "Status": {
+                    "type": "string",
+                    "readOnly": true
+                },
+                "UpdatedDateUTC": {
+                    "type": "string",
+                    "format": "date-time",
+                    "readOnly": true
+                },
+                "Total": {
+                    "type": "number",
+                    "format": "float",
+                    "readOnly": true
+                },
+                "AmountDue": {
+                    "type": "number",
+                    "format": "float",
+                    "readOnly": true
+                },
+                "AmountPaid": {
+                    "type": "number",
+                    "format": "float",
+                    "readOnly": true
+                },
+                "PaymentDueDate": {
+                    "type": "string",
+                    "format": "date",
+                    "readOnly": true
+                },
+                "ReportingDate": {
+                    "type": "string",
+                    "format": "date",
+                    "readOnly": true
+                },
+                "ReceiptID": {
+                    "type": "string",
+                    "format": "uuid"
+                }
+            }
+        },
+        "Invoice": {
+            "properties": {
+                "Type": {
+                    "type": "string"
+                },
+                "Contact": {
+                    "type": "string"
+                },
+                "Schedule": {
+                    "type": "string"
+                },
+                "LineItems": {
+                    "type": "string"
+                },
+                "LineAmountTypes": {
+                    "type": "string"
+                },
+                "Reference": {
+                    "type": "string"
+                },
+                "BrandingThemeID": {
+                    "type": "string"
+                },
+                "CurrencyCode": {
+                    "type": "string"
+                },
+                "Status": {
+                    "type": "string"
+                },
+                "SubTotal": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "TotalTax": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "Total": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "RepeatingInvoiceID": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "HasAttachments": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "Item": {
+            "required": [
+                "Code",
+                "InventoryAssetAccountCode"
+            ],
+            "properties": {
+                "Code": {
+                    "type": "string",
+                    "maxLength": 30
+                },
+                "InventoryAssetAccountCode": {
+                    "type": "string"
+                },
+                "Name": {
+                    "type": "string",
+                    "maxLength": 50
+                },
+                "IsSold": {
+                    "type": "boolean"
+                },
+                "IsPurchased": {
+                    "type": "boolean"
+                },
+                "Description": {
+                    "type": "string",
+                    "maxLength": 4000
+                },
+                "PurchaseDescription": {
+                    "type": "string",
+                    "maxLength": 4000
+                },
+                "PurchaseDetails": {
+                    "type": "string"
+                },
+                "SalesDetails": {
+                    "type": "string"
+                },
+                "IsTrackedAsInventory": {
+                    "type": "boolean"
+                },
+                "TotalCostPool": {
+                    "type": "string"
+                },
+                "QuantityOnHand": {
+                    "type": "string"
+                },
+                "UpdatedDateUTC": {
+                    "type": "string",
+                    "format": "date-time"
+                }
+            }
+        },
+        "Purchase": {
+            "properties": {
+                "UnitPrice": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "AccountCode": {
+                    "type": "string"
+                },
+                "COGSAccountCode": {
+                    "type": "string"
+                },
+                "TaxType": {
+                    "type": "string"
+                }
+            }
+        },
+        "Journal": {
+            "properties": {
+                "JournalID": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "JournalDate": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "JournalNumber": {
+                    "type": "string"
+                },
+                "CreatedDateUTC": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "Reference": {
+                    "type": "string"
+                },
+                "SourceID": {
+                    "type": "string"
+                },
+                "SourceType": {
+                    "type": "string"
+                },
+                "JournalLines": {
+                    "type": "string"
+                }
+            }
+        },
+        "JournalLine": {
+            "required": [
+                "LineAmount",
+                "AccountCode"
+            ],
+            "properties": {
+                "LineAmount": {
+                    "type": "string"
+                },
+                "AccountCode": {
+                    "type": "string"
+                },
+                "Description": {
+                    "type": "string"
+                },
+                "TaxType": {
+                    "type": "string"
+                },
+                "Tracking": {
+                    "type": "string"
+                },
+                "TaxAmount": {
+                    "type": "number",
+                    "format": "float",
+                    "readOnly": true
+                }
+            }
+        },
+        "LinkedTransaction": {
+            "required": [
+                "SourceTransactionID",
+                "SourceLineItemID"
+            ],
+            "properties": {
+                "SourceTransactionID": {
+                    "type": "string"
+                },
+                "SourceLineItemID": {
+                    "type": "string"
+                },
+                "ContactID": {
+                    "type": "string"
+                },
+                "TargetTransactionID": {
+                    "type": "string"
+                },
+                "TargetLineItemID": {
+                    "type": "string"
+                },
+                "LinkedTransactionID": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "Status": {
+                    "type": "string"
+                },
+                "Type": {
+                    "type": "string"
+                },
+                "UpdatedDateUTC": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "SourceTransactionTypeCode": {
+                    "type": "string"
+                }
+            }
+        },
+        "ManualJournal": {
+            "required": [
+                "Narration",
+                "JournalLines"
+            ],
+            "properties": {
+                "Narration": {
+                    "type": "string"
+                },
+                "JournalLines": {
+                    "type": "string"
+                },
+                "Date": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "LineAmountTypes": {
+                    "type": "string"
+                },
+                "Status": {
+                    "type": "string"
+                },
+                "Url": {
+                    "type": "string"
+                },
+                "ShowOnCashBasisReports": {
+                    "type": "boolean"
+                },
+                "HasAttachments": {
+                    "type": "boolean",
+                    "readOnly": true
+                },
+                "UpdatedDateUTC": {
+                    "type": "string",
+                    "format": "date-time",
+                    "readOnly": true
+                }
+            }
+        },
+        "Organisation": {
+            "properties": {
+                "APIKey": {
+                    "type": "string"
+                },
+                "Name": {
+                    "type": "string"
+                },
+                "LegalName": {
+                    "type": "string"
+                },
+                "PaysTax": {
+                    "type": "boolean"
+                },
+                "Version": {
+                    "type": "string"
+                },
+                "OrganisationType": {
+                    "type": "string"
+                },
+                "BaseCurrency": {
+                    "type": "string"
+                },
+                "CountryCode": {
+                    "type": "string"
+                },
+                "IsDemoCompany": {
+                    "type": "boolean"
+                },
+                "OrganisationStatus": {
+                    "type": "string"
+                },
+                "RegistrationNumber": {
+                    "type": "string"
+                },
+                "TaxNumber": {
+                    "type": "string"
+                },
+                "FinancialYearEndDay": {
+                    "type": "string"
+                },
+                "FinancialYearEndMonth": {
+                    "type": "string"
+                },
+                "SalesTaxBasis": {
+                    "type": "string"
+                },
+                "SalesTaxPeriod": {
+                    "type": "string"
+                },
+                "DefaultSalesTax": {
+                    "type": "string"
+                },
+                "DefaultPurchasesTax": {
+                    "type": "string"
+                },
+                "PeriodLockDate": {
+                    "type": "string"
+                },
+                "EndOfYearLockDate": {
+                    "type": "string"
+                },
+                "CreatedDateUTC": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "OrganisationEntityType": {
+                    "type": "string"
+                },
+                "ShortCode": {
+                    "type": "string"
+                },
+                "LineOfBusiness": {
+                    "type": "string"
+                },
+                "Addresses": {
+                    "type": "string"
+                },
+                "Phones": {
+                    "type": "string"
+                },
+                "ExternalLinks": {
+                    "type": "string"
+                },
+                "PaymentTerms": {
+                    "type": "string"
+                }
+            }
+        },
+        "PaymentTerm": {
+            "properties": {
+                "Bills": {
+                    "type": "string"
+                },
+                "Sales": {
+                    "type": "string"
+                }
+            }
+        },
+        "ExternalLink": {
+            "properties": {
+                "LinkType": {
+                    "type": "string"
+                },
+                "Url": {
+                    "type": "string"
+                },
+                "Day": {
+                    "type": "string"
+                },
+                "Type": {
+                    "type": "string"
+                }
+            }
+        },
+        "Overpayment": {
+            "properties": {
+                "Type": {
+                    "type": "string"
+                },
+                "Contact": {
+                    "type": "string"
+                },
+                "Date": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "Status": {
+                    "type": "string"
+                },
+                "LineAmountTypes": {
+                    "type": "string"
+                },
+                "LineItems": {
+                    "type": "string"
+                },
+                "SubTotal": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "TotalTax": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "Total": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "UpdatedDateUTC": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "CurrencyCode": {
+                    "type": "string"
+                },
+                "OverpaymentID": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "CurrencyRate": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "RemainingCredit": {
+                    "type": "string"
+                },
+                "Allocations": {
+                    "type": "string"
+                },
+                "Payments": {
+                    "type": "string"
+                },
+                "HasAttachments": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "Payment": {
+            "properties": {
+                "Invoice": {
+                    "type": "string"
+                },
+                "CreditNote": {
+                    "type": "string"
+                },
+                "Prepayment": {
+                    "type": "string"
+                },
+                "Overpayment": {
+                    "type": "string"
+                },
+                "InvoiceNumber": {
+                    "type": "string"
+                },
+                "CreditNoteNumber": {
+                    "type": "string"
+                },
+                "Account": {
+                    "type": "string"
+                },
+                "Code": {
+                    "type": "string"
+                },
+                "Date": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "CurrencyRate": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "Amount": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "Reference": {
+                    "type": "string"
+                },
+                "IsReconciled": {
+                    "type": "string"
+                },
+                "Status": {
+                    "type": "string"
+                },
+                "PaymentType": {
+                    "type": "string",
+                    "readOnly": true
+                },
+                "UpdatedDateUTC": {
+                    "type": "string",
+                    "format": "date-time",
+                    "readOnly": true
+                }
+            }
+        },
+        "Prepayment": {
+            "properties": {
+                "Type": {
+                    "type": "string"
+                },
+                "Contact": {
+                    "type": "string"
+                },
+                "Date": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "Status": {
+                    "type": "string"
+                },
+                "LineAmountTypes": {
+                    "type": "string"
+                },
+                "LineItems": {
+                    "type": "string"
+                },
+                "SubTotal": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "TotalTax": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "Total": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "UpdatedDateUTC": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "CurrencyCode": {
+                    "type": "string"
+                },
+                "PrepaymentID": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "CurrencyRate": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "RemainingCredit": {
+                    "type": "string"
+                },
+                "Allocations": {
+                    "type": "string"
+                },
+                "HasAttachments": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "PurchaseOrder": {
+            "required": [
+                "Contact",
+                "LineItems"
+            ],
+            "properties": {
+                "Contact": {
+                    "type": "string"
+                },
+                "LineItems": {
+                    "type": "string"
+                },
+                "Date": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "DeliveryDate": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "LineAmountTypes": {
+                    "type": "string"
+                },
+                "PurchaseOrderNumber": {
+                    "type": "string"
+                },
+                "Reference": {
+                    "type": "string"
+                },
+                "BrandingThemeID": {
+                    "type": "string"
+                },
+                "CurrencyCode": {
+                    "type": "string"
+                },
+                "Status": {
+                    "type": "string"
+                },
+                "SentToContact": {
+                    "type": "boolean"
+                },
+                "DeliveryAddress": {
+                    "type": "string"
+                },
+                "AttentionTo": {
+                    "type": "string"
+                },
+                "Telephone": {
+                    "type": "string"
+                },
+                "DeliveryInstructions": {
+                    "type": "string"
+                },
+                "ExpectedArrivalDate": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "PurchaseOrderID": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "CurrencyRate": {
+                    "type": "number",
+                    "format": "float",
+                    "readOnly": true
+                },
+                "SubTotal": {
+                    "type": "number",
+                    "format": "float",
+                    "readOnly": true
+                },
+                "TotalTax": {
+                    "type": "number",
+                    "format": "float",
+                    "readOnly": true
+                },
+                "Total": {
+                    "type": "number",
+                    "format": "float",
+                    "readOnly": true
+                },
+                "TotalDiscount": {
+                    "type": "number",
+                    "format": "float",
+                    "readOnly": true
+                },
+                "HasAttachments": {
+                    "type": "boolean",
+                    "readOnly": true
+                },
+                "UpdatedDateUTC": {
+                    "type": "string",
+                    "format": "date-time",
+                    "readOnly": true
+                }
+            }
+        },
+        "Receipt": {
+            "required": [
+                "Date",
+                "Contact",
+                "Lineitems",
+                "User"
+            ],
+            "properties": {
+                "Date": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "Contact": {
+                    "type": "string"
+                },
+                "Lineitems": {
+                    "type": "string"
+                },
+                "User": {
+                    "type": "string"
+                },
+                "Reference": {
+                    "type": "string"
+                },
+                "LineAmountTypes": {
+                    "type": "string"
+                },
+                "SubTotal": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "TotalTax": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "Total": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "ReceiptID": {
+                    "type": "string",
+                    "format": "uuid",
+                    "readOnly": true
+                },
+                "Status": {
+                    "type": "string",
+                    "readOnly": true
+                },
+                "ReceiptNumber": {
+                    "type": "string",
+                    "readOnly": true
+                },
+                "UpdatedDateUTC": {
+                    "type": "string",
+                    "format": "date-time",
+                    "readOnly": true
+                },
+                "HasAttachments": {
+                    "type": "boolean",
+                    "readOnly": true
+                },
+                "Url": {
+                    "type": "string",
+                    "readOnly": true
+                }
+            }
+        },
+        "Schedule": {
+            "properties": {
+                "Period": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "Unit": {
+                    "type": "string"
+                },
+                "DueDate": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "DueDateType": {
+                    "type": "string"
+                },
+                "StartDate": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "NextScheduledDate": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "EndDate": {
+                    "type": "string",
+                    "format": "date"
+                }
+            }
+        },
+        "TaxRate": {
+            "required": [
+                "ReportTaxType"
+            ],
+            "properties": {
+                "Name": {
+                    "type": "string"
+                },
+                "TaxType": {
+                    "type": "string"
+                },
+                "TaxComponents": {
+                    "type": "string"
+                },
+                "Status": {
+                    "type": "string"
+                },
+                "ReportTaxType": {
+                    "type": "string"
+                },
+                "CanApplyToAssets": {
+                    "type": "number",
+                    "format": "float",
+                    "readOnly": true
+                },
+                "CanApplyToEquity": {
+                    "type": "number",
+                    "format": "float",
+                    "readOnly": true
+                },
+                "CanApplyToExpenses": {
+                    "type": "number",
+                    "format": "float",
+                    "readOnly": true
+                },
+                "CanApplyToLiabilities": {
+                    "type": "number",
+                    "format": "float",
+                    "readOnly": true
+                },
+                "CanApplyToRevenue": {
+                    "type": "number",
+                    "format": "float",
+                    "readOnly": true
+                },
+                "DisplayTaxRate": {
+                    "type": "number",
+                    "format": "float",
+                    "readOnly": true
+                },
+                "EffectiveRate": {
+                    "type": "number",
+                    "format": "float",
+                    "readOnly": true
+                }
+            }
+        },
+        "TaxComponent": {
+            "properties": {
+                "Name": {
+                    "type": "string"
+                },
+                "Rate": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "IsCompound": {
+                    "type": "number",
+                    "format": "float"
+                }
+            }
+        },
+        "TrackingCategory": {
+            "properties": {
+                "TrackingCategoryID": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "Name": {
+                    "type": "string",
+                    "maxLength": 100
+                },
+                "Status": {
+                    "type": "string"
+                },
+                "Options": {
+                    "type": "string"
+                }
+            }
+        },
+        "TrackingOption": {
+            "properties": {
+                "TrackingOptionID": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "Name": {
+                    "type": "string",
+                    "maxLength": 50
+                },
+                "Status": {
+                    "type": "string"
+                }
+            }
+        },
+        "User": {
+            "properties": {
+                "UserID": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "EmailAddress": {
+                    "type": "string"
+                },
+                "FirstName": {
+                    "type": "string"
+                },
+                "LastName": {
+                    "type": "string"
+                },
+                "UpdatedDateUTC": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "IsSubscriber": {
+                    "type": "boolean"
+                },
+                "OrganisationRole": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

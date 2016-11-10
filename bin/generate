@@ -8,10 +8,14 @@ use Calcinai\Strut\Definitions\Info;
 use Calcinai\Strut\Definitions\Operation;
 use Calcinai\Strut\Definitions\PathItem;
 use Calcinai\Strut\Definitions\Paths;
+use Calcinai\Strut\Definitions\QueryParameterSubSchema;
+use Calcinai\Strut\Definitions\Response;
+use Calcinai\Strut\Definitions\Responses;
 use Calcinai\Strut\Definitions\Schema;
 use Calcinai\Strut\Definitions\Schema\Properties\Properties;
 use Calcinai\Strut\Swagger;
 use Calcinai\XeroSchemaGenerator\API;
+use Calcinai\XeroSchemaGenerator\ParsedObject\Model;
 use Calcinai\XeroSchemaGenerator\ParsedObject\Model\Property;
 use Calcinai\XeroSchemaGenerator\Scraper;
 
@@ -20,34 +24,34 @@ $scraper = new Scraper('http://developer.xero.com/documentation');
 $accounting_api = new API('Accounting API', 'Accounting');
 $scraper->scrapeEnums($accounting_api, 'api/types');
 $scraper->scrapeModels($accounting_api, 'api', [
-//    'accounts',
-//    //'bankstatements',
-//    'banktransactions',
-//    'bank-transfers',
-//    'branding-themes',
+    'accounts',
+    //'bankstatements',
+    'banktransactions',
+    'bank-transfers',
+    'branding-themes',
     'contacts',
-//    'contactgroups',
-//    'credit-notes',
-//    'currencies',
-//    'employees',
-//    'expense-claims',
-//    'invoices',
-//    'items',
-//    'journals',
-//    'linked-transactions',
-//    'manual-journals',
-//    'organisation',
-//    'overpayments',
-//    'payments',
-//    'prepayments',
-//    'purchase-orders',
-//    'quotes',
-//    'receipts',
-//    'repeating-invoices',
-//    //'reports', - this is in a way different format
-//    'tax-rates',
-//    'tracking-categories',
-//    'users'
+    'contactgroups',
+    'credit-notes',
+    'currencies',
+    'employees',
+    'expense-claims',
+    'invoices',
+    'items',
+    'journals',
+    'linked-transactions',
+    'manual-journals',
+    'organisation',
+    'overpayments',
+    'payments',
+    'prepayments',
+    'purchase-orders',
+    'quotes',
+    'receipts',
+    'repeating-invoices',
+    //'reports', - this is in a way different format
+    'tax-rates',
+    'tracking-categories',
+    'users'
 //]);
 
 //print_r($accounting_api);
@@ -108,7 +112,7 @@ $swagger->setInfo(
 //        )
 )
 
-    ->setHost('')
+    ->setHost('api.xero.com')
     ->setBasePath('/api.xro')
     ->addScheme('https')
 
@@ -128,35 +132,31 @@ foreach ($accounting_api->getModels() as $model) {
     if($model->getResourceURI() !== null){
 
         $path_item_schema = PathItem::create();
-        $path_item_schema->setGet(Operation::create()
-            ->setSummary($model->getDescription())
 
-//        ->addParameter(QueryParameterSubSchema::create()
-//            ->setName('Limit')
-//            ->setDescription('How many items to return at one time (max 100)')
-//            ->setRequired(false)
-//            ->setType('integer')
-//            ->setFormat('int32')
-//
-//        )
-//
-//        ->setResponses(Responses::create()
-//            ->set('200', Response::create()
-//                ->setDescription('A paged array of pets')
-//                ->setHeaders(Headers::create()
-//                    ->set('x-next', Header::create()
-//                        ->setType('string')
-//                        ->setDescription('A link to the next page of responses')
-//                    )
-//                )
-//                ->setSchema($pets->getId())
-//            )
-//            ->set('default', Response::create()
-//                ->setDescription('Unexpected error')
-//                ->setSchema($error)
-//            )
-//        )
-        );
+        if($model->supportsMethod(Model::METHOD_GET)){
+
+            $path_item_schema->setGet(Operation::create()
+                ->setSummary($model->getDescriptionForMethod(Model::METHOD_GET))
+
+                ->addParameter(QueryParameterSubSchema::create()
+                    ->setName('Limit')
+                    ->setDescription('How many items to return at one time (max 100)')
+                    ->setRequired(false)
+                    ->setType('integer')
+                    ->setFormat('int32')
+                )
+
+                ->setResponses(Responses::create()
+                    ->set('200', Response::create()
+                        ->setDescription('A paged array of pets')
+                        ->setSchema(Schema::create()->setRef(sprintf('#/definitions/%s', $model->getSingularName())))
+                    )
+                )
+            );
+
+        }
+
+
 
         $paths->set($model->getResourceURI(), $path_item_schema);
 
@@ -225,4 +225,5 @@ foreach ($accounting_api->getModels() as $model) {
 
 $swagger->setPaths($paths);
 $swagger->setDefinitions($definitions);
-print_r(json_encode($swagger, JSON_PRETTY_PRINT));
+
+file_put_contents(__DIR__.'/../schemas/accounting.json', json_encode($swagger, JSON_PRETTY_PRINT));

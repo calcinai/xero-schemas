@@ -132,7 +132,7 @@ class Property extends ParsedObject
         }
 
         if(preg_match('/max length\s?=\s?(?<length>\d+)/', $this->description, $matches)){
-            $this->max_length = $matches['length'];
+            $this->max_length = (int) $matches['length'];
         }
 
     }
