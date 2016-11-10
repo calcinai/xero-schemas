@@ -5,11 +5,11 @@ include __DIR__ . '/../vendor/autoload.php';
 
 use Calcinai\Strut\Definitions\Definitions;
 use Calcinai\Strut\Definitions\Info;
-use Calcinai\Strut\Definitions\License;
 use Calcinai\Strut\Definitions\Schema;
 use Calcinai\Strut\Definitions\Schema\Properties\Properties;
 use Calcinai\Strut\Swagger;
 use Calcinai\XeroSchemaGenerator\API;
+use Calcinai\XeroSchemaGenerator\ParsedObject\Model\Property;
 use Calcinai\XeroSchemaGenerator\Scraper;
 
 $scraper = new Scraper('http://developer.xero.com/documentation');
@@ -98,7 +98,7 @@ $swagger = new Swagger();
 $swagger->setInfo(
     Info::create()
         ->setTitle($api->getName())
-//        ->setVersion('1.0.0')
+        ->setVersion('1.0.0')
 //        ->setLicense(
 //            License::create()
 //                ->setName('MIT')
@@ -110,35 +110,50 @@ $swagger->setInfo(
     ->addScheme('https')
 
     ->setConsumes(['text/xml'])
-    ->setProduces(['text/xml']);
+    ->setProduces(['text/xml', 'application/json']);
 
 
 $definitions = Definitions::create();
 
 foreach ($accounting_api->getModels() as $model) {
 
-    $properties = Properties::create();
-
+    $schema_properties = Properties::create();
+    $schema_model = Schema::create();
 
     foreach($model->getProperties() as $property_name => $property){
-        $properties->set($property_name, Schema::create()
-            ->setType($property->getType())
-        );
-    }
-//    ->set('code', Schema::create()
-//        ->setType('integer')
-//        ->setFormat('int32')
-//    )
-//        ->set('error', Schema::create()
-//            ->setType('string')
-//        )
 
-    $definitions->set($model->getName(),
-        Schema::create()
-//            ->addRequired('code')
-//            ->addRequired('message')
-            ->setProperties($properties)
-    );
+        $schema_property = Schema::create();
+
+        switch($property->getType()){
+
+            case Property::TYPE_BOOLEAN:
+                $schema_property->setType('boolean');
+                break;
+            case Property::TYPE_INT:
+                $schema_property->setType('number')->setFormat('double');
+                break;
+            case Property::TYPE_FLOAT:
+                $schema_property->setType('number')->setFormat('float');
+                break;
+            case Property::TYPE_STRING:
+                $schema_property->setType('string');
+                break;
+            case Property::TYPE_DATE:
+                $schema_property->setType('string')->setFormat('date');
+                break;
+            case Property::TYPE_DATETIME:
+                $schema_property->setType('string')->setFormat('date-time');
+                break;
+        }
+
+        if($property->isMandatory()){
+            $schema_model->addRequired($property_name);
+        }
+
+        $schema_properties->set($property_name, $property);
+    }
+
+    $definitions->set($model->getSingularName(), $schema_model);
 
 
 }

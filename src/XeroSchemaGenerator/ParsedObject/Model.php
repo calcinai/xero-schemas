@@ -6,6 +6,7 @@
 
 namespace Calcinai\XeroSchemaGenerator\ParsedObject;
 
+use Calcinai\XeroSchemaGenerator\API;
 use Calcinai\XeroSchemaGenerator\ParsedObject;
 use Calcinai\XeroSchemaGenerator\ParsedObject\Model\Property;
 
@@ -13,35 +14,63 @@ class Model extends ParsedObject
 {
 
     /**
+     * @var API
+     */
+    private $api;
+
+    /**
      * @var Property[]
      */
-    private $properties;
+    private $properties = [];
+
+    /**
+     * @var
+     */
+    private $guid_property;
 
     /**
      * @var array
      */
-    private $methods;
+    private $methods = [];
 
     /**
      * @var string
      */
-    private $url;
+    private $full_url;
+
+    /**
+     * @var string
+     */
+    private $base_path;
+
+    /**
+     * @var string
+     */
+    private $version;
+
+    /**
+     * @var string
+     */
+    private $uri;
 
     /**
      * @var Model
      */
     private $parent_model;
 
+    /**
+     * @var bool
+     */
     public $is_pagable;
+
+    /**
+     * @var bool
+     */
     public $supports_pdf;
 
     public function __construct($raw_name)
     {
         parent::__construct($raw_name);
-
-        $this->url = null;
-        $this->methods = [];
-        $this->properties = [];
 
         $this->is_pagable = false;
         $this->supports_pdf = false;
@@ -49,6 +78,7 @@ class Model extends ParsedObject
 
     public function addProperty(Property $property)
     {
+        $property->setParentModel($this);
         $this->properties[$property->getName()] = $property;
     }
 
@@ -56,17 +86,24 @@ class Model extends ParsedObject
     /**
      * @return mixed
      */
-    public function getURL()
+    public function getFullURL()
     {
-        return $this->url;
+        return $this->full_url;
     }
 
     /**
-     * @param mixed $url
+     * @param mixed $full_url
      */
-    public function setURL($url)
+    public function setFullURL($full_url)
     {
-        $this->url = $url;
+        $this->full_url = $full_url;
+
+        if (preg_match('#(?<base_path>/[a-z]+.xro)/(?<version>[0-9\.]+)/(?<uri>.+)#', $this->full_url, $matches)){
+            $this->base_path = $matches['base_path'];
+            $this->version = $matches['version'];
+            $this->uri = $matches['uri'];
+        }
+
     }
 
 
@@ -99,12 +136,7 @@ class Model extends ParsedObject
     //https://api.xero.com/api.xro/2.0/Contacts
     public function getResourceURI()
     {
-
-        if (preg_match('#/[a-z]+.xro/[0-9\.]+/(?<uri>.+)#', $this->url, $matches))
-            return $matches['uri'];
-
-        //Otherwise default to name of object
-        return $this->getName();
+        return $this->uri;
     }
 
 
@@ -112,7 +144,7 @@ class Model extends ParsedObject
     public function matchName($model_name)
     {
         $parsed = self::parseRawName($model_name);
-        return in_array($this->name, $parsed) || in_array($this->collective_name, $parsed);
+        return in_array($this->singular_name, $parsed) || in_array($this->collective_name, $parsed);
     }
 
     /**
@@ -151,6 +183,22 @@ class Model extends ParsedObject
 
 
     /**
+     * @param Property $property
+     */
+    public function setGUIDProperty(Property $property)
+    {
+        $this->guid_property = $property;
+    }
+
+    /**
+     * @return Property
+     */
+    public function getGUIDProperty()
+    {
+        return $this->guid_property;
+    }
+
+    /**
      * Pretty ugly eh!
      * For debugging
      *
@@ -170,7 +218,7 @@ class Model extends ParsedObject
         //Cannot echo the data types here.  They are lazily calculated after all the models are aware of each other.
         $total_row_width = array_sum($column_sizes) + count($column_sizes) * 3 + 1;
         echo str_repeat('-', $total_row_width) . "\n";
-        printf("| %-" . ($total_row_width - 4) . "s |\n", $this->getName());
+        printf("| %-" . ($total_row_width - 4) . "s |\n", $this->getSingularName());
         echo str_repeat('-', $total_row_width) . "\n";
         foreach ($rows as $row) {
             echo '|';
@@ -183,5 +231,7 @@ class Model extends ParsedObject
 
 
     }
+
+
 
 }

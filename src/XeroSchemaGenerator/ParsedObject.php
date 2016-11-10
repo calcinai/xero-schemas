@@ -2,13 +2,15 @@
 
 namespace Calcinai\XeroSchemaGenerator;
 
+use ICanBoogie\Inflector;
+
 abstract class ParsedObject
 {
 
     /**
      * @var string
      */
-    protected $name;
+    protected $singular_name;
     protected $collective_name;
     protected $raw_name;
 
@@ -19,8 +21,11 @@ abstract class ParsedObject
         $this->raw_name = $raw_name;
 
         $parsed = self::parseRawName($raw_name);
-        $this->collective_name = array_shift($parsed);
-        $this->name = Inflector::singularize($this->collective_name);
+
+        $this->name = array_shift($parsed);
+        $this->collective_name = Inflector::get()->pluralize($this->name);
+        $this->singular_name = Inflector::get()->singularize($this->name);
+
         $this->aliases += $parsed;
     }
 
@@ -32,18 +37,26 @@ abstract class ParsedObject
         return $this->name;
     }
 
+    /**
+     * @return string
+     */
+    public function getSingularName()
+    {
+        return $this->singular_name;
+    }
+
     public function getCollectiveName()
     {
         return $this->collective_name;
     }
 
     /**
-     * @param string $name
+     * @param string $singular_name
      * @return static
      */
-    public function setName($name)
+    public function setSingularName($singular_name)
     {
-        $this->name = $name;
+        $this->singular_name = $singular_name;
         return $this;
     }
 

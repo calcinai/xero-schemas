@@ -47,7 +47,7 @@ class API
      */
     public function addModel(Model $model)
     {
-        $this->models[$model->getName()] = $model;
+        $this->models[$model->getSingularName()] = $model;
 
         //For debugging
         $model->printPropertyTable();
@@ -58,7 +58,7 @@ class API
      */
     public function addEnum(Enum $enum)
     {
-        $this->enums[$enum->getName()] = $enum;
+        $this->enums[$enum->getSingularName()] = $enum;
     }
 
     /**

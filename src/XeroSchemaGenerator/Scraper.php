@@ -150,7 +150,7 @@ class Scraper
 
                         switch (strtolower($table_columns->eq(0)->text())) {
                             case 'url':
-                                $primary_model->setUrl($table_columns->eq(1)->text());
+                                $primary_model->setFullURL($table_columns->eq(1)->text());
                                 break;
                             case 'methods supported':
                                 $primary_model->setMethods($table_columns->eq(1)->text());
@@ -287,13 +287,13 @@ class Scraper
             if (false !== strpos($property_name, ',')) {
                 list($property_name, $suffixes) = explode(' ', $property_name);
                 foreach (explode(',', $suffixes) as $suffix) {
-                    $model->addProperty(new Model\Property($property_name . $suffix, $description));
+                    $model->addProperty(new Model\Property($property_name . $suffix, $description, $mandatory, $read_only));
                 }
             } else {
                 //this is the normal case, where there's only one property (or <X> or <Y>)
                 foreach (preg_split('/(>\s*or\s*<|\s&\s)/', $property_name) as $column_name) {
                     //make it into another param
-                    $property = new Model\Property($column_name, $description);
+                    $property = new Model\Property($column_name, $description, $mandatory, $read_only);
 
                     //add links to property (for parsing types)
                     $table_column_nodes->filter('a')->each(function (Crawler $node) use ($property) {

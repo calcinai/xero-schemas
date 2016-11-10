@@ -8,7 +8,8 @@
     "require": {
         "php": ">=5.5.0",
         "fabpot/goutte": "~2.0",
-        "calcinai/strut": "^0.2.0"
+        "calcinai/strut": "^0.2.0",
+        "icanboogie/inflector": "^1.4"
     },
 
     "require-dev": {
