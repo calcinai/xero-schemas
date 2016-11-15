@@ -504,7 +504,8 @@
             "properties": {
                 "EmployeeID": {
                     "description": "Xero employee identifier. e.g c56b19ef-75bf-45e8-98a4-e699a96609f7",
-                    "type": "string"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "EmploymentBasis": {
                     "description": "See Employment Basis Types",
@@ -592,8 +593,8 @@
                 },
                 "EarningsRateID": {
                     "description": "Xero earnings rate identifier",
-                    "type": "number",
-                    "format": "float"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "CalculationType": {
                     "description": "See Leave Type Calculation Types",
@@ -623,7 +624,8 @@
                 },
                 "DeductionTypeID": {
                     "description": "Xero deduction type identifier",
-                    "type": "string"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "Percentage": {
                     "description": "The percentage of the SuperLine. Applies on Percentage of Earnings\u00a0CalculationType.",
@@ -636,7 +638,8 @@
                 },
                 "SuperMembershipID": {
                     "description": "Xero superannuation fund membership identifier",
-                    "type": "string"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "ContributionType": {
                     "description": "See Superannuation Contribution Type",
@@ -662,7 +665,8 @@
                 },
                 "ReimbursementTypeID": {
                     "description": "Xero reimbursement type identifier",
-                    "type": "string"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "Description": {
                     "description": "The description of the reimbursement type",
@@ -670,7 +674,8 @@
                 },
                 "LeaveTypeID": {
                     "description": "Xero leave type identifier.",
-                    "type": "string"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "AnnualNumberOfUnits": {
                     "description": "Hours of leave accrued each year",
@@ -739,8 +744,8 @@
                 },
                 "EarningsRateID": {
                     "description": "Xero earnings rate identifier",
-                    "type": "number",
-                    "format": "float"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "Amount": {
                     "description": "Reimbursement type amount",
@@ -749,11 +754,13 @@
                 },
                 "DeductionTypeID": {
                     "description": "Xero deduction type identifier",
-                    "type": "string"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "SuperMembershipID": {
                     "description": "Xero super membership ID",
-                    "type": "string"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "CalculationType": {
                     "description": "Calculation type for Super line",
@@ -761,11 +768,13 @@
                 },
                 "ReimbursementTypeID": {
                     "description": "Xero reimbursement type identifier",
-                    "type": "string"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "LeaveTypeID": {
                     "description": "Xero leave type identifier",
-                    "type": "string"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "NumberOfUnits": {
                     "description": "Leave number of units",
@@ -783,14 +792,9 @@
                     "type": "string"
                 },
                 "LeaveTypeID": {
-                    "allOf": [
-                        {
-                            "description": "Identifier of the leave type (see PayItems)"
-                        },
-                        {
-                            "$ref": "#\/definitions\/LeaveType"
-                        }
-                    ]
+                    "description": "Identifier of the leave type (see PayItems)",
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "NumberOfUnits": {
                     "description": "The balance of the leave available",
@@ -1164,14 +1168,9 @@
             },
             "properties": {
                 "PayrollCalendarID": {
-                    "allOf": [
-                        {
-                            "description": "See PayrollCalendars"
-                        },
-                        {
-                            "$ref": "#\/definitions\/PayrollCalendar"
-                        }
-                    ]
+                    "description": "See PayrollCalendars",
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "PayRunID": {
                     "description": "Xero identifier for pay run",

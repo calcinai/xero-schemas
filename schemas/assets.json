@@ -1,0 +1,330 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Assets API",
+        "version": "1.0"
+    },
+    "host": "api.xero.com",
+    "basePath": "\/assets.xro",
+    "schemes": [
+        "https"
+    ],
+    "consumes": [
+        "text\/xml"
+    ],
+    "produces": [
+        "text\/xml",
+        "application\/json"
+    ],
+    "paths": {
+        "\/Assets": {
+            "get": {
+                "summary": "Allows you to retrieve assetsAllows you to create and update draft assets",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/Asset"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "Assets",
+                        "schema": {
+                            "$ref": "#\/definitions\/Asset"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/Asset"
+                        }
+                    }
+                }
+            }
+        },
+        "\/AssetTypes": {
+            "get": {
+                "summary": "Allows you to retrieve asset typesAllows you to create and update asset types",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/AssetType"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "AssetTypes",
+                        "schema": {
+                            "$ref": "#\/definitions\/AssetType"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/AssetType"
+                        }
+                    }
+                }
+            }
+        },
+        "\/Settings": {
+            "get": {
+                "summary": "Allows you to retrieve the organisation settings for fixed assets",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/Setting"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Asset": {
+            "externalDocs": {
+                "url": "http:\/\/developer.xero.com\/documentation\/assets-api\/assets\/"
+            },
+            "properties": {
+                "AssetName": {
+                    "description": "The name of the asset",
+                    "type": "string"
+                },
+                "AssetNumber": {
+                    "description": "Must be unique. To retrieve the next available Xero-generated assetNumber perform a GET \/settings (optional).",
+                    "type": "string"
+                },
+                "PurchaseDate": {
+                    "description": "The date the asset was purchased YYYY-MM-DD",
+                    "type": "string",
+                    "format": "date"
+                },
+                "PurchasePrice": {
+                    "description": "The purchase price of the asset",
+                    "type": "string"
+                },
+                "WarrantyExpiryDate": {
+                    "description": "The date the asset\u2019s warranty expires (if needed) YYYY-MM-DD",
+                    "type": "string",
+                    "format": "date"
+                },
+                "SerialNumber": {
+                    "description": "The asset\u2019s serial number",
+                    "type": "string"
+                },
+                "AssetStatus": {
+                    "description": "See Asset Status Codes. Assets can only be created with a status of Draft.",
+                    "type": "string"
+                },
+                "BookDepreciationSettings": {
+                    "description": "See Book Depreciation Settings.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#\/definitions\/BookDepreciationSetting"
+                    }
+                },
+                "BookDepreciationDetail": {
+                    "allOf": [
+                        {
+                            "description": "See Book Depreciation Detail."
+                        },
+                        {
+                            "$ref": "#\/definitions\/BookDepreciationDetail"
+                        }
+                    ]
+                },
+                "AssetId": {
+                    "description": "The Xero-generated Id for the asset",
+                    "type": "string"
+                },
+                "AccountingBookValue": {
+                    "description": "The accounting value of the asset",
+                    "type": "string"
+                },
+                "CanRollBack": {
+                    "description": "Boolean to indicate whether depreciation can be rolled back for this asset individually. This is true if it doesn\u2019t have \u2018legacy\u2019 journal entries and if there is no lock period that would prevent this asset from rolling back.",
+                    "type": "boolean"
+                },
+                "DisposalPrice": {
+                    "description": "The price the asset was disposed at",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "AssetName",
+                "AssetNumber"
+            ]
+        },
+        "BookDepreciationSetting": {
+            "externalDocs": {
+                "url": "http:\/\/developer.xero.com\/documentation\/assets-api\/asset-types\/"
+            },
+            "properties": {
+                "DepreciationMethod": {
+                    "description": "The method of depreciation applied to this asset. See Depreciation Methods",
+                    "type": "string"
+                },
+                "AveragingMethod": {
+                    "description": "The method of averaging applied to this asset. See Averaging Methods",
+                    "type": "string"
+                },
+                "DepreciationRate": {
+                    "description": "The rate of depreciation (e.g. 0.05)",
+                    "type": "number",
+                    "format": "float"
+                },
+                "EffectiveLifeYears": {
+                    "description": "The effective life of the assets of this type in years. Not required if using depreciationRate.",
+                    "type": "number",
+                    "format": "float"
+                },
+                "DepreciationCalculationMethod": {
+                    "description": "See Depreciation Calculation Methods",
+                    "type": "string"
+                }
+            }
+        },
+        "BookDepreciationDetail": {
+            "externalDocs": {
+                "url": "http:\/\/developer.xero.com\/documentation\/assets-api\/assets\/"
+            },
+            "properties": {
+                "CurrentCapitalGain": {
+                    "description": "When an asset is disposed, this will be the sell price minus the purchase price if a profit was made.",
+                    "type": "string"
+                },
+                "CurrentGainLoss": {
+                    "description": "When an asset is disposed, this will be the lowest one of sell price or purchase price, minus the current book value.",
+                    "type": "string"
+                },
+                "DepreciationStartDate": {
+                    "description": "YYYY-MM-DD",
+                    "type": "string"
+                },
+                "CostLimit": {
+                    "description": "The value of the asset you want to depreciate, if this is less than the cost of the asset.",
+                    "type": "string"
+                },
+                "ResidualValue": {
+                    "description": "The value of the asset remaining when you\u2019ve fully depreciated it.",
+                    "type": "string"
+                },
+                "PriorAccumDepreciationAmount": {
+                    "description": "All depreciation prior to the current financial year.",
+                    "type": "string"
+                },
+                "CurrentAccumDepreciationAmount": {
+                    "description": "All depreciation occurring in the current financial year.",
+                    "type": "string"
+                }
+            }
+        },
+        "AssetType": {
+            "externalDocs": {
+                "url": "http:\/\/developer.xero.com\/documentation\/assets-api\/asset-types\/"
+            },
+            "properties": {
+                "AssetTypeName": {
+                    "description": "The name of the asset type",
+                    "type": "string"
+                },
+                "FixedAssetAccountId": {
+                    "description": "The asset account for fixed assets of this type",
+                    "type": "string"
+                },
+                "DepreciationExpenseAccountId": {
+                    "description": "The expense account for the depreciation of fixed assets of this type",
+                    "type": "string"
+                },
+                "AccumulatedDepreciationAccountId": {
+                    "description": "The account for accumulated depreciation of fixed assets of this type",
+                    "type": "string"
+                },
+                "BookDepreciationSetting": {
+                    "allOf": [
+                        {
+                            "description": "See bookDepreciationSetting"
+                        },
+                        {
+                            "$ref": "#\/definitions\/BookDepreciationSetting"
+                        }
+                    ]
+                },
+                "AssetTypeId": {
+                    "description": "Xero generated unique identifier for asset types",
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "Locks": {
+                    "description": "All asset types that have accumulated  depreciation for any assets that use them are deemed \u2018locked\u2019 and cannot be removed.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "AssetTypeName",
+                "FixedAssetAccountId",
+                "DepreciationExpenseAccountId",
+                "AccumulatedDepreciationAccountId",
+                "BookDepreciationSetting",
+                "AssetTypeId",
+                "Locks"
+            ]
+        },
+        "Setting": {
+            "externalDocs": {
+                "url": "http:\/\/developer.xero.com\/documentation\/assets-api\/settings\/"
+            },
+            "properties": {
+                "AssetNumberPrefix": {
+                    "description": "The prefix used for fixed asset numbers (\u201cFA-\u201d by default)",
+                    "type": "string"
+                },
+                "AssetNumberSequence": {
+                    "description": "The next available sequence number",
+                    "type": "string"
+                },
+                "AssetStartDate": {
+                    "description": "The date depreciation calculations started on registered fixed assets in Xero",
+                    "type": "string",
+                    "format": "date"
+                },
+                "LastDepreciationDate": {
+                    "description": "The last depreciation date",
+                    "type": "string",
+                    "format": "date"
+                },
+                "DefaultGainOnDisposalAccountId": {
+                    "description": "Default account that gains are posted to",
+                    "type": "string"
+                },
+                "DefaultLossOnDisposalAccountId": {
+                    "description": "Default account that losses are posted to",
+                    "type": "string"
+                },
+                "DefaultCapitalGainOnDisposalAccount": {
+                    "description": "Default account that capital gains are posted to",
+                    "type": "string"
+                },
+                "OptInForTax": {
+                    "description": "",
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

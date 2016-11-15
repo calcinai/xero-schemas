@@ -1422,7 +1422,8 @@
                 },
                 "AccountID": {
                     "description": "The ID of the Bank Account",
-                    "type": "string"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "Name": {
                     "description": "The Name Bank Account",
@@ -1480,12 +1481,14 @@
                 "FromBankTransactionID": {
                     "description": "The Bank Transaction ID for the source account",
                     "readOnly": true,
-                    "type": "string"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "ToBankTransactionID": {
                     "description": "The Bank Transaction ID for the destination account",
                     "readOnly": true,
-                    "type": "string"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "HasAttachments": {
                     "description": "Boolean to indicate if a Bank Transfer has an attachment",
@@ -1874,14 +1877,9 @@
                     }
                 },
                 "BrandingThemeID": {
-                    "allOf": [
-                        {
-                            "description": "See BrandingThemes"
-                        },
-                        {
-                            "$ref": "#\/definitions\/BrandingTheme"
-                        }
-                    ]
+                    "description": "See BrandingThemes",
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "HasAttachments": {
                     "description": "boolean to indicate if a credit note has an attachment",
@@ -2112,14 +2110,9 @@
                     "type": "string"
                 },
                 "BrandingThemeID": {
-                    "allOf": [
-                        {
-                            "description": "See BrandingThemes"
-                        },
-                        {
-                            "$ref": "#\/definitions\/BrandingTheme"
-                        }
-                    ]
+                    "description": "See BrandingThemes",
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "Url": {
                     "description": "URL link to a source document \u2013 shown as \u201cGo to [appName]\u201d in the Xero app",
@@ -2379,7 +2372,8 @@
                 },
                 "SourceID": {
                     "description": "The identifier for the source transaction (e.g. InvoiceID)",
-                    "type": "string"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "SourceType": {
                     "description": "The journal source type. The type of transaction that created the journal",
@@ -2441,23 +2435,28 @@
             "properties": {
                 "SourceTransactionID": {
                     "description": "The identifier of the source transaction (the purchase component of a billable expense). Either an invoice with a type of ACCPAY or a banktransaction of type SPEND.",
-                    "type": "string"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "SourceLineItemID": {
                     "description": "The line item identifier from the source transaction.",
-                    "type": "string"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "ContactID": {
                     "description": "The identifier for the contact on the target transaction i.e. the customer that the expense is being billed on to.",
-                    "type": "string"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "TargetTransactionID": {
                     "description": "The identifier of the target transaction (the sale component of a billable expense). Currently, only invoices with a type of ACCREC can be a target transaction.",
-                    "type": "string"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "TargetLineItemID": {
                     "description": "The line item identifier from the target transaction. It is possible to link multiple billable expenses to the same TargetLineItemID.",
-                    "type": "string"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "LinkedTransactionID": {
                     "description": "The Xero generated identifier for a linked transaction.",
@@ -3098,14 +3097,9 @@
                     "type": "string"
                 },
                 "BrandingThemeID": {
-                    "allOf": [
-                        {
-                            "description": "See BrandingThemes"
-                        },
-                        {
-                            "$ref": "#\/definitions\/BrandingTheme"
-                        }
-                    ]
+                    "description": "See BrandingThemes",
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "CurrencyCode": {
                     "description": "The currency that purchase order has been raised in (see Currencies)",
@@ -3337,14 +3331,9 @@
                     "type": "string"
                 },
                 "BrandingThemeID": {
-                    "allOf": [
-                        {
-                            "description": "See BrandingThemes"
-                        },
-                        {
-                            "$ref": "#\/definitions\/BrandingTheme"
-                        }
-                    ]
+                    "description": "See BrandingThemes",
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "CurrencyCode": {
                     "description": "The currency that invoice has been raised in (see Currencies)",

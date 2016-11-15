@@ -344,7 +344,8 @@
                 },
                 "HolidayGroupID": {
                     "description": "HolidayGroupID of the employee",
-                    "type": "string"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "IsAuthorisedToApproveTimeOff": {
                     "description": "Boolean to specify if employee is authorised to approve time off",
@@ -681,8 +682,8 @@
                 },
                 "EarningsTypeID": {
                     "description": "Xero earnings rate identifier",
-                    "type": "number",
-                    "format": "float"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "Amount": {
                     "description": "Reimbursement type amount",
@@ -691,15 +692,18 @@
                 },
                 "BenefitTypeID": {
                     "description": "Xero benefit type identifier",
-                    "type": "string"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "DeductionTypeID": {
                     "description": "Xero deduction type identifier",
-                    "type": "string"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "ReimbursementTypeID": {
                     "description": "Xero reimbursement type identifier",
-                    "type": "string"
+                    "type": "string",
+                    "format": "uuid"
                 }
             }
         },
@@ -1234,7 +1238,8 @@
                 },
                 "PayRunID": {
                     "description": "",
-                    "type": "string"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "FirstName": {
                     "description": "Employee first name",

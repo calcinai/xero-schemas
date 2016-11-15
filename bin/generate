@@ -99,3 +99,4 @@ file_put_contents(sprintf('%s/schemas/accounting.json', APP_ROOT), json_encode($
 file_put_contents(sprintf('%s/schemas/payroll_au.json', APP_ROOT), json_encode($generator->generate($payroll_api), JSON_PRETTY_PRINT));
 file_put_contents(sprintf('%s/schemas/payroll_us.json', APP_ROOT), json_encode($generator->generate($payroll_api_us), JSON_PRETTY_PRINT));
 file_put_contents(sprintf('%s/schemas/files.json', APP_ROOT), json_encode($generator->generate($files_api), JSON_PRETTY_PRINT));
+file_put_contents(sprintf('%s/schemas/assets.json', APP_ROOT), json_encode($generator->generate($assets_api), JSON_PRETTY_PRINT));

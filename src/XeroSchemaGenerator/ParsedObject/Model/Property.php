@@ -184,6 +184,10 @@ class Property extends ParsedObject
             return self::TYPE_GUID;
         }
 
+        if (preg_match('/ID$/', $this->name)) {
+            return self::TYPE_GUID;
+        }
+
         if (preg_match('/Code$/i', $this->getName())) {
             return self::TYPE_STRING;
         }
