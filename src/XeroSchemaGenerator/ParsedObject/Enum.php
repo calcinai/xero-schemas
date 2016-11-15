@@ -7,6 +7,7 @@
 namespace Calcinai\XeroSchemaGenerator\ParsedObject;
 
 use Calcinai\XeroSchemaGenerator\ParsedObject;
+use Calcinai\XeroSchemaGenerator\ParsedObject\Enum\Value;
 
 class Enum extends ParsedObject
 {
@@ -25,8 +26,16 @@ class Enum extends ParsedObject
         $this->values = [];
     }
 
-    public function addValue(ParsedObject\Enum\Value $value)
+    public function addValue(Value $value)
     {
         $this->values[$value->getName()] = $value;
+    }
+
+    /**
+     * @return Value[]
+     */
+    public function getValues()
+    {
+        return $this->values;
     }
 }

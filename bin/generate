@@ -16,6 +16,7 @@ use Calcinai\Strut\Definitions\Schema;
 use Calcinai\Strut\Definitions\Schema\Properties\Properties;
 use Calcinai\Strut\Swagger;
 use Calcinai\XeroSchemaGenerator\API;
+use Calcinai\XeroSchemaGenerator\ParsedObject\Enum;
 use Calcinai\XeroSchemaGenerator\ParsedObject\Model;
 use Calcinai\XeroSchemaGenerator\ParsedObject\Model\Property;
 use Calcinai\XeroSchemaGenerator\Scraper;
@@ -226,6 +227,15 @@ foreach ($accounting_api->getModels() as $model) {
 
             case Property::TYPE_GUID:
                 $schema_property->setType('string')->setFormat('uuid');
+                break;
+
+            case Property::TYPE_ENUM:
+                $schema_property->setType('string');
+
+                foreach($property->getChildObject()->getValues() as $enum){
+                    $schema_property->addEnum($enum->getName());
+                }
+
                 break;
 
             case Property::TYPE_OBJECT:

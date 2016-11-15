@@ -122,7 +122,7 @@ class Property extends ParsedObject
     }
 
     /**
-     * @return Model
+     * @return Model|Enum
      */
     public function getChildObject()
     {
