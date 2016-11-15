@@ -37,6 +37,11 @@ abstract class ParsedObject
      */
     protected $description;
 
+    /**
+     * @var API
+     */
+    protected $api;
+
 
     /**
      * ParsedObject constructor.
@@ -62,6 +67,25 @@ abstract class ParsedObject
     public function getName()
     {
         return $this->name;
+    }
+
+
+    /**
+     * @return API
+     */
+    public function getAPI()
+    {
+        return $this->api;
+    }
+
+    /**
+     * @param API $api
+     * @return $this
+     */
+    public function setAPI(API $api)
+    {
+        $this->api = $api;
+        return $this;
     }
 
     /**
@@ -111,7 +135,7 @@ abstract class ParsedObject
             //Name sure it's singular and title case
             $name = ucwords($name);
             //Remove spaces and non-a-z
-            $names[] = preg_replace('/[^a-z]+/i', '', $name);
+            $names[] = preg_replace('/(\([^\)]+\)|[^a-z]+)/i', '', $name);
         }
 
         //If there are two, see if they're common

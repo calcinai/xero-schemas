@@ -3,27 +3,17 @@
 
 include __DIR__ . '/../vendor/autoload.php';
 
-use Calcinai\Strut\Definitions\Definitions;
-use Calcinai\Strut\Definitions\ExternalDocs;
-use Calcinai\Strut\Definitions\Info;
-use Calcinai\Strut\Definitions\Operation;
-use Calcinai\Strut\Definitions\PathItem;
-use Calcinai\Strut\Definitions\Paths;
-use Calcinai\Strut\Definitions\QueryParameterSubSchema;
-use Calcinai\Strut\Definitions\Response;
-use Calcinai\Strut\Definitions\Responses;
-use Calcinai\Strut\Definitions\Schema;
-use Calcinai\Strut\Definitions\Schema\Properties\Properties;
-use Calcinai\Strut\Swagger;
 use Calcinai\XeroSchemaGenerator\API;
+use Calcinai\XeroSchemaGenerator\Generator;
 use Calcinai\XeroSchemaGenerator\ParsedObject\Enum;
 use Calcinai\XeroSchemaGenerator\ParsedObject\Model;
-use Calcinai\XeroSchemaGenerator\ParsedObject\Model\Property;
 use Calcinai\XeroSchemaGenerator\Scraper;
+
+define('APP_ROOT', realpath(sprintf('%s/../', __DIR__)));
 
 $scraper = new Scraper('http://developer.xero.com/documentation');
 
-$accounting_api = new API('Accounting API', 'Accounting');
+$accounting_api = new API('Accounting API', '/api.xro', '2.0');
 $scraper->scrapeEnums($accounting_api, 'api/types');
 $scraper->scrapeModels($accounting_api, 'api', [
     'accounts',
@@ -47,213 +37,65 @@ $scraper->scrapeModels($accounting_api, 'api', [
     'payments',
     'prepayments',
     'purchase-orders',
-    'quotes',
+    //'quotes', //-Not avaliable in the API
     'receipts',
     'repeating-invoices',
     //'reports', - this is in a way different format
     'tax-rates',
     'tracking-categories',
     'users'
-//]);
+]);
 
-//print_r($accounting_api);
-//
-//
-//exit;
-//
-//$payroll_api = new API('Payroll - AU', 'PayrollAU');
-//$scraper->scrapeEnums($payroll_api, 'payroll-api/types-and-codes');
-//$scraper->scrapeModels($payroll_api, 'payroll-api', [
-//    'employees',
-//    'leaveapplications',
-//    'payitems',
-//    'payrollcalendars',
-//    'payruns',
-//    'payslip',
-//    'settings',
-//    'superfunds',
-//    'superfundproducts',
-//    'timesheets'
-//]);
-//
-//$payroll_api_us = new API('Payroll - US', 'PayrollUS');
-//$scraper->scrapeEnums($payroll_api_us, 'payroll-api-us/types-codes');
-//$scraper->scrapeModels($payroll_api_us, 'payroll-api-us', [
-//    'employees',
-//    'pay-items',
-//    'pay-runs',
-//    'pay-schedules',
-//    'pay-stubs',
-//    'settings',
-//    'timesheets',
-//    'work-locations'
-//]);
-//
-//
-//$files_api = new API('Files API', 'Files');
-//$scraper->scrapeEnums($files_api, 'files-api/types');
-//$scraper->scrapeModels($files_api, 'files-api', [
-//    'files',
-//    'folders',
-//    'associations'
+$payroll_api = new API('Payroll - AU', '/payroll.xro', '1.0');
+$scraper->scrapeEnums($payroll_api, 'payroll-api/types-and-codes');
+$scraper->scrapeModels($payroll_api, 'payroll-api', [
+    'employees',
+    'leaveapplications',
+    'payitems',
+    'payrollcalendars',
+    'payruns',
+    'payslip',
+    'settings',
+    'superfunds',
+    'superfundproducts',
+    'timesheets'
+]);
+
+$payroll_api_us = new API('Payroll - US', '/payroll.xro', '1.0');
+$scraper->scrapeEnums($payroll_api_us, 'payroll-api-us/types-codes');
+$scraper->scrapeModels($payroll_api_us, 'payroll-api-us', [
+    'employees',
+    'pay-items',
+    'pay-runs',
+    'pay-schedules',
+    'pay-stubs',
+    'settings',
+    'timesheets',
+    'work-locations'
 ]);
 
 
-
-$api = $accounting_api;
-
-
-$swagger = new Swagger();
-$swagger->setInfo(
-    Info::create()
-        ->setTitle($api->getName())
-        ->setVersion('1.0.0')
-//        ->setLicense(
-//            License::create()
-//                ->setName('MIT')
-//        )
-)
-
-    ->setHost('api.xero.com')
-    ->setBasePath('/api.xro')
-    ->addScheme('https')
-
-    ->setConsumes(['text/xml'])
-    ->setProduces(['text/xml', 'application/json']);
+$files_api = new API('Files API', '/files.xro', '1.0');
+$scraper->scrapeEnums($files_api, 'files-api/types');
+$scraper->scrapeModels($files_api, 'files-api', [
+    'files',
+    'folders',
+    'associations'
+]);
 
 
-$swagger->setPaths(
-    $paths = Paths::create()
-);
-
-$swagger->setDefinitions(
-    $definitions = Definitions::create()
-);
-
-foreach ($accounting_api->getModels() as $model) {
-
-    $definitions->set($model->getSingularName(),
-        $schema_model = Schema::create()
-            ->setExternalDocs(ExternalDocs::create()
-            ->setUrl($model->getDocumentationURI())
-        )
-    );
+$assets_api = new API('Assets API', '/assets.xro', '1.0');
+$scraper->scrapeEnums($assets_api, 'assets-api/types');
+$scraper->scrapeModels($assets_api, 'assets-api', [
+    'assets',
+    'asset-types',
+    'settings'
+]);
 
 
-    if($model->getResourceURI() !== null){
+$generator = new Generator();
 
-        $paths->set($model->getResourceURI(),
-            $path_item_schema = PathItem::create()
-        );
-
-        if($model->supportsMethod(Model::METHOD_GET)){
-
-            $path_item_schema->setGet(Operation::create()
-                ->setSummary($model->getDescriptionForMethod(Model::METHOD_GET))
-
-                ->addParameter(QueryParameterSubSchema::create()
-                    ->setName('Limit')
-                    ->setDescription('How many items to return at one time (max 100)')
-                    ->setRequired(false)
-                    ->setType('integer')
-                    ->setFormat('int32')
-                )
-
-                ->setResponses(Responses::create()
-                    ->set('200', Response::create()
-                        ->setDescription('')
-                        ->setSchema(Schema::create()->setRef(sprintf('#/definitions/%s', $model->getSingularName())))
-                    )
-                )
-            );
-
-        }
-
-    }
-
-
-
-    //Add the property set to the model
-    $schema_model->setProperties(
-        $schema_properties = Properties::create()
-    );
-
-    foreach($model->getProperties() as $property_name => $property){
-
-        //Container for the property of the model
-        //Add the property to the property set
-        $schema_properties->set($property_name,
-            $schema_property = Schema::create()
-        );
-
-        if($property->isMandatory()){
-            $schema_model->addRequired($property_name);
-        }
-
-        if($property->isReadOnly()){
-            $schema_property->setReadOnly(true);
-        }
-
-        if($property->getMaxLength() !== null){
-            $schema_property->setMaxLength($property->getMaxLength());
-        }
-
-
-        switch($property->getType()){
-
-            case Property::TYPE_BOOLEAN:
-                $schema_property->setType('boolean');
-                break;
-
-            case Property::TYPE_INT:
-                $schema_property->setType('number')->setFormat('double');
-                break;
-
-            case Property::TYPE_FLOAT:
-                $schema_property->setType('number')->setFormat('float');
-                break;
-
-            case Property::TYPE_STRING:
-                $schema_property->setType('string');
-                break;
-
-            case Property::TYPE_DATE:
-                $schema_property->setType('string')->setFormat('date');
-                break;
-
-            case Property::TYPE_DATETIME:
-                $schema_property->setType('string')->setFormat('date-time');
-                break;
-
-            case Property::TYPE_GUID:
-                $schema_property->setType('string')->setFormat('uuid');
-                break;
-
-            case Property::TYPE_ENUM:
-                $schema_property->setType('string');
-
-                foreach($property->getChildObject()->getValues() as $enum){
-                    $schema_property->addEnum($enum->getName());
-                }
-
-                break;
-
-            case Property::TYPE_OBJECT:
-                $ref = sprintf('#/definitions/%s', $property->getChildObject()->getSingularName());
-
-                if($property->isArray()){
-                    $schema_property
-                        ->setType('array')
-                        ->setItems(Schema::create()->setRef($ref));
-                } else {
-                    $schema_property->setRef($ref);
-                }
-                break;
-        }
-    }
-
-
-
-}
-
-file_put_contents(__DIR__.'/../schemas/accounting.json', json_encode($swagger, JSON_PRETTY_PRINT));
+file_put_contents(sprintf('%s/schemas/accounting.json', APP_ROOT), json_encode($generator->generate($accounting_api), JSON_PRETTY_PRINT));
+file_put_contents(sprintf('%s/schemas/payroll_au.json', APP_ROOT), json_encode($generator->generate($payroll_api), JSON_PRETTY_PRINT));
+file_put_contents(sprintf('%s/schemas/payroll_us.json', APP_ROOT), json_encode($generator->generate($payroll_api_us), JSON_PRETTY_PRINT));
+file_put_contents(sprintf('%s/schemas/files.json', APP_ROOT), json_encode($generator->generate($files_api), JSON_PRETTY_PRINT));

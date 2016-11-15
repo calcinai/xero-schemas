@@ -12,12 +12,6 @@ use Calcinai\XeroSchemaGenerator\ParsedObject\Model\Property;
 
 class Model extends ParsedObject
 {
-
-    /**
-     * @var API
-     */
-    private $api;
-
     /**
      * @var string
      */
@@ -218,24 +212,6 @@ class Model extends ParsedObject
     public function getGUIDProperty()
     {
         return $this->guid_property;
-    }
-
-    /**
-     * @return API
-     */
-    public function getAPI()
-    {
-        return $this->api;
-    }
-
-    /**
-     * @param API $api
-     * @return $this
-     */
-    public function setAPI(API $api)
-    {
-        $this->api = $api;
-        return $this;
     }
 
     public function supportsMethod($method)

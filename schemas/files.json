@@ -1,0 +1,287 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Files API",
+        "version": "1.0"
+    },
+    "host": "api.xero.com",
+    "basePath": "\/files.xro",
+    "schemes": [
+        "https"
+    ],
+    "consumes": [
+        "text\/xml"
+    ],
+    "produces": [
+        "text\/xml",
+        "application\/json"
+    ],
+    "paths": {
+        "\/Files": {
+            "get": {
+                "summary": "Allows you to retrieve, upload, update and delete files.",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/File"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "Files",
+                        "schema": {
+                            "$ref": "#\/definitions\/File"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/File"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "Files",
+                        "schema": {
+                            "$ref": "#\/definitions\/File"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/File"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/Folders": {
+            "get": {
+                "summary": "Allows you to retrieve, add, update and delete folders.",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/Folder"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "Folders",
+                        "schema": {
+                            "$ref": "#\/definitions\/Folder"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/Folder"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "Folders",
+                        "schema": {
+                            "$ref": "#\/definitions\/Folder"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/Folder"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "\/Files\/{FileId}\/Associations": {
+            "get": {
+                "summary": "GET a Association",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/Association"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "Associations",
+                        "schema": {
+                            "$ref": "#\/definitions\/Association"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/Association"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "File": {
+            "externalDocs": {
+                "url": "http:\/\/developer.xero.com\/documentation\/files-api\/files\/"
+            },
+            "properties": {
+                "Name": {
+                    "description": "The name of the file",
+                    "type": "string"
+                },
+                "FolderId": {
+                    "description": "The ID of the Folder that contains the File.",
+                    "type": "string"
+                },
+                "MimeType": {
+                    "description": "The Mime type of the file",
+                    "type": "string"
+                },
+                "Size": {
+                    "description": "The file size in bytes",
+                    "type": "string"
+                },
+                "CreatedDateUTC": {
+                    "description": "UTC timestamp of the file creation",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "UpdatedDateUTC": {
+                    "description": "UTC timestamp of the last modified date",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "User": {
+                    "description": "The Xero User that created the file. Note: For Files uploaded via the API this will always be \u201cSystem Generated\u201d.",
+                    "type": "string"
+                },
+                "Id": {
+                    "description": "Xero unique identifier for a file",
+                    "type": "string",
+                    "format": "uuid"
+                }
+            }
+        },
+        "Folder": {
+            "externalDocs": {
+                "url": "http:\/\/developer.xero.com\/documentation\/files-api\/folders\/"
+            },
+            "properties": {
+                "Name": {
+                    "description": "The name of the folder",
+                    "type": "string"
+                },
+                "FileCount": {
+                    "description": "The number of files in the folder",
+                    "type": "string"
+                },
+                "Email": {
+                    "description": "The email address used to email files to the inbox. Only the inbox will have this element.",
+                    "type": "string"
+                },
+                "IsInbox": {
+                    "description": "Boolean to indicate if the folder is the Inbox. The Inbox cannot be renamed or deleted.",
+                    "type": "boolean"
+                },
+                "Id": {
+                    "description": "Xero unique identifier for a folder",
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "Files": {
+                    "description": "The Files that are contained in the Folder. Note: The Files element is only returned when using the \/Folders\/{FolderId}\/Files endpoint.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#\/definitions\/File"
+                    }
+                }
+            },
+            "required": [
+                "Name",
+                "FileCount",
+                "Email",
+                "IsInbox",
+                "Id",
+                "Files"
+            ]
+        },
+        "Association": {
+            "externalDocs": {
+                "url": "http:\/\/developer.xero.com\/documentation\/files-api\/associations\/"
+            },
+            "properties": {
+                "ObjectId": {
+                    "description": "The identifier of the object that the file is being associated with (e.g. InvoiceID, BankTransactionID, ContactID)",
+                    "type": "string"
+                },
+                "ObjectGroup": {
+                    "description": "The Object Group that the object is in. These roughly correlate to the endpoints that can be used to retrieve the object via the core accounting API.",
+                    "type": "string"
+                },
+                "ObjectType": {
+                    "description": "The Object Type.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "ObjectId",
+                "ObjectGroup",
+                "ObjectType"
+            ]
+        }
+    }
+}

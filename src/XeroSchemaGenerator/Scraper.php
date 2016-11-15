@@ -74,7 +74,8 @@ class Scraper
                     $api->addModel($model);
                     $this->parseModelTable($model, $table_node);
                 } else {
-                    $enum = new Enum($section_name);
+                    $enum = new Enum($subsection_name);
+                    $enum->setTargetName($section_name);
                     $api->addEnum($enum);
                     $this->parseEnumTable($enum, $table_node);
                 }
@@ -167,7 +168,7 @@ class Scraper
                 }
 
                 //Go backward to find headings
-                $section_nodes = $table_node->previousAll()->filter('h3,h4');
+                $section_nodes = $table_node->previousAll()->filter('h3,h4,p>strong');
                 if ($section_nodes->count() === 0) {
                     return;
                 }
@@ -187,7 +188,8 @@ class Scraper
                     }
 
                     //If the table that's being processed os for a different model, create a new one
-                    if (false === $current_model->matchName($matches['model_name'])) {
+                    //...and it's not he first model being processed
+                    if ($table_index > 1 && false === $current_model->matchName($matches['model_name'])) {
                         $current_model = new Model($matches['model_name']);
                         $current_model->setDocumentationURI($full_uri);
                         $current_model->setParentModel($primary_model);
@@ -224,7 +226,6 @@ class Scraper
 
     private function parseModelTable(Model $model, Crawler $table_node)
     {
-
         $mandatory = false;
         $read_only = false;
 

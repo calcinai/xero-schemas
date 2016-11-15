@@ -20,12 +20,6 @@ class API
     private $name;
 
     /**
-     * @var string
-     */
-    private $namespace;
-
-
-    /**
      * @var Model[]
      */
     private $models = [];
@@ -35,17 +29,41 @@ class API
      */
     private $enums = [];
 
+    /**
+     * @var string
+     */
+    private $base_path;
 
-    private $search_keys;
+    /**
+     * @var string
+     */
+    private $version;
 
-    private $is_indexed;
 
-
-    public function __construct($name, $namespace)
+    public function __construct($name, $base_path, $version)
     {
         $this->name = $name;
-        $this->namespace = $namespace;
+        $this->base_path = $base_path;
+        $this->version = $version;
     }
+
+
+    /**
+     * @return string
+     */
+    public function getBasePath()
+    {
+        return $this->base_path;
+    }
+
+    /**
+     * @return string
+     */
+    public function getVersion()
+    {
+        return $this->version;
+    }
+
 
 
     /**
@@ -62,6 +80,7 @@ class API
      */
     public function addEnum(Enum $enum)
     {
+        $enum->setAPI($this);
         $this->enums[$enum->getSingularName()] = $enum;
     }
 
@@ -90,6 +109,21 @@ class API
         return $this->name;
     }
 
+    /**
+     * Return all enums that don't specifically belong to a model
+     *
+     * @return \Generator
+     */
+    public function getStrayEnums(){
+
+        foreach($this->enums as $enum){
+            if(! $enum->getTarget() instanceof Model){
+                yield $enum;
+            }
+        }
+
+    }
+
     public function searchByName($search_name)
     {
 
@@ -108,6 +142,9 @@ class API
 
         foreach ($this->enums as $enum) {
             if(in_array($enum->getName(), $search_arr)){
+                return $enum;
+            }
+            if(in_array($enum->getTargetName(), $search_arr)){
                 return $enum;
             }
         }
@@ -133,6 +170,5 @@ class API
         return null;
 
     }
-
 
 }
