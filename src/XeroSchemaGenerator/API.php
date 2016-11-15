@@ -9,6 +9,7 @@ namespace Calcinai\XeroSchemaGenerator;
 
 use Calcinai\XeroSchemaGenerator\ParsedObject\Enum;
 use Calcinai\XeroSchemaGenerator\ParsedObject\Model;
+use ICanBoogie\Inflector;
 
 class API
 {
@@ -54,9 +55,6 @@ class API
     {
         $model->setAPI($this);
         $this->models[$model->getSingularName()] = $model;
-
-        //For debugging
-        $model->printPropertyTable();
     }
 
     /**
@@ -92,8 +90,49 @@ class API
         return $this->name;
     }
 
+    public function searchByName($search_name)
+    {
 
+        $inflector = Inflector::get();
+        $search_arr = [
+            $search_name,
+            $inflector->singularize($search_name),
+            $inflector->pluralize($search_name)
+        ];
 
+        foreach($this->models as $model){
+            if(in_array($model->getName(), $search_arr)){
+                return $model;
+            }
+        }
+
+        foreach ($this->enums as $enum) {
+            if(in_array($enum->getName(), $search_arr)){
+                return $enum;
+            }
+        }
+
+        return null;
+
+    }
+
+    public function searchByURL($url)
+    {
+        $parsed_search_url = parse_url($url);
+
+        foreach($this->models as $model){
+            $parsed_model_url = parse_url($model->getDocumentationURI());
+
+            //Some real inconsistencies in the documentation
+            if ($parsed_model_url['host'] === $parsed_search_url['host'] &&
+                trim($parsed_model_url['path'], '/') === trim($parsed_search_url['path'], '/')){
+                return $model;
+            }
+        }
+
+        return null;
+
+    }
 
 
 }

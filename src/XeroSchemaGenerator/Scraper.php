@@ -36,10 +36,11 @@ class Scraper
     public function scrapeEnums(API $api, $types_uri)
     {
 
-        $crawler = $this->client->request('GET', sprintf('%s/%s', $this->documentation_base, $types_uri));
+        $full_uri = sprintf('%s/%s', $this->documentation_base, $types_uri);
+        $crawler = $this->client->request('GET', $full_uri);
 
         $crawler->filter('.apidoc-table')->each(
-            function (Crawler $table_node) use ($api) {
+            function (Crawler $table_node) use ($api, $full_uri) {
 
                 //Unfortunately I couldn't get consistent results with xpath.
                 $section_name = $table_node->previousAll()->filter('h3,h4')->first()->text();
@@ -69,6 +70,7 @@ class Scraper
                 //This is all we have to go by at the moment!
                 if ($section_name === $subsection_name) {
                     $model = new Model($section_name);
+                    $model->setDocumentationURI($full_uri);
                     $api->addModel($model);
                     $this->parseModelTable($model, $table_node);
                 } else {
@@ -136,9 +138,10 @@ class Scraper
             $page_heading = strtok($crawler->filter('.entry-content > h1')->first()->text(), "\n");
 
             $primary_model = new Model($page_heading);
+            $primary_model->setDocumentationURI($full_uri);
             $current_model = $primary_model;
 
-            $crawler->filter('.apidoc-table')->each(function (Crawler $table_node, $table_index) use ($api, $page_heading, $primary_model, &$current_model) {
+            $crawler->filter('.apidoc-table')->each(function (Crawler $table_node, $table_index) use ($api, $full_uri, $page_heading, $primary_model, &$current_model) {
 
                 //This is the header table with meta inf
                 if ($table_index === 0) {
@@ -186,6 +189,7 @@ class Scraper
                     //If the table that's being processed os for a different model, create a new one
                     if (false === $current_model->matchName($matches['model_name'])) {
                         $current_model = new Model($matches['model_name']);
+                        $current_model->setDocumentationURI($full_uri);
                         $current_model->setParentModel($primary_model);
                     }
 
@@ -212,6 +216,8 @@ class Scraper
                 }
             });
 
+            //For debugging
+            $primary_model->printPropertyTable();
         }
     }
 
@@ -300,7 +306,7 @@ class Scraper
 
                     //add links to property (for parsing types)
                     $table_column_nodes->filter('a')->each(function (Crawler $node) use ($property) {
-                        $property->addLink($node->text(), $node->attr('href'));
+                        $property->addLink($node->text(), $node->link()->getUri());
                     });
 
                     $model->addProperty($property);

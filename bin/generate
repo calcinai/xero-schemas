@@ -4,6 +4,7 @@
 include __DIR__ . '/../vendor/autoload.php';
 
 use Calcinai\Strut\Definitions\Definitions;
+use Calcinai\Strut\Definitions\ExternalDocs;
 use Calcinai\Strut\Definitions\Info;
 use Calcinai\Strut\Definitions\Operation;
 use Calcinai\Strut\Definitions\PathItem;
@@ -24,34 +25,34 @@ $scraper = new Scraper('http://developer.xero.com/documentation');
 $accounting_api = new API('Accounting API', 'Accounting');
 $scraper->scrapeEnums($accounting_api, 'api/types');
 $scraper->scrapeModels($accounting_api, 'api', [
-//    'accounts',
-//    //'bankstatements',
-//    'banktransactions',
-//    'bank-transfers',
-//    'branding-themes',
+    'accounts',
+    //'bankstatements',
+    'banktransactions',
+    'bank-transfers',
+    'branding-themes',
     'contacts',
-//    'contactgroups',
-//    'credit-notes',
-//    'currencies',
-//    'employees',
-//    'expense-claims',
-//    'invoices',
-//    'items',
-//    'journals',
-//    'linked-transactions',
-//    'manual-journals',
-//    'organisation',
-//    'overpayments',
-//    'payments',
-//    'prepayments',
-//    'purchase-orders',
-//    'quotes',
-//    'receipts',
-//    'repeating-invoices',
-//    //'reports', - this is in a way different format
-//    'tax-rates',
-//    'tracking-categories',
-//    'users'
+    'contactgroups',
+    'credit-notes',
+    'currencies',
+    'employees',
+    'expense-claims',
+    'invoices',
+    'items',
+    'journals',
+    'linked-transactions',
+    'manual-journals',
+    'organisation',
+    'overpayments',
+    'payments',
+    'prepayments',
+    'purchase-orders',
+    'quotes',
+    'receipts',
+    'repeating-invoices',
+    //'reports', - this is in a way different format
+    'tax-rates',
+    'tracking-categories',
+    'users'
 //]);
 
 //print_r($accounting_api);
@@ -120,18 +121,29 @@ $swagger->setInfo(
     ->setProduces(['text/xml', 'application/json']);
 
 
-$paths = Paths::create();
-$definitions = Definitions::create();
+$swagger->setPaths(
+    $paths = Paths::create()
+);
 
+$swagger->setDefinitions(
+    $definitions = Definitions::create()
+);
 
 foreach ($accounting_api->getModels() as $model) {
 
-    $schema_model = Schema::create();
+    $definitions->set($model->getSingularName(),
+        $schema_model = Schema::create()
+            ->setExternalDocs(ExternalDocs::create()
+            ->setUrl($model->getDocumentationURI())
+        )
+    );
 
 
     if($model->getResourceURI() !== null){
 
-        $path_item_schema = PathItem::create();
+        $paths->set($model->getResourceURI(),
+            $path_item_schema = PathItem::create()
+        );
 
         if($model->supportsMethod(Model::METHOD_GET)){
 
@@ -148,7 +160,7 @@ foreach ($accounting_api->getModels() as $model) {
 
                 ->setResponses(Responses::create()
                     ->set('200', Response::create()
-                        ->setDescription('A paged array of pets')
+                        ->setDescription('')
                         ->setSchema(Schema::create()->setRef(sprintf('#/definitions/%s', $model->getSingularName())))
                     )
                 )
@@ -156,47 +168,22 @@ foreach ($accounting_api->getModels() as $model) {
 
         }
 
-
-
-        $paths->set($model->getResourceURI(), $path_item_schema);
-
     }
 
 
 
-
-
-    $schema_properties = Properties::create();
+    //Add the property set to the model
+    $schema_model->setProperties(
+        $schema_properties = Properties::create()
+    );
 
     foreach($model->getProperties() as $property_name => $property){
 
         //Container for the property of the model
-        $schema_property = Schema::create();
-
-        switch($property->getType()){
-
-            case Property::TYPE_BOOLEAN:
-                $schema_property->setType('boolean');
-                break;
-            case Property::TYPE_INT:
-                $schema_property->setType('number')->setFormat('double');
-                break;
-            case Property::TYPE_FLOAT:
-                $schema_property->setType('number')->setFormat('float');
-                break;
-            case Property::TYPE_STRING:
-                $schema_property->setType('string');
-                break;
-            case Property::TYPE_DATE:
-                $schema_property->setType('string')->setFormat('date');
-                break;
-            case Property::TYPE_DATETIME:
-                $schema_property->setType('string')->setFormat('date-time');
-                break;
-            case Property::TYPE_GUID:
-                $schema_property->setType('string')->setFormat('uuid');
-                break;
-        }
+        //Add the property to the property set
+        $schema_properties->set($property_name,
+            $schema_property = Schema::create()
+        );
 
         if($property->isMandatory()){
             $schema_model->addRequired($property_name);
@@ -210,20 +197,53 @@ foreach ($accounting_api->getModels() as $model) {
             $schema_property->setMaxLength($property->getMaxLength());
         }
 
-        //Add the property to the property set
-        $schema_properties->set($property_name, $schema_property);
+
+        switch($property->getType()){
+
+            case Property::TYPE_BOOLEAN:
+                $schema_property->setType('boolean');
+                break;
+
+            case Property::TYPE_INT:
+                $schema_property->setType('number')->setFormat('double');
+                break;
+
+            case Property::TYPE_FLOAT:
+                $schema_property->setType('number')->setFormat('float');
+                break;
+
+            case Property::TYPE_STRING:
+                $schema_property->setType('string');
+                break;
+
+            case Property::TYPE_DATE:
+                $schema_property->setType('string')->setFormat('date');
+                break;
+
+            case Property::TYPE_DATETIME:
+                $schema_property->setType('string')->setFormat('date-time');
+                break;
+
+            case Property::TYPE_GUID:
+                $schema_property->setType('string')->setFormat('uuid');
+                break;
+
+            case Property::TYPE_OBJECT:
+                $ref = sprintf('#/definitions/%s', $property->getChildObject()->getSingularName());
+
+                if($property->isArray()){
+                    $schema_property
+                        ->setType('array')
+                        ->setItems(Schema::create()->setRef($ref));
+                } else {
+                    $schema_property->setRef($ref);
+                }
+                break;
+        }
     }
 
-    //Add the property set to the model
-    $schema_model->setProperties($schema_properties);
-
-    //add the model to the definitions.
-    $definitions->set($model->getSingularName(), $schema_model);
 
 
 }
-
-$swagger->setPaths($paths);
-$swagger->setDefinitions($definitions);
 
 file_put_contents(__DIR__.'/../schemas/accounting.json', json_encode($swagger, JSON_PRETTY_PRINT));

@@ -19,6 +19,11 @@ class Model extends ParsedObject
     private $api;
 
     /**
+     * @var string
+     */
+    private $documentation_uri;
+
+    /**
      * @var Property[]
      */
     private $properties = [];
@@ -233,6 +238,29 @@ class Model extends ParsedObject
         return $this;
     }
 
+    public function supportsMethod($method)
+    {
+        return in_array($method, $this->methods);
+    }
+
+    /**
+     * @param string $documentation_uri
+     * @return Model
+     */
+    public function setDocumentationURI($documentation_uri)
+    {
+        $this->documentation_uri = $documentation_uri;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDocumentationURI()
+    {
+        return $this->documentation_uri;
+    }
+
 
 
     public function getDescriptionForMethod($method)
@@ -294,11 +322,6 @@ class Model extends ParsedObject
         echo str_repeat('-', $total_row_width) . "\n\n";
 
 
-    }
-
-    public function supportsMethod($method)
-    {
-        return in_array($method, $this->methods);
     }
 
 }

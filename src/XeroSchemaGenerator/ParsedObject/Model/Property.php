@@ -14,16 +14,16 @@ use Calcinai\XeroSchemaGenerator\ParsedObject\Model;
 class Property extends ParsedObject
 {
 
-    const TYPE_STRING    = 'string';
-    const TYPE_INT       = 'int';
-    const TYPE_FLOAT     = 'float';
-    const TYPE_BOOLEAN   = 'bool';
-    const TYPE_DATE      = 'date';
-    const TYPE_DATETIME  = 'datetime';
-    const TYPE_GUID      = 'guid';
+    const TYPE_STRING = 'string';
+    const TYPE_INT = 'int';
+    const TYPE_FLOAT = 'float';
+    const TYPE_BOOLEAN = 'bool';
+    const TYPE_DATE = 'date';
+    const TYPE_DATETIME = 'datetime';
+    const TYPE_GUID = 'guid';
 
-    const TYPE_OBJECT    = 'object';
-    const TYPE_ENUM      = 'enum';
+    const TYPE_OBJECT = 'object';
+    const TYPE_ENUM = 'enum';
 
     private $links;
     private $type;
@@ -36,7 +36,7 @@ class Property extends ParsedObject
     /**
      * @var Model
      */
-    private $child_model;
+    private $child_object;
 
     /**
      * @var bool
@@ -55,11 +55,6 @@ class Property extends ParsedObject
 
 
     private $max_length;
-
-    /**
-     * @var Model
-     */
-    private $related_object;
 
     public function __construct($name, $description, $mandatory = false, $read_only = false, $deprecated = false)
     {
@@ -87,15 +82,16 @@ class Property extends ParsedObject
         $this->links[$href] = $name;
     }
 
-    public function getType(){
+    public function getType()
+    {
 
-        if($this->type === null){
+        if ($this->type === null) {
             $this->type = $this->parseType();
         }
 
         return $this->type;
     }
-    
+
 
     /**
      * @param Model $parent_model
@@ -116,184 +112,187 @@ class Property extends ParsedObject
     }
 
     /**
-     * @param Model $child_model
+     * @param Model $child_object
      * @return Property
      */
-    public function setChildModel($child_model)
+    public function setChildObject($child_object)
     {
-        $this->child_model = $child_model;
+        $this->child_object = $child_object;
         return $this;
     }
 
     /**
      * @return Model
      */
-    public function getChildModel()
+    public function getChildObject()
     {
-        return $this->child_model;
+        return $this->child_object;
     }
 
 
-    private function parseDescription(){
+    private function parseDescription()
+    {
 
         if (strpos($this->description, 'read only')) {
             $this->is_read_only = true;
         }
 
-        if(preg_match('/max length\s?=\s?(?<length>\d+)/', $this->description, $matches)){
-            $this->max_length = (int) $matches['length'];
+        if (preg_match('/max length\s?=\s?(?<length>\d+)/', $this->description, $matches)) {
+            $this->max_length = (int)$matches['length'];
         }
 
     }
 
 
     /**
+     * @return bool
+     */
+    public function isArray()
+    {
+
+        switch (true) {
+            case stripos($this->getName(), 'status') !== false:
+            case $this->getType() === self::TYPE_BOOLEAN:
+            case $this->getType() === self::TYPE_ENUM:
+            case $this->getType() === self::TYPE_STRING:
+                return false;
+            //This to to improve detection of names that are the same plural/sing
+            case preg_match('/maximum of [2-9] <(?<model>[a-z]+)> elements/i', $this->getDescription()):
+                return true;
+            default:
+                return $this->getSingularName() !== $this->getName();
+        }
+
+    }
+
+    /**
      * A very ugly function to parse the property type based on a massive arbitrary set of rules.
+     *
+     * Basically, the certainty goes down the further through the function you get
      *
      * @return string
      */
     private function parseType()
     {
 
-        //Spelling errors in the docs
-        if (preg_match('/^((a\s)?bool|true\b|booelan)/i', $this->description))
-            $type = self::TYPE_BOOLEAN;
+        if ($this->getParentModel()->getSingularName() . 'ID' == $this->getName()) {
+            $this->getParentModel()->setGUIDProperty($this);
+            return self::TYPE_GUID;
+        }
 
-        //Spelling errors in the docs
-        if (preg_match('/UTC$/', $this->getName()))
-            $type = self::TYPE_DATETIME;
+        if (preg_match('/Xero (generated )?(unique )?identifier/i', $this->description)) {
+            return self::TYPE_GUID;
+        }
 
-        if (preg_match('/^Has[A-Z]\w+/', $this->getName()))
-            $type = self::TYPE_BOOLEAN;
+        if (preg_match('/Code$/i', $this->getName())) {
+            return self::TYPE_STRING;
+        }
+
+        if (preg_match('/(^int(eger)?\b)/i', $this->description)) {
+            return self::TYPE_INT;
+        }
+
+        if (preg_match('/alpha numeric/i', $this->description)) {
+            return self::TYPE_STRING;
+        }
 
         if (preg_match('/(^sum\b|decimal|the\stotal|total\s(of|tax)|rate\b|amount\b)/i', $this->description)) {
             //If not the name of the field itself and not an 'amount type'
             if (stripos($this->name, 'name') === false &&
                 stripos($this->name, 'description') === false &&
-                stripos($this->description, 'amount type') === false) {
-                    $type = self::TYPE_FLOAT;
+                stripos($this->description, 'amount type') === false
+            ) {
+                return self::TYPE_FLOAT;
             }
         }
 
-        if (preg_match('/(alpha numeric)/i', $this->description))
-            $type = self::TYPE_STRING;
-
-        if (preg_match('/(^int(eger)?\b)/i', $this->description)){
-            $type = self::TYPE_INT;
+        //Spelling errors in the docs
+        if (preg_match('/UTC$/', $this->getName())) {
+            return self::TYPE_DATETIME;
         }
 
-        if (!isset($type) && preg_match('/(\bdate\b)/i', $this->description)){
-            $type = self::TYPE_DATE;
+        //Spelling errors in the docs
+        if (preg_match('/^((a\s)?bool|true\b|booelan)/i', $this->description)) {
+            return self::TYPE_BOOLEAN;
         }
 
-        if (preg_match('/Xero (generated )?(unique )?identifier/i', $this->description)){
-            $type = self::TYPE_GUID;
+        if (preg_match('/^Has[A-Z]\w+/', $this->getName())) {
+            return self::TYPE_BOOLEAN;
         }
 
-        if ($this->getParentModel()->getSingularName() . 'ID' == $this->getName()) {
-            $type = self::TYPE_GUID;
-            $this->getParentModel()->setGUIDProperty($this);
+        if (preg_match('/(\bdate\b)/i', $this->description)) {
+            return self::TYPE_DATE;
         }
 
-        $result = null;
 
-        if (!isset($type)) {
+        //This point on searches for related models/enums
+        $search_names = [];
 
-            if (preg_match('/see\s(?<model>[^.]+)/i', $this->getDescription(), $matches)) {
+        if (preg_match('/see\s(?<model>[^.]+)/i', $this->getDescription(), $matches)) {
+            $search_names[] = $matches['model'];
+        }
 
-                print_r($matches);
-//                print_r($this->getParentModel()->getAPI());
-//                $result = $this->getParentModel()->getAPI()->searchByKey();
+        //Look for pointy bracketed references
+        if (preg_match('/<(?<model>[^>]+)>/i', $this->getDescription(), $matches)) {
+            $search_names[] = $matches['model'];
+        }
 
+        //Then the property name itself (root ns then child)
+        $search_names[] = $this->getName();
+
+        //Stupid exception
+        if (preg_match('/^(?<model>Purchase|Sale)s?Details/i', $this->getName(), $matches)) {
+            $search_names[] = $matches['model'];
+        }
+
+
+        //then links
+        $search_links = [];
+
+        foreach ($this->links as $href => $name) {
+            //Catch anchors - they're likely to be refences to types and codes (subschemas)
+            if (preg_match('/#(?<anchor>.+)/i', $href, $matches)) {
+                $search_names[] = $matches['anchor'];
+            } else {
+                $search_links[] = $href;
             }
-
-
-
-//            //The ns hint for searching, look for subclasses of this first.
-//            $ns_hint = sprintf('%s\\%s', $this->getParentModel()->getNamespace(), $this->getParentModel()->getClassName());
-//
-//            if (preg_match('/see\s(?<model>[^.]+)/i', $this->getDescription(), $matches)) {
-//
-//                //Try NS'ing it with existing models... MNA htis is getting ugly.
-//                foreach ($this->getParentModel()->getAPI()->getModels() as $model) {
-//                    $class_name = $model->getClassName();
-//                    $model_name = $matches['model'];
-//                    if (strpos($model_name, $class_name) === 0) {
-//                        //this means it starts with the model name
-//                        $search_text = sprintf('%s\\%s', substr($model_name, 0, strlen($class_name)), substr($model_name, strlen($class_name)));
-//                        $result = $this->getParentModel()->getAPI()->searchByKey(str_replace(' ', '', ucwords($search_text)), $this->getParentModel()->getNamespace());
-//
-//                    }
-//                }
-//
-//            }
-//
-//            if ($result === null && substr_count($ns_hint, '\\') > 1) {
-//                $parent_ns_hint = substr($ns_hint, 0, strrpos($ns_hint, '\\'));
-//                $result = $this->getParentModel()->getAPI()->searchByKey($this->getName(), $parent_ns_hint);
-//            }
-//
-//            if ($result === null)
-//                $result = $this->getParentModel()->getAPI()->searchByKey($this->getName(), $ns_hint);
-//
-//            if ($result === null) {
-//                foreach ($this->links as $link) {
-//                    $search_text = str_replace(' ', '', ucwords($link['text']));
-//
-//                    $result = $this->getParentModel()->getAPI()->searchByKey($search_text, $ns_hint);
-//
-//                    //then try anchor
-//                    if ($result === null) {
-//                        if (preg_match('/#(?<anchor>.+)/i', $link['href'], $matches)) {
-//                            $result = $this->getParentModel()->getAPI()->searchByKey($matches['anchor'], $ns_hint);
-//                        }
-//                    }
-//                }
-//            }
-//
-//            //Otherwise, just have a stab again, this needs to be after other references
-//            if ($result === null) {
-//                if (preg_match('/see\s(?<model>[^.]+)/i', $this->getDescription(), $matches)) {
-//                    $result = $this->getParentModel()->getAPI()->searchByKey(str_replace(' ', '', ucwords($matches['model'])), $ns_hint);
-//                }
-//            }
-//
-//            //Look for pointy bracketed references
-//            if ($result === null) {
-//                if (preg_match('/<(?<model>[^>]+)>/i', $this->getDescription(), $matches)) {
-//                    $result = $this->getParentModel()->getAPI()->searchByKey(str_replace(' ', '', ucwords($matches['model'])), $ns_hint);
-//                }
-//            }
-//
-//
-//            //I have tried very hard to avoid special cases!
-//            if ($result === null) {
-//                if (preg_match('/^(?<model>Purchase|Sale)s?Details/i', $this->getName(), $matches)) {
-//                    $result = $this->getParentModel()->getAPI()->searchByKey($matches['model'], $ns_hint);
-//                }
-//            }
-
         }
 
 
-        if ($result instanceof Enum)
-            $type = self::TYPE_ENUM;
-        elseif ($result instanceof Model) {
-            $type = self::TYPE_OBJECT;
-            $this->related_object = $result;
+        foreach ($search_names as $search_name) {
+            //search for it
+            if(null !== $this->child_object = $this->getParentModel()->getAPI()->searchByName($search_name)){
+                break;
+            }
+        }
+
+        //If not found by name, try the url.  Can be multiple models ont he same page so not always safe
+        if($this->child_object === null){
+            foreach ($search_links as $search_link) {
+                //search for it
+                if(null !== $this->child_object = $this->getParentModel()->getAPI()->searchByURL($search_link)){
+                    break;
+                }
+            }
+        }
+
+
+
+        //See what was returned
+        if ($this->child_object instanceof Enum) {
+            return self::TYPE_ENUM;
+
+        } elseif ($this->child_object instanceof Model) {
 
             //If docs have case-typos in them, take the class name as authoritative.
-            if (strcmp($this->getName(), $this->related_object->getSingularName()) !== 0 && strcasecmp($this->getName(), $this->related_object->getSingularName()) === 0)
-                $this->name = $this->related_object->getSingularName();
+            if (strcmp($this->getName(), $this->child_object->getSingularName()) !== 0 && strcasecmp($this->getName(), $this->child_object->getSingularName()) === 0)
+                $this->name = $this->child_object->getSingularName();
 
-
+            return self::TYPE_OBJECT;
         }
 
-        if (!isset($type)){
-            $type = self::TYPE_STRING;
-        }
 
-        return $type;
+        return self::TYPE_STRING;
     }
 
     public function isMandatory()
