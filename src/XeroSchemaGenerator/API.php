@@ -35,6 +35,11 @@ class API
     private $enums = [];
 
 
+    private $search_keys;
+
+    private $is_indexed;
+
+
     public function __construct($name, $namespace)
     {
         $this->name = $name;
@@ -47,6 +52,7 @@ class API
      */
     public function addModel(Model $model)
     {
+        $model->setAPI($this);
         $this->models[$model->getSingularName()] = $model;
 
         //For debugging
@@ -69,8 +75,25 @@ class API
         return $this->models;
     }
 
+
+    /**
+     * @return ParsedObject\Enum[]
+     */
+    public function getEnums()
+    {
+        return $this->enums;
+    }
+
+    /**
+     * @return string
+     */
     public function getName()
     {
         return $this->name;
     }
+
+
+
+
+
 }

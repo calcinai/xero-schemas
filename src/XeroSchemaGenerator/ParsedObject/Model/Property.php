@@ -8,6 +8,7 @@
 namespace Calcinai\XeroSchemaGenerator\ParsedObject\Model;
 
 use Calcinai\XeroSchemaGenerator\ParsedObject;
+use Calcinai\XeroSchemaGenerator\ParsedObject\Enum;
 use Calcinai\XeroSchemaGenerator\ParsedObject\Model;
 
 class Property extends ParsedObject
@@ -20,6 +21,9 @@ class Property extends ParsedObject
     const TYPE_DATE      = 'date';
     const TYPE_DATETIME  = 'datetime';
     const TYPE_GUID      = 'guid';
+
+    const TYPE_OBJECT    = 'object';
+    const TYPE_ENUM      = 'enum';
 
     private $links;
     private $type;
@@ -52,6 +56,11 @@ class Property extends ParsedObject
 
     private $max_length;
 
+    /**
+     * @var Model
+     */
+    private $related_object;
+
     public function __construct($name, $description, $mandatory = false, $read_only = false, $deprecated = false)
     {
 
@@ -62,7 +71,7 @@ class Property extends ParsedObject
             $deprecated = true;
         }
 
-        $this->name = preg_replace('/[^a-z]+/i', '', ucwords($name));
+        $this->name = preg_replace('/[^a-z\d]+/i', '', ucwords($name));
         $this->description = $description;
         $this->links = [];
 
@@ -189,6 +198,17 @@ class Property extends ParsedObject
         $result = null;
 
         if (!isset($type)) {
+
+            if (preg_match('/see\s(?<model>[^.]+)/i', $this->getDescription(), $matches)) {
+
+                print_r($matches);
+//                print_r($this->getParentModel()->getAPI());
+//                $result = $this->getParentModel()->getAPI()->searchByKey();
+
+            }
+
+
+
 //            //The ns hint for searching, look for subclasses of this first.
 //            $ns_hint = sprintf('%s\\%s', $this->getParentModel()->getNamespace(), $this->getParentModel()->getClassName());
 //
@@ -256,18 +276,18 @@ class Property extends ParsedObject
         }
 
 
-//        if ($result instanceof Enum)
-//            $type = self::TYPE_ENUM;
-//        elseif ($result instanceof Model) {
-//            $type = self::TYPE_OBJECT;
-//            $this->related_object = $result;
-//
-//            //If docs have case-typos in them, take the class name as authoritative.
-//            if (strcmp($this->getName(), $this->related_object->getSingularName()) !== 0 && strcasecmp($this->getName(), $this->related_object->getSingularName()) === 0)
-//                $this->name = $this->related_object->getSingularName();
-//
-//
-//        }
+        if ($result instanceof Enum)
+            $type = self::TYPE_ENUM;
+        elseif ($result instanceof Model) {
+            $type = self::TYPE_OBJECT;
+            $this->related_object = $result;
+
+            //If docs have case-typos in them, take the class name as authoritative.
+            if (strcmp($this->getName(), $this->related_object->getSingularName()) !== 0 && strcasecmp($this->getName(), $this->related_object->getSingularName()) === 0)
+                $this->name = $this->related_object->getSingularName();
+
+
+        }
 
         if (!isset($type)){
             $type = self::TYPE_STRING;

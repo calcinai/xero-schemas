@@ -45,7 +45,19 @@
     "definitions": {
         "Address": {
             "properties": {
-                "AddressLine": {
+                "AddressLine1": {
+                    "type": "string",
+                    "maxLength": 500
+                },
+                "AddressLine2": {
+                    "type": "string",
+                    "maxLength": 500
+                },
+                "AddressLine3": {
+                    "type": "string",
+                    "maxLength": 500
+                },
+                "AddressLine4": {
                     "type": "string",
                     "maxLength": 500
                 },

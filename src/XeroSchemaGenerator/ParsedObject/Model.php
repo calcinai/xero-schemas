@@ -215,6 +215,25 @@ class Model extends ParsedObject
         return $this->guid_property;
     }
 
+    /**
+     * @return API
+     */
+    public function getAPI()
+    {
+        return $this->api;
+    }
+
+    /**
+     * @param API $api
+     * @return $this
+     */
+    public function setAPI(API $api)
+    {
+        $this->api = $api;
+        return $this;
+    }
+
+
 
     public function getDescriptionForMethod($method)
     {
@@ -281,6 +300,5 @@ class Model extends ParsedObject
     {
         return in_array($method, $this->methods);
     }
-
 
 }
