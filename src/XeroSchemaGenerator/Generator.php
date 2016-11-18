@@ -38,7 +38,7 @@ class Generator
             ->setHost('api.xero.com') //This needs to get overridden for partner APIs, but needs somehting as a base for valid swagger
             ->setBasePath($api->getBasePath())
             ->addScheme('https')
-            ->setConsumes(['text/xml'])
+            ->setConsumes(['text/xml', 'application/json'])
             ->setProduces(['text/xml', 'application/json']);
 
 

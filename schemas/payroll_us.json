@@ -10,7 +10,8 @@
         "https"
     ],
     "consumes": [
-        "text\/xml"
+        "text\/xml",
+        "application\/json"
     ],
     "produces": [
         "text\/xml",
