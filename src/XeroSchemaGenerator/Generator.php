@@ -105,7 +105,6 @@ class Generator
                             )
                         )
                     );
-
                 }
 
                 //PUT - not correct yet
