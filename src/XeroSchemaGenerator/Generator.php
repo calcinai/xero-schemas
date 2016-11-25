@@ -245,7 +245,6 @@ class Generator
             $get_operation->addParameter(HeaderParameterSubSchema::create()
                 ->setName('If-Modified-Since')
                 ->setDescription('Only records created or modified since this timestamp will be returned')
-                ->setCollectionFormat(null)//stupid fix
                 ->setType('string')->setFormat('date-time')
             );
         }
@@ -254,7 +253,6 @@ class Generator
             $get_operation->addParameter(QueryParameterSubSchema::create()
                 ->setName('page')
                 ->setDescription('e.g. page=1 – Up to 100 records will be returned in a single API call')
-//                            ->setCollectionFormat(null) //stupid fix
                 ->setType('number')
             );
         }
@@ -263,7 +261,6 @@ class Generator
             $get_operation->addParameter(QueryParameterSubSchema::create()
                 ->setName('where')
                 ->setDescription('Filter by an any element')
-//                            ->setCollectionFormat(null) //stupid fix
                 ->setType('string')
             );
         }
@@ -272,7 +269,6 @@ class Generator
             $get_operation->addParameter(QueryParameterSubSchema::create()
                 ->setName('order')
                 ->setDescription('Order by an any element')
-//                            ->setCollectionFormat(null) //stupid fix
                 ->setType('string')
             );
         }
