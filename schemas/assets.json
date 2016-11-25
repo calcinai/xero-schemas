@@ -25,7 +25,10 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#\/definitions\/Asset"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#\/definitions\/Asset"
+                            }
                         }
                     }
                 }
@@ -57,7 +60,10 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#\/definitions\/AssetType"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#\/definitions\/AssetType"
+                            }
                         }
                     }
                 }
@@ -89,7 +95,10 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#\/definitions\/Setting"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#\/definitions\/Setting"
+                            }
                         }
                     }
                 }

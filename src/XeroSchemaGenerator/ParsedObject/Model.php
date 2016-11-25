@@ -57,10 +57,7 @@ class Model extends ParsedObject
      */
     private $parent_model;
 
-    /**
-     * @var bool
-     */
-    public $is_pagable;
+    private $parameters;
 
     /**
      * @var bool
@@ -68,9 +65,9 @@ class Model extends ParsedObject
     public $supports_pdf;
 
 
-    const METHOD_GET    = 'GET';
-    const METHOD_PUT    = 'PUT';
-    const METHOD_POST   = 'POST';
+    const METHOD_GET = 'GET';
+    const METHOD_PUT = 'PUT';
+    const METHOD_POST = 'POST';
     const METHOD_DELETE = 'DELETE';
 
     /**
@@ -83,11 +80,12 @@ class Model extends ParsedObject
         self::METHOD_DELETE
     ];
 
+
     public function __construct($raw_name)
     {
         parent::__construct($raw_name);
 
-        $this->is_pagable = false;
+        $this->parameters = [];
         $this->supports_pdf = false;
     }
 
@@ -113,7 +111,7 @@ class Model extends ParsedObject
     {
         $this->full_url = $full_url;
 
-        if (preg_match('#(?<base_path>/[a-z]+.xro)/(?<version>[0-9\.]+)(?<uri>/.+)#', $this->full_url, $matches)){
+        if (preg_match('#(?<base_path>/[a-z]+.xro)/(?<version>[0-9\.]+)(?<uri>/.+)#', $this->full_url, $matches)) {
             $this->base_path = $matches['base_path'];
             $this->version = $matches['version'];
             $this->resource_uri = $matches['uri'];
@@ -238,10 +236,9 @@ class Model extends ParsedObject
     }
 
 
-
     public function getDescriptionForMethod($method)
     {
-        switch($method){
+        switch ($method) {
             case self::METHOD_GET:
                 preg_match('/.*(retrieve|get).*/i', $this->description, $matches);
                 break;
@@ -257,7 +254,7 @@ class Model extends ParsedObject
         }
 
         //If a keyword is found, return that line
-        if(isset($matches[0])){
+        if (isset($matches[0])) {
             return $matches[0];
         }
 
@@ -273,8 +270,8 @@ class Model extends ParsedObject
      */
     public function printPropertyTable()
     {
-        $rows = array();
-        $column_sizes = array();
+        $rows = [];
+        $column_sizes = [];
 
         foreach ($this->properties as $key => $property) {
             $rows[$key] = array($property->getName(), $string = substr(preg_replace('/[^\w\s.\-\(\)]|\n/', '', $property->getDescription()), 0, 100));
@@ -298,6 +295,16 @@ class Model extends ParsedObject
         echo str_repeat('-', $total_row_width) . "\n\n";
 
 
+    }
+
+    public function setHasParameter($name)
+    {
+        $this->parameters[$name] = true;
+    }
+
+    public function hasParameter($name)
+    {
+        return isset($this->parameters[$name]);
     }
 
 }

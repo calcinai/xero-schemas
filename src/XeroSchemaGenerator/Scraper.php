@@ -195,8 +195,9 @@ class Scraper
                         $current_model->setParentModel($primary_model);
                     }
 
-                    $this->parseModelTable($current_model, $table_node);
                 }
+
+                $this->parseModelTable($current_model, $table_node);
 
                 //Add (might happen more than once for the same model but doesn't matter).
                 $api->addModel($current_model);
@@ -277,15 +278,25 @@ class Scraper
             //If there's a second, use it as description
             $description = $table_column_nodes->count() > 1 ? $table_column_nodes->eq(1)->text() : null;
 
-
             //@todo Here should handle making these methods available on the models
             if (preg_match('/^(?<special_function>where|order|sort|filter|page|offset|pagesize|modified( after)?|record filter|include ?archived)$/i', $property_name, $matches) !== 0) {
 
                 if (isset($matches['special_function'])) {
-                    switch ($matches['special_function']) {
+                    switch (strtolower($matches['special_function'])) {
                         case 'page':
-                            $model->is_pagable = true;
+                            $model->setHasParameter('page');
                             break;
+                        case 'order':
+                            $model->setHasParameter('order');
+                            break;
+                        case 'where':
+                            $model->setHasParameter('where');
+                            break;
+                        case 'modified':
+                        case 'modified after':
+                            $model->setHasParameter('if-modified-since');
+                            break;
+
                     }
                 }
 

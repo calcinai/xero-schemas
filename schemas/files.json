@@ -25,7 +25,10 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#\/definitions\/File"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#\/definitions\/File"
+                            }
                         }
                     }
                 }
@@ -83,7 +86,10 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#\/definitions\/Folder"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#\/definitions\/Folder"
+                            }
                         }
                     }
                 }
@@ -141,7 +147,10 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#\/definitions\/Association"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#\/definitions\/Association"
+                            }
                         }
                     }
                 }

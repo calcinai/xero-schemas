@@ -9,9 +9,11 @@ namespace Calcinai\XeroSchemaGenerator;
 use Calcinai\Strut\Definitions\BodyParameter;
 use Calcinai\Strut\Definitions\Definitions;
 use Calcinai\Strut\Definitions\ExternalDocs;
+use Calcinai\Strut\Definitions\HeaderParameterSubSchema;
 use Calcinai\Strut\Definitions\Info;
 use Calcinai\Strut\Definitions\Operation;
 use Calcinai\Strut\Definitions\PathItem;
+use Calcinai\Strut\Definitions\PathParameterSubSchema;
 use Calcinai\Strut\Definitions\Paths;
 use Calcinai\Strut\Definitions\QueryParameterSubSchema;
 use Calcinai\Strut\Definitions\Response;
@@ -35,7 +37,7 @@ class Generator
                 ->setTitle($api->getName())
                 ->setVersion($api->getVersion())
         )
-            ->setHost('api.xero.com') //This needs to get overridden for partner APIs, but needs somehting as a base for valid swagger
+            ->setHost('api.xero.com')//This needs to get overridden for partner APIs, but needs somehting as a base for valid swagger
             ->setBasePath($api->getBasePath())
             ->addScheme('https')
             ->setConsumes(['text/xml', 'application/json'])
@@ -68,43 +70,12 @@ class Generator
 
                 //GET
                 if ($model->supportsMethod(Model::METHOD_GET)) {
-
-                    $path_item_schema->setGet(Operation::create()
-                        ->setSummary($model->getDescriptionForMethod(Model::METHOD_GET))
-//                        ->addParameter(QueryParameterSubSchema::create()
-//                            ->setName('Limit')
-//                            ->setDescription('How many items to return at one time (max 100)')
-//                            ->setRequired(false)
-//                            ->setType('integer')
-//                            ->setFormat('int32')
-//                        )
-                        ->setResponses(Responses::create()
-                            ->set('200', Response::create()
-                                ->setDescription('')
-                                ->setSchema(Schema::create()->setRef(sprintf('#/definitions/%s', $model->getSingularName())))
-                            )
-                        )
-                    );
-
+                    $path_item_schema->setGet($this->buildGetOperation($model));
                 }
 
                 //POST - not correct yet
                 if ($model->supportsMethod(Model::METHOD_POST)) {
-
-                    $path_item_schema->setPost(Operation::create()
-                        ->addParameter(BodyParameter::create()
-                            ->setName($model->getCollectiveName())
-                            ->setSchema(Schema::create()
-                                ->setRef(sprintf('#/definitions/%s', $model->getSingularName())) //Not sure about this one yet
-                            )
-                        )
-                        ->setResponses(Responses::create()
-                            ->set('200', Response::create()
-                                ->setDescription('')
-                                ->setSchema(Schema::create()->setRef(sprintf('#/definitions/%s', $model->getSingularName())))
-                            )
-                        )
-                    );
+                    $path_item_schema->setPost($this->buildPostOperation($model));
                 }
 
                 //PUT - not correct yet
@@ -246,6 +217,92 @@ class Generator
 
         return $swagger;
 
+    }
+
+
+    /**
+     * @param Model $model
+     * @return Operation
+     */
+    public function buildGetOperation(Model $model)
+    {
+
+        $get_operation = Operation::create()
+            ->setSummary($model->getDescriptionForMethod(Model::METHOD_GET))
+            ->setResponses(Responses::create()
+                ->set('200', Response::create()
+                    ->setDescription('')
+                    ->setSchema(Schema::create()
+                        ->setType('array')
+                        ->setItems(
+                            Schema::create()->setRef(sprintf('#/definitions/%s', $model->getSingularName()))
+                        )
+                    )
+                )
+            );
+
+        if ($model->hasParameter('if-modified-since')) {
+            $get_operation->addParameter(HeaderParameterSubSchema::create()
+                ->setName('If-Modified-Since')
+                ->setDescription('Only records created or modified since this timestamp will be returned')
+                ->setCollectionFormat(null)//stupid fix
+                ->setType('string')->setFormat('date-time')
+            );
+        }
+
+        if ($model->hasParameter('page')) {
+            $get_operation->addParameter(QueryParameterSubSchema::create()
+                ->setName('page')
+                ->setDescription('e.g. page=1 – Up to 100 records will be returned in a single API call')
+//                            ->setCollectionFormat(null) //stupid fix
+                ->setType('number')
+            );
+        }
+
+        if ($model->hasParameter('where')) {
+            $get_operation->addParameter(QueryParameterSubSchema::create()
+                ->setName('where')
+                ->setDescription('Filter by an any element')
+//                            ->setCollectionFormat(null) //stupid fix
+                ->setType('string')
+            );
+        }
+
+        if ($model->hasParameter('order')) {
+            $get_operation->addParameter(QueryParameterSubSchema::create()
+                ->setName('order')
+                ->setDescription('Order by an any element')
+//                            ->setCollectionFormat(null) //stupid fix
+                ->setType('string')
+            );
+        }
+
+        return $get_operation;
+    }
+
+
+    /**
+     * @param Model $model
+     * @return Operation
+     */
+    public function buildPostOperation(Model $model)
+    {
+
+        $post_operation = Operation::create()
+            ->addParameter(BodyParameter::create()
+                ->setName($model->getCollectiveName())
+                ->setSchema(Schema::create()
+                    ->setRef(sprintf('#/definitions/%s', $model->getSingularName()))
+                )
+            )
+            ->setResponses(Responses::create()
+                ->set('200', Response::create()
+                    ->setDescription('')
+                    ->setSchema(Schema::create()->setRef(sprintf('#/definitions/%s', $model->getSingularName())))
+                )
+            );
+
+        return $post_operation;
     }
 
 }

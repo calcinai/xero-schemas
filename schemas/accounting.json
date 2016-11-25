@@ -25,10 +25,37 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#\/definitions\/Account"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#\/definitions\/Account"
+                            }
                         }
                     }
-                }
+                },
+                "parameters": [
+                    {
+                        "in": "header",
+                        "collectionFormat": null,
+                        "name": "If-Modified-Since",
+                        "description": "Only records created or modified since this timestamp will be returned",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    {
+                        "in": "query",
+                        "collectionFormat": "csv",
+                        "name": "where",
+                        "description": "Filter by an any element",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "collectionFormat": "csv",
+                        "name": "order",
+                        "description": "Order by an any element",
+                        "type": "string"
+                    }
+                ]
             },
             "post": {
                 "parameters": [
@@ -83,7 +110,10 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#\/definitions\/BankTransaction"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#\/definitions\/BankTransaction"
+                            }
                         }
                     }
                 }
@@ -134,7 +164,10 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#\/definitions\/BankTransfer"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#\/definitions\/BankTransfer"
+                            }
                         }
                     }
                 }
@@ -166,7 +199,10 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#\/definitions\/BrandingTheme"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#\/definitions\/BrandingTheme"
+                            }
                         }
                     }
                 }
@@ -179,7 +215,10 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#\/definitions\/Contact"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#\/definitions\/Contact"
+                            }
                         }
                     }
                 }
@@ -230,10 +269,29 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#\/definitions\/ContactGroup"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#\/definitions\/ContactGroup"
+                            }
                         }
                     }
-                }
+                },
+                "parameters": [
+                    {
+                        "in": "query",
+                        "collectionFormat": "csv",
+                        "name": "where",
+                        "description": "Filter by an any element",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "collectionFormat": "csv",
+                        "name": "order",
+                        "description": "Order by an any element",
+                        "type": "string"
+                    }
+                ]
             },
             "post": {
                 "parameters": [
@@ -288,7 +346,10 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#\/definitions\/CreditNote"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#\/definitions\/CreditNote"
+                            }
                         }
                     }
                 }
@@ -339,10 +400,29 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#\/definitions\/Currency"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#\/definitions\/Currency"
+                            }
                         }
                     }
-                }
+                },
+                "parameters": [
+                    {
+                        "in": "query",
+                        "collectionFormat": "csv",
+                        "name": "where",
+                        "description": "Filter by an any element",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "collectionFormat": "csv",
+                        "name": "order",
+                        "description": "Order by an any element",
+                        "type": "string"
+                    }
+                ]
             }
         },
         "\/Employees": {
@@ -352,10 +432,37 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#\/definitions\/Employee"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#\/definitions\/Employee"
+                            }
                         }
                     }
-                }
+                },
+                "parameters": [
+                    {
+                        "in": "header",
+                        "collectionFormat": null,
+                        "name": "If-Modified-Since",
+                        "description": "Only records created or modified since this timestamp will be returned",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    {
+                        "in": "query",
+                        "collectionFormat": "csv",
+                        "name": "where",
+                        "description": "Filter by an any element",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "collectionFormat": "csv",
+                        "name": "order",
+                        "description": "Order by an any element",
+                        "type": "string"
+                    }
+                ]
             },
             "post": {
                 "parameters": [
@@ -403,10 +510,37 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#\/definitions\/ExpenseClaim"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#\/definitions\/ExpenseClaim"
+                            }
                         }
                     }
-                }
+                },
+                "parameters": [
+                    {
+                        "in": "header",
+                        "collectionFormat": null,
+                        "name": "If-Modified-Since",
+                        "description": "Only records created or modified since this timestamp will be returned",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    {
+                        "in": "query",
+                        "collectionFormat": "csv",
+                        "name": "where",
+                        "description": "Filter by an any element",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "collectionFormat": "csv",
+                        "name": "order",
+                        "description": "Order by an any element",
+                        "type": "string"
+                    }
+                ]
             },
             "post": {
                 "parameters": [
@@ -454,7 +588,10 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#\/definitions\/Invoice"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#\/definitions\/Invoice"
+                            }
                         }
                     }
                 }
@@ -505,7 +642,10 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#\/definitions\/Item"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#\/definitions\/Item"
+                            }
                         }
                     }
                 }
@@ -563,10 +703,23 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#\/definitions\/Journal"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#\/definitions\/Journal"
+                            }
                         }
                     }
-                }
+                },
+                "parameters": [
+                    {
+                        "in": "header",
+                        "collectionFormat": null,
+                        "name": "If-Modified-Since",
+                        "description": "Only records created or modified since this timestamp will be returned",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                ]
             }
         },
         "\/LinkedTransactions": {
@@ -576,10 +729,22 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#\/definitions\/LinkedTransaction"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#\/definitions\/LinkedTransaction"
+                            }
                         }
                     }
-                }
+                },
+                "parameters": [
+                    {
+                        "in": "query",
+                        "collectionFormat": "csv",
+                        "name": "page",
+                        "description": "e.g. page=1 \u2013 Up to 100 records will be returned in a single API call",
+                        "type": "number"
+                    }
+                ]
             },
             "post": {
                 "parameters": [
@@ -634,7 +799,10 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#\/definitions\/ManualJournal"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#\/definitions\/ManualJournal"
+                            }
                         }
                     }
                 }
@@ -685,7 +853,10 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#\/definitions\/Organisation"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#\/definitions\/Organisation"
+                            }
                         }
                     }
                 }
@@ -698,7 +869,10 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#\/definitions\/Overpayment"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#\/definitions\/Overpayment"
+                            }
                         }
                     }
                 }
@@ -730,10 +904,37 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#\/definitions\/Payment"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#\/definitions\/Payment"
+                            }
                         }
                     }
-                }
+                },
+                "parameters": [
+                    {
+                        "in": "header",
+                        "collectionFormat": null,
+                        "name": "If-Modified-Since",
+                        "description": "Only records created or modified since this timestamp will be returned",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    {
+                        "in": "query",
+                        "collectionFormat": "csv",
+                        "name": "where",
+                        "description": "Filter by an any element",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "collectionFormat": "csv",
+                        "name": "order",
+                        "description": "Order by an any element",
+                        "type": "string"
+                    }
+                ]
             },
             "post": {
                 "parameters": [
@@ -781,7 +982,10 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#\/definitions\/Prepayment"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#\/definitions\/Prepayment"
+                            }
                         }
                     }
                 }
@@ -813,7 +1017,10 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#\/definitions\/PurchaseOrder"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#\/definitions\/PurchaseOrder"
+                            }
                         }
                     }
                 }
@@ -864,7 +1071,10 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#\/definitions\/Receipt"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#\/definitions\/Receipt"
+                            }
                         }
                     }
                 }
@@ -915,7 +1125,10 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#\/definitions\/RepeatingInvoice"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#\/definitions\/RepeatingInvoice"
+                            }
                         }
                     }
                 }
@@ -928,7 +1141,10 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#\/definitions\/TaxRate"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#\/definitions\/TaxRate"
+                            }
                         }
                     }
                 }
@@ -979,7 +1195,10 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#\/definitions\/TrackingCategory"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#\/definitions\/TrackingCategory"
+                            }
                         }
                     }
                 }
@@ -1037,10 +1256,37 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#\/definitions\/User"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#\/definitions\/User"
+                            }
                         }
                     }
-                }
+                },
+                "parameters": [
+                    {
+                        "in": "header",
+                        "collectionFormat": null,
+                        "name": "If-Modified-Since",
+                        "description": "Only records created or modified since this timestamp will be returned",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    {
+                        "in": "query",
+                        "collectionFormat": "csv",
+                        "name": "where",
+                        "description": "Filter by an any element",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "collectionFormat": "csv",
+                        "name": "order",
+                        "description": "Order by an any element",
+                        "type": "string"
+                    }
+                ]
             }
         }
     },
@@ -1177,8 +1423,7 @@
                     "type": "boolean"
                 },
                 "AccountID": {
-                    "description": "Xero identifier",
-                    "readOnly": true,
+                    "description": "The Xero identifier for an account \u2013 specified as a string following the endpoint name\ne.g. \/297c2dc5-cc47-4afd-8ec8-74990b8761e9",
                     "type": "string",
                     "format": "uuid"
                 },
@@ -1409,6 +1654,11 @@
                 "DiscountRate": {
                     "description": "Percentage discount being applied to a line item (only supported on ACCREC invoices \u2013 ACC PAY invoices and credit notes in Xero do not support discounts ",
                     "type": "string"
+                },
+                "RepeatingInvoiceID": {
+                    "description": "The Xero identifier for a Repeating Invoicee.g. 297c2dc5-cc47-4afd-8ec8-74990b8761e9",
+                    "type": "string",
+                    "format": "uuid"
                 }
             }
         },
@@ -1762,7 +2012,7 @@
                     "type": "string"
                 },
                 "ContactGroupID": {
-                    "description": "The Xero generated unique identifier for contact groups",
+                    "description": "The Xero identifier for an contact group \u2013 specified as a string following the endpoint name.\ne.g. \/297c2dc5-cc47-4afd-8ec8-74990b8761e9",
                     "type": "string",
                     "format": "uuid"
                 },
@@ -1936,7 +2186,7 @@
             },
             "properties": {
                 "EmployeeID": {
-                    "description": "Xero identifier",
+                    "description": "The Xero identifier for an employee\ne.g. 297c2dc5-cc47-4afd-8ec8-74990b8761e9",
                     "type": "string",
                     "format": "uuid"
                 },
@@ -2435,7 +2685,7 @@
             },
             "properties": {
                 "SourceTransactionID": {
-                    "description": "The identifier of the source transaction (the purchase component of a billable expense). Either an invoice with a type of ACCPAY or a banktransaction of type SPEND.",
+                    "description": "Filter by the SourceTransactionID. Get all the linked transactions created from a particular ACCPAY invoice",
                     "type": "string",
                     "format": "uuid"
                 },
@@ -2445,12 +2695,12 @@
                     "format": "uuid"
                 },
                 "ContactID": {
-                    "description": "The identifier for the contact on the target transaction i.e. the customer that the expense is being billed on to.",
+                    "description": "Filter by the combination of ContactID and Status. Get all the linked transactions that have been assigned to a particular customer and have a particular status e.g. GET \/LinkedTransactions?ContactID=4bb34b03-3378-4bb2-a0ed-6345abf3224e&Status=APPROVED.",
                     "type": "string",
                     "format": "uuid"
                 },
                 "TargetTransactionID": {
-                    "description": "The identifier of the target transaction (the sale component of a billable expense). Currently, only invoices with a type of ACCREC can be a target transaction.",
+                    "description": "Filter by the TargetTransactionID. Get all the linked transactions allocated to a particular ACCREC invoice",
                     "type": "string",
                     "format": "uuid"
                 },
@@ -2460,12 +2710,12 @@
                     "format": "uuid"
                 },
                 "LinkedTransactionID": {
-                    "description": "The Xero generated identifier for a linked transaction.",
+                    "description": "The Xero identifier for an Linked Transaction e.g. \/LinkedTransactions\/297c2dc5-cc47-4afd-8ec8-74990b8761e9",
                     "type": "string",
                     "format": "uuid"
                 },
                 "Status": {
-                    "description": "The status of the linked transaction. This is derived from the statuses of the source and target transactions and cannot be explicitly set\/updated.",
+                    "description": "Filter by the combination of ContactID and Status. Get all the linked transactions that have been assigned to a particular customer and have a particular status e.g. GET \/LinkedTransactions?ContactID=4bb34b03-3378-4bb2-a0ed-6345abf3224e&Status=APPROVED.",
                     "type": "string"
                 },
                 "Type": {
@@ -2483,7 +2733,6 @@
                 }
             },
             "required": [
-                "SourceTransactionID",
                 "SourceLineItemID"
             ]
         },
@@ -2956,6 +3205,11 @@
                     "readOnly": true,
                     "type": "string",
                     "format": "date-time"
+                },
+                "PaymentID": {
+                    "description": "The Xero identifier for an Payment e.g. 297c2dc5-cc47-4afd-8ec8-74990b8761e9",
+                    "type": "string",
+                    "format": "uuid"
                 }
             }
         },
@@ -3514,6 +3768,10 @@
                     "description": "Boolean to describe if Tax rate is compounded.Learn more",
                     "type": "number",
                     "format": "float"
+                },
+                "TaxType": {
+                    "description": "Filter by a Tax Type",
+                    "type": "string"
                 }
             }
         },
@@ -3560,6 +3818,11 @@
                 "Status": {
                     "description": "The status of a tracking option",
                     "type": "string"
+                },
+                "TrackingCategoryID": {
+                    "description": "Filter by a tracking categorye.g. 297c2dc5-cc47-4afd-8ec8-74990b8761e9",
+                    "type": "string",
+                    "format": "uuid"
                 }
             }
         },

@@ -25,7 +25,10 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#\/definitions\/Employee"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#\/definitions\/Employee"
+                            }
                         }
                     }
                 }
@@ -57,7 +60,10 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#\/definitions\/LeaveApplication"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#\/definitions\/LeaveApplication"
+                            }
                         }
                     }
                 }
@@ -89,7 +95,10 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#\/definitions\/PayItem"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#\/definitions\/PayItem"
+                            }
                         }
                     }
                 }
@@ -121,7 +130,10 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#\/definitions\/PayrollCalendar"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#\/definitions\/PayrollCalendar"
+                            }
                         }
                     }
                 }
@@ -153,7 +165,10 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#\/definitions\/PayRun"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#\/definitions\/PayRun"
+                            }
                         }
                     }
                 }
@@ -185,7 +200,10 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#\/definitions\/Payslip"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#\/definitions\/Payslip"
+                            }
                         }
                     }
                 }
@@ -217,7 +235,10 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#\/definitions\/Setting"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#\/definitions\/Setting"
+                            }
                         }
                     }
                 }
@@ -230,7 +251,10 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#\/definitions\/SuperFund"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#\/definitions\/SuperFund"
+                            }
                         }
                     }
                 }
@@ -262,7 +286,10 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#\/definitions\/SuperFundProduct"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#\/definitions\/SuperFundProduct"
+                            }
                         }
                     }
                 }
@@ -275,7 +302,10 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#\/definitions\/Timesheet"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#\/definitions\/Timesheet"
+                            }
                         }
                     }
                 }

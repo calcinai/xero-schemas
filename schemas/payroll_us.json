@@ -25,7 +25,10 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#\/definitions\/Employee"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#\/definitions\/Employee"
+                            }
                         }
                     }
                 }
@@ -57,7 +60,10 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#\/definitions\/WorkLocation"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#\/definitions\/WorkLocation"
+                            }
                         }
                     }
                 }
@@ -89,7 +95,10 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#\/definitions\/PayItem"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#\/definitions\/PayItem"
+                            }
                         }
                     }
                 }
@@ -121,7 +130,10 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#\/definitions\/PayRun"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#\/definitions\/PayRun"
+                            }
                         }
                     }
                 }
@@ -153,7 +165,10 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#\/definitions\/PaySchedule"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#\/definitions\/PaySchedule"
+                            }
                         }
                     }
                 }
@@ -185,7 +200,10 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#\/definitions\/Paystub"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#\/definitions\/Paystub"
+                            }
                         }
                     }
                 }
@@ -217,7 +235,10 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#\/definitions\/Setting"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#\/definitions\/Setting"
+                            }
                         }
                     }
                 }
@@ -230,7 +251,10 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#\/definitions\/Timesheet"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#\/definitions\/Timesheet"
+                            }
                         }
                     }
                 }

@@ -46,57 +46,57 @@ $scraper->scrapeModels($accounting_api, 'api', [
     'users'
 ]);
 
-$payroll_api = new API('Payroll - AU', '/payroll.xro', '1.0');
-$scraper->scrapeEnums($payroll_api, 'payroll-api/types-and-codes');
-$scraper->scrapeModels($payroll_api, 'payroll-api', [
-    'employees',
-    'leaveapplications',
-    'payitems',
-    'payrollcalendars',
-    'payruns',
-    'payslip',
-    'settings',
-    'superfunds',
-    'superfundproducts',
-    'timesheets'
-]);
-
-$payroll_api_us = new API('Payroll - US', '/payroll.xro', '1.0');
-$scraper->scrapeEnums($payroll_api_us, 'payroll-api-us/types-codes');
-$scraper->scrapeModels($payroll_api_us, 'payroll-api-us', [
-    'employees',
-    'pay-items',
-    'pay-runs',
-    'pay-schedules',
-    'pay-stubs',
-    'settings',
-    'timesheets',
-    'work-locations'
-]);
-
-
-$files_api = new API('Files API', '/files.xro', '1.0');
-$scraper->scrapeEnums($files_api, 'files-api/types');
-$scraper->scrapeModels($files_api, 'files-api', [
-    'files',
-    'folders',
-    'associations'
-]);
-
-
-$assets_api = new API('Assets API', '/assets.xro', '1.0');
-$scraper->scrapeEnums($assets_api, 'assets-api/types');
-$scraper->scrapeModels($assets_api, 'assets-api', [
-    'assets',
-    'asset-types',
-    'settings'
-]);
+//$payroll_api = new API('Payroll - AU', '/payroll.xro', '1.0');
+//$scraper->scrapeEnums($payroll_api, 'payroll-api/types-and-codes');
+//$scraper->scrapeModels($payroll_api, 'payroll-api', [
+//    'employees',
+//    'leaveapplications',
+//    'payitems',
+//    'payrollcalendars',
+//    'payruns',
+//    'payslip',
+//    'settings',
+//    'superfunds',
+//    'superfundproducts',
+//    'timesheets'
+//]);
+//
+//$payroll_api_us = new API('Payroll - US', '/payroll.xro', '1.0');
+//$scraper->scrapeEnums($payroll_api_us, 'payroll-api-us/types-codes');
+//$scraper->scrapeModels($payroll_api_us, 'payroll-api-us', [
+//    'employees',
+//    'pay-items',
+//    'pay-runs',
+//    'pay-schedules',
+//    'pay-stubs',
+//    'settings',
+//    'timesheets',
+//    'work-locations'
+//]);
+//
+//
+//$files_api = new API('Files API', '/files.xro', '1.0');
+//$scraper->scrapeEnums($files_api, 'files-api/types');
+//$scraper->scrapeModels($files_api, 'files-api', [
+//    'files',
+//    'folders',
+//    'associations'
+//]);
+//
+//
+//$assets_api = new API('Assets API', '/assets.xro', '1.0');
+//$scraper->scrapeEnums($assets_api, 'assets-api/types');
+//$scraper->scrapeModels($assets_api, 'assets-api', [
+//    'assets',
+//    'asset-types',
+//    'settings'
+//]);
 
 
 $generator = new Generator();
 
 file_put_contents(sprintf('%s/schemas/accounting.json', APP_ROOT), json_encode($generator->generate($accounting_api), JSON_PRETTY_PRINT));
-file_put_contents(sprintf('%s/schemas/payroll_au.json', APP_ROOT), json_encode($generator->generate($payroll_api), JSON_PRETTY_PRINT));
-file_put_contents(sprintf('%s/schemas/payroll_us.json', APP_ROOT), json_encode($generator->generate($payroll_api_us), JSON_PRETTY_PRINT));
-file_put_contents(sprintf('%s/schemas/files.json', APP_ROOT), json_encode($generator->generate($files_api), JSON_PRETTY_PRINT));
-file_put_contents(sprintf('%s/schemas/assets.json', APP_ROOT), json_encode($generator->generate($assets_api), JSON_PRETTY_PRINT));
+//file_put_contents(sprintf('%s/schemas/payroll_au.json', APP_ROOT), json_encode($generator->generate($payroll_api), JSON_PRETTY_PRINT));
+//file_put_contents(sprintf('%s/schemas/payroll_us.json', APP_ROOT), json_encode($generator->generate($payroll_api_us), JSON_PRETTY_PRINT));
+//file_put_contents(sprintf('%s/schemas/files.json', APP_ROOT), json_encode($generator->generate($files_api), JSON_PRETTY_PRINT));
+//file_put_contents(sprintf('%s/schemas/assets.json', APP_ROOT), json_encode($generator->generate($assets_api), JSON_PRETTY_PRINT));
