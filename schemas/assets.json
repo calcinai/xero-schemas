@@ -20,7 +20,7 @@
     "paths": {
         "\/Assets": {
             "get": {
-                "summary": "Allows you to retrieve assetsAllows you to create and update draft assets",
+                "summary": "Allows you to retrieve assets",
                 "responses": {
                     "200": {
                         "description": "",
@@ -32,30 +32,11 @@
                         }
                     }
                 }
-            },
-            "post": {
-                "parameters": [
-                    {
-                        "in": "body",
-                        "name": "Assets",
-                        "schema": {
-                            "$ref": "#\/definitions\/Asset"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "",
-                        "schema": {
-                            "$ref": "#\/definitions\/Asset"
-                        }
-                    }
-                }
             }
         },
         "\/AssetTypes": {
             "get": {
-                "summary": "Allows you to retrieve asset typesAllows you to create and update asset types",
+                "summary": "Allows you to retrieve asset types",
                 "responses": {
                     "200": {
                         "description": "",
@@ -64,25 +45,6 @@
                             "items": {
                                 "$ref": "#\/definitions\/AssetType"
                             }
-                        }
-                    }
-                }
-            },
-            "post": {
-                "parameters": [
-                    {
-                        "in": "body",
-                        "name": "AssetTypes",
-                        "schema": {
-                            "$ref": "#\/definitions\/AssetType"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "",
-                        "schema": {
-                            "$ref": "#\/definitions\/AssetType"
                         }
                     }
                 }
@@ -240,6 +202,26 @@
                 },
                 "CurrentAccumDepreciationAmount": {
                     "description": "All depreciation occurring in the current financial year.",
+                    "type": "string"
+                },
+                "AssetId": {
+                    "description": "You can specify an individual record by appending the identifier to the endpoint, i.e.GET https:\/\/\u2026\/Assets\/4f7bcdcb-5ec1-4258-9558-19f662fccdfe",
+                    "type": "string"
+                },
+                "Status": {
+                    "description": "Required when retrieving a collection of assets. See Asset Status Codes",
+                    "type": "string"
+                },
+                "OrderBy": {
+                    "description": "Requests can be ordered by AssetType, AssetName, AssetNumber, PurchaseDate and PurchasePrice. If the asset status is DISPOSED it also allows DisposalDate and DisposalPrice.",
+                    "type": "string"
+                },
+                "SortDirection": {
+                    "description": "ASC or DESC",
+                    "type": "string"
+                },
+                "FilterBy": {
+                    "description": "A string that can be used to filter the list to only return assets containing the text. Checks it against the AssetName, AssetNumber, Description and AssetTypeName fields.",
                     "type": "string"
                 }
             }

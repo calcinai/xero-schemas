@@ -35,7 +35,6 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "collectionFormat": "csv",
                         "name": "If-Modified-Since",
                         "description": "Only records created or modified since this timestamp will be returned",
                         "type": "string",
@@ -43,28 +42,49 @@
                     },
                     {
                         "in": "query",
-                        "collectionFormat": "csv",
                         "name": "where",
                         "description": "Filter by an any element",
                         "type": "string"
                     },
                     {
                         "in": "query",
-                        "collectionFormat": "csv",
                         "name": "order",
                         "description": "Order by an any element",
                         "type": "string"
                     }
                 ]
             },
-            "post": {
+            "put": {
                 "parameters": [
                     {
                         "in": "body",
                         "name": "Accounts",
                         "schema": {
                             "$ref": "#\/definitions\/Account"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/Account"
                         }
+                    }
+                }
+            }
+        },
+        "\/Accounts\/{AccountID}": {
+            "get": {
+                "summary": "Allows you to retrieve the full chart of accounts",
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "AccountID",
+                        "type": "string",
+                        "format": "uuid"
                     }
                 ],
                 "responses": {
@@ -76,14 +96,22 @@
                     }
                 }
             },
-            "put": {
+            "post": {
                 "parameters": [
                     {
                         "in": "body",
                         "name": "Accounts",
                         "schema": {
                             "$ref": "#\/definitions\/Account"
-                        }
+                        },
+                        "required": true
+                    },
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "AccountID",
+                        "type": "string",
+                        "format": "uuid"
                     }
                 ],
                 "responses": {
@@ -96,6 +124,15 @@
                 }
             },
             "delete": {
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "AccountID",
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": ""
@@ -118,14 +155,37 @@
                     }
                 }
             },
-            "post": {
+            "put": {
                 "parameters": [
                     {
                         "in": "body",
                         "name": "BankTransactions",
                         "schema": {
                             "$ref": "#\/definitions\/BankTransaction"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/BankTransaction"
                         }
+                    }
+                }
+            }
+        },
+        "\/BankTransactions\/{BankTransactionID}": {
+            "get": {
+                "summary": "Allows you to retrieve any spend or receive money transactions",
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "BankTransactionID",
+                        "type": "string",
+                        "format": "uuid"
                     }
                 ],
                 "responses": {
@@ -137,14 +197,22 @@
                     }
                 }
             },
-            "put": {
+            "post": {
                 "parameters": [
                     {
                         "in": "body",
                         "name": "BankTransactions",
                         "schema": {
                             "$ref": "#\/definitions\/BankTransaction"
-                        }
+                        },
+                        "required": true
+                    },
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "BankTransactionID",
+                        "type": "string",
+                        "format": "uuid"
                     }
                 ],
                 "responses": {
@@ -159,7 +227,7 @@
         },
         "\/BankTransfers": {
             "get": {
-                "summary": "Allows you to retrieve any bank transfersAllows you to create bank transfers (Beta)Allows you to attach files to bank transfers",
+                "summary": "Allows you to retrieve any bank transfers",
                 "responses": {
                     "200": {
                         "description": "",
@@ -179,7 +247,30 @@
                         "name": "BankTransfers",
                         "schema": {
                             "$ref": "#\/definitions\/BankTransfer"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/BankTransfer"
                         }
+                    }
+                }
+            }
+        },
+        "\/BankTransfers\/{BankTransferID}": {
+            "get": {
+                "summary": "Allows you to retrieve any bank transfers",
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "BankTransferID",
+                        "type": "string",
+                        "format": "uuid"
                     }
                 ],
                 "responses": {
@@ -208,6 +299,28 @@
                 }
             }
         },
+        "\/BrandingThemes\/{BrandingThemeID}": {
+            "get": {
+                "summary": "GET a BrandingTheme",
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "BrandingThemeID",
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/BrandingTheme"
+                        }
+                    }
+                }
+            }
+        },
         "\/Contacts": {
             "get": {
                 "summary": "Allows you to retrieve, add and update contacts in a Xero organisation",
@@ -223,14 +336,37 @@
                     }
                 }
             },
-            "post": {
+            "put": {
                 "parameters": [
                     {
                         "in": "body",
                         "name": "Contacts",
                         "schema": {
                             "$ref": "#\/definitions\/Contact"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/Contact"
                         }
+                    }
+                }
+            }
+        },
+        "\/Contacts\/{ContactID}": {
+            "get": {
+                "summary": "Allows you to retrieve, add and update contacts in a Xero organisation",
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "ContactID",
+                        "type": "string",
+                        "format": "uuid"
                     }
                 ],
                 "responses": {
@@ -242,14 +378,22 @@
                     }
                 }
             },
-            "put": {
+            "post": {
                 "parameters": [
                     {
                         "in": "body",
                         "name": "Contacts",
                         "schema": {
                             "$ref": "#\/definitions\/Contact"
-                        }
+                        },
+                        "required": true
+                    },
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "ContactID",
+                        "type": "string",
+                        "format": "uuid"
                     }
                 ],
                 "responses": {
@@ -264,7 +408,7 @@
         },
         "\/ContactGroups": {
             "get": {
-                "summary": "Allows you to retrieve the ContactID and Name of all the contacts in a contact groupAllows you to create contact groupsAllows you to rename contact groupsAllows you to update the status (delete) contact groupsAllows you to add contacts to a contact groupAllows you to remove a contact from a contact groupAllows you to remove all contacts from a contact group",
+                "summary": "Allows you to retrieve the ContactID and Name of all the contacts in a contact group",
                 "responses": {
                     "200": {
                         "description": "",
@@ -279,28 +423,49 @@
                 "parameters": [
                     {
                         "in": "query",
-                        "collectionFormat": "csv",
                         "name": "where",
                         "description": "Filter by an any element",
                         "type": "string"
                     },
                     {
                         "in": "query",
-                        "collectionFormat": "csv",
                         "name": "order",
                         "description": "Order by an any element",
                         "type": "string"
                     }
                 ]
             },
-            "post": {
+            "put": {
                 "parameters": [
                     {
                         "in": "body",
                         "name": "ContactGroups",
                         "schema": {
                             "$ref": "#\/definitions\/ContactGroup"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/ContactGroup"
                         }
+                    }
+                }
+            }
+        },
+        "\/ContactGroups\/{ContactGroupID}": {
+            "get": {
+                "summary": "Allows you to retrieve the ContactID and Name of all the contacts in a contact group",
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "ContactGroupID",
+                        "type": "string",
+                        "format": "uuid"
                     }
                 ],
                 "responses": {
@@ -312,14 +477,22 @@
                     }
                 }
             },
-            "put": {
+            "post": {
                 "parameters": [
                     {
                         "in": "body",
                         "name": "ContactGroups",
                         "schema": {
                             "$ref": "#\/definitions\/ContactGroup"
-                        }
+                        },
+                        "required": true
+                    },
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "ContactGroupID",
+                        "type": "string",
+                        "format": "uuid"
                     }
                 ],
                 "responses": {
@@ -332,6 +505,15 @@
                 }
             },
             "delete": {
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "ContactGroupID",
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": ""
@@ -354,14 +536,37 @@
                     }
                 }
             },
-            "post": {
+            "put": {
                 "parameters": [
                     {
                         "in": "body",
                         "name": "CreditNotes",
                         "schema": {
                             "$ref": "#\/definitions\/CreditNote"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/CreditNote"
                         }
+                    }
+                }
+            }
+        },
+        "\/CreditNotes\/{CreditNoteID}": {
+            "get": {
+                "summary": "Allows you to retrieve any credit notes",
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "CreditNoteID",
+                        "type": "string",
+                        "format": "uuid"
                     }
                 ],
                 "responses": {
@@ -373,14 +578,22 @@
                     }
                 }
             },
-            "put": {
+            "post": {
                 "parameters": [
                     {
                         "in": "body",
                         "name": "CreditNotes",
                         "schema": {
                             "$ref": "#\/definitions\/CreditNote"
-                        }
+                        },
+                        "required": true
+                    },
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "CreditNoteID",
+                        "type": "string",
+                        "format": "uuid"
                     }
                 ],
                 "responses": {
@@ -410,14 +623,12 @@
                 "parameters": [
                     {
                         "in": "query",
-                        "collectionFormat": "csv",
                         "name": "where",
                         "description": "Filter by an any element",
                         "type": "string"
                     },
                     {
                         "in": "query",
-                        "collectionFormat": "csv",
                         "name": "order",
                         "description": "Order by an any element",
                         "type": "string"
@@ -442,7 +653,6 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "collectionFormat": "csv",
                         "name": "If-Modified-Since",
                         "description": "Only records created or modified since this timestamp will be returned",
                         "type": "string",
@@ -450,28 +660,49 @@
                     },
                     {
                         "in": "query",
-                        "collectionFormat": "csv",
                         "name": "where",
                         "description": "Filter by an any element",
                         "type": "string"
                     },
                     {
                         "in": "query",
-                        "collectionFormat": "csv",
                         "name": "order",
                         "description": "Order by an any element",
                         "type": "string"
                     }
                 ]
             },
-            "post": {
+            "put": {
                 "parameters": [
                     {
                         "in": "body",
                         "name": "Employees",
                         "schema": {
                             "$ref": "#\/definitions\/Employee"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/Employee"
                         }
+                    }
+                }
+            }
+        },
+        "\/Employees\/{EmployeeID}": {
+            "get": {
+                "summary": "Allows you to retrieve, add and update employees used in Xero payrun functionality",
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "EmployeeID",
+                        "type": "string",
+                        "format": "uuid"
                     }
                 ],
                 "responses": {
@@ -483,14 +714,22 @@
                     }
                 }
             },
-            "put": {
+            "post": {
                 "parameters": [
                     {
                         "in": "body",
                         "name": "Employees",
                         "schema": {
                             "$ref": "#\/definitions\/Employee"
-                        }
+                        },
+                        "required": true
+                    },
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "EmployeeID",
+                        "type": "string",
+                        "format": "uuid"
                     }
                 ],
                 "responses": {
@@ -520,7 +759,6 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "collectionFormat": "csv",
                         "name": "If-Modified-Since",
                         "description": "Only records created or modified since this timestamp will be returned",
                         "type": "string",
@@ -528,28 +766,49 @@
                     },
                     {
                         "in": "query",
-                        "collectionFormat": "csv",
                         "name": "where",
                         "description": "Filter by an any element",
                         "type": "string"
                     },
                     {
                         "in": "query",
-                        "collectionFormat": "csv",
                         "name": "order",
                         "description": "Order by an any element",
                         "type": "string"
                     }
                 ]
             },
-            "post": {
+            "put": {
                 "parameters": [
                     {
                         "in": "body",
                         "name": "ExpenseClaims",
                         "schema": {
                             "$ref": "#\/definitions\/ExpenseClaim"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/ExpenseClaim"
                         }
+                    }
+                }
+            }
+        },
+        "\/ExpenseClaims\/{ExpenseClaimID}": {
+            "get": {
+                "summary": "Allows you to retrieve expense claims to see their status",
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "ExpenseClaimID",
+                        "type": "string",
+                        "format": "uuid"
                     }
                 ],
                 "responses": {
@@ -561,14 +820,22 @@
                     }
                 }
             },
-            "put": {
+            "post": {
                 "parameters": [
                     {
                         "in": "body",
                         "name": "ExpenseClaims",
                         "schema": {
                             "$ref": "#\/definitions\/ExpenseClaim"
-                        }
+                        },
+                        "required": true
+                    },
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "ExpenseClaimID",
+                        "type": "string",
+                        "format": "uuid"
                     }
                 ],
                 "responses": {
@@ -596,14 +863,37 @@
                     }
                 }
             },
-            "post": {
+            "put": {
                 "parameters": [
                     {
                         "in": "body",
                         "name": "Invoices",
                         "schema": {
                             "$ref": "#\/definitions\/Invoice"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/Invoice"
                         }
+                    }
+                }
+            }
+        },
+        "\/Invoices\/{InvoiceID}": {
+            "get": {
+                "summary": "Allows you to retrieve any sales invoices or purchase bills",
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "InvoiceID",
+                        "type": "string",
+                        "format": "uuid"
                     }
                 ],
                 "responses": {
@@ -615,14 +905,22 @@
                     }
                 }
             },
-            "put": {
+            "post": {
                 "parameters": [
                     {
                         "in": "body",
                         "name": "Invoices",
                         "schema": {
                             "$ref": "#\/definitions\/Invoice"
-                        }
+                        },
+                        "required": true
+                    },
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "InvoiceID",
+                        "type": "string",
+                        "format": "uuid"
                     }
                 ],
                 "responses": {
@@ -637,7 +935,7 @@
         },
         "\/Items": {
             "get": {
-                "summary": "Allows you to retrieve any itemsAllows you to add or update tracked itemsAllows you to add or update untracked itemsAllows you to delete items",
+                "summary": "Allows you to retrieve any items",
                 "responses": {
                     "200": {
                         "description": "",
@@ -650,14 +948,37 @@
                     }
                 }
             },
-            "post": {
+            "put": {
                 "parameters": [
                     {
                         "in": "body",
                         "name": "Items",
                         "schema": {
                             "$ref": "#\/definitions\/Item"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/Item"
                         }
+                    }
+                }
+            }
+        },
+        "\/Items\/{ItemID}": {
+            "get": {
+                "summary": "Allows you to retrieve any items",
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "ItemID",
+                        "type": "string",
+                        "format": "uuid"
                     }
                 ],
                 "responses": {
@@ -669,14 +990,22 @@
                     }
                 }
             },
-            "put": {
+            "post": {
                 "parameters": [
                     {
                         "in": "body",
                         "name": "Items",
                         "schema": {
                             "$ref": "#\/definitions\/Item"
-                        }
+                        },
+                        "required": true
+                    },
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "ItemID",
+                        "type": "string",
+                        "format": "uuid"
                     }
                 ],
                 "responses": {
@@ -689,6 +1018,15 @@
                 }
             },
             "delete": {
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "ItemID",
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": ""
@@ -698,7 +1036,7 @@
         },
         "\/Journals": {
             "get": {
-                "summary": "Allows you to retrieve any journals.See Manual Journals if you need to create journals in Xero",
+                "summary": "Allows you to retrieve any journals.",
                 "responses": {
                     "200": {
                         "description": "",
@@ -713,7 +1051,6 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "collectionFormat": "csv",
                         "name": "If-Modified-Since",
                         "description": "Only records created or modified since this timestamp will be returned",
                         "type": "string",
@@ -722,9 +1059,31 @@
                 ]
             }
         },
+        "\/Journals\/{JournalID}": {
+            "get": {
+                "summary": "Allows you to retrieve any journals.",
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "JournalID",
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/Journal"
+                        }
+                    }
+                }
+            }
+        },
         "\/LinkedTransactions": {
             "get": {
-                "summary": "Retrieve linked transactions (billable expenses)Create linked transactionsUpdate linked transactionsDelete linked transactions",
+                "summary": "Retrieve linked transactions (billable expenses)",
                 "responses": {
                     "200": {
                         "description": "",
@@ -739,21 +1098,43 @@
                 "parameters": [
                     {
                         "in": "query",
-                        "collectionFormat": "csv",
                         "name": "page",
                         "description": "e.g. page=1 \u2013 Up to 100 records will be returned in a single API call",
                         "type": "number"
                     }
                 ]
             },
-            "post": {
+            "put": {
                 "parameters": [
                     {
                         "in": "body",
                         "name": "LinkedTransactions",
                         "schema": {
                             "$ref": "#\/definitions\/LinkedTransaction"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/LinkedTransaction"
                         }
+                    }
+                }
+            }
+        },
+        "\/LinkedTransactions\/{LinkedTransactionID}": {
+            "get": {
+                "summary": "Retrieve linked transactions (billable expenses)",
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "LinkedTransactionID",
+                        "type": "string",
+                        "format": "uuid"
                     }
                 ],
                 "responses": {
@@ -765,14 +1146,22 @@
                     }
                 }
             },
-            "put": {
+            "post": {
                 "parameters": [
                     {
                         "in": "body",
                         "name": "LinkedTransactions",
                         "schema": {
                             "$ref": "#\/definitions\/LinkedTransaction"
-                        }
+                        },
+                        "required": true
+                    },
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "LinkedTransactionID",
+                        "type": "string",
+                        "format": "uuid"
                     }
                 ],
                 "responses": {
@@ -785,6 +1174,15 @@
                 }
             },
             "delete": {
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "LinkedTransactionID",
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": ""
@@ -807,14 +1205,37 @@
                     }
                 }
             },
-            "post": {
+            "put": {
                 "parameters": [
                     {
                         "in": "body",
                         "name": "ManualJournals",
                         "schema": {
                             "$ref": "#\/definitions\/ManualJournal"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/ManualJournal"
                         }
+                    }
+                }
+            }
+        },
+        "\/ManualJournals\/{JournalID}": {
+            "get": {
+                "summary": "Allows you to retrieve any manual journals",
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "JournalID",
+                        "type": "string",
+                        "format": "uuid"
                     }
                 ],
                 "responses": {
@@ -826,14 +1247,22 @@
                     }
                 }
             },
-            "put": {
+            "post": {
                 "parameters": [
                     {
                         "in": "body",
                         "name": "ManualJournals",
                         "schema": {
                             "$ref": "#\/definitions\/ManualJournal"
-                        }
+                        },
+                        "required": true
+                    },
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "JournalID",
+                        "type": "string",
+                        "format": "uuid"
                     }
                 ],
                 "responses": {
@@ -862,6 +1291,28 @@
                 }
             }
         },
+        "\/Organisation\/{ShortCode}": {
+            "get": {
+                "summary": "GET a Organisation",
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "ShortCode",
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/Organisation"
+                        }
+                    }
+                }
+            }
+        },
         "\/Overpayments": {
             "get": {
                 "summary": "Allows you to retrieve overpayments",
@@ -884,7 +1335,30 @@
                         "name": "Overpayments",
                         "schema": {
                             "$ref": "#\/definitions\/Overpayment"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/Overpayment"
                         }
+                    }
+                }
+            }
+        },
+        "\/Overpayments\/{OverpaymentID}": {
+            "get": {
+                "summary": "Allows you to retrieve overpayments",
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "OverpaymentID",
+                        "type": "string",
+                        "format": "uuid"
                     }
                 ],
                 "responses": {
@@ -899,7 +1373,7 @@
         },
         "\/Payments": {
             "get": {
-                "summary": "Retrieve either one or many payments for invoices and credit notesApply payments to approved AR and AP invoicesAllow you to refund credit notesDelete (reverse) a paymentAllows you to refund prepayments and overpayments",
+                "summary": "Retrieve either one or many payments for invoices and credit notes",
                 "responses": {
                     "200": {
                         "description": "",
@@ -914,7 +1388,6 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "collectionFormat": "csv",
                         "name": "If-Modified-Since",
                         "description": "Only records created or modified since this timestamp will be returned",
                         "type": "string",
@@ -922,28 +1395,49 @@
                     },
                     {
                         "in": "query",
-                        "collectionFormat": "csv",
                         "name": "where",
                         "description": "Filter by an any element",
                         "type": "string"
                     },
                     {
                         "in": "query",
-                        "collectionFormat": "csv",
                         "name": "order",
                         "description": "Order by an any element",
                         "type": "string"
                     }
                 ]
             },
-            "post": {
+            "put": {
                 "parameters": [
                     {
                         "in": "body",
                         "name": "Payments",
                         "schema": {
                             "$ref": "#\/definitions\/Payment"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/Payment"
                         }
+                    }
+                }
+            }
+        },
+        "\/Payments\/{PaymentID}": {
+            "get": {
+                "summary": "Retrieve either one or many payments for invoices and credit notes",
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "PaymentID",
+                        "type": "string",
+                        "format": "uuid"
                     }
                 ],
                 "responses": {
@@ -955,14 +1449,22 @@
                     }
                 }
             },
-            "put": {
+            "post": {
                 "parameters": [
                     {
                         "in": "body",
                         "name": "Payments",
                         "schema": {
                             "$ref": "#\/definitions\/Payment"
-                        }
+                        },
+                        "required": true
+                    },
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "PaymentID",
+                        "type": "string",
+                        "format": "uuid"
                     }
                 ],
                 "responses": {
@@ -997,7 +1499,30 @@
                         "name": "Prepayments",
                         "schema": {
                             "$ref": "#\/definitions\/Prepayment"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/Prepayment"
                         }
+                    }
+                }
+            }
+        },
+        "\/Prepayments\/{PrepaymentID}": {
+            "get": {
+                "summary": "Allows you to retrieve prepayments",
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "PrepaymentID",
+                        "type": "string",
+                        "format": "uuid"
                     }
                 ],
                 "responses": {
@@ -1025,14 +1550,37 @@
                     }
                 }
             },
-            "post": {
+            "put": {
                 "parameters": [
                     {
                         "in": "body",
                         "name": "PurchaseOrders",
                         "schema": {
                             "$ref": "#\/definitions\/PurchaseOrder"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/PurchaseOrder"
                         }
+                    }
+                }
+            }
+        },
+        "\/PurchaseOrders\/{PurchaseOrderID}": {
+            "get": {
+                "summary": "Allows you to retrieve purchase orders",
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "PurchaseOrderID",
+                        "type": "string",
+                        "format": "uuid"
                     }
                 ],
                 "responses": {
@@ -1044,14 +1592,22 @@
                     }
                 }
             },
-            "put": {
+            "post": {
                 "parameters": [
                     {
                         "in": "body",
                         "name": "PurchaseOrders",
                         "schema": {
                             "$ref": "#\/definitions\/PurchaseOrder"
-                        }
+                        },
+                        "required": true
+                    },
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "PurchaseOrderID",
+                        "type": "string",
+                        "format": "uuid"
                     }
                 ],
                 "responses": {
@@ -1066,7 +1622,7 @@
         },
         "\/Receipts": {
             "get": {
-                "summary": "Allows you to retrieve draft expense claim receipts for any userAllows you to add or update draft expense claim receiptsAllows you to attach images to draft expense claim receiptsAllows you to delete draft expense claim receipts",
+                "summary": "Allows you to retrieve draft expense claim receipts for any user",
                 "responses": {
                     "200": {
                         "description": "",
@@ -1079,14 +1635,37 @@
                     }
                 }
             },
-            "post": {
+            "put": {
                 "parameters": [
                     {
                         "in": "body",
                         "name": "Receipts",
                         "schema": {
                             "$ref": "#\/definitions\/Receipt"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/Receipt"
                         }
+                    }
+                }
+            }
+        },
+        "\/Receipts\/{ReceiptID}": {
+            "get": {
+                "summary": "Allows you to retrieve draft expense claim receipts for any user",
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "ReceiptID",
+                        "type": "string",
+                        "format": "uuid"
                     }
                 ],
                 "responses": {
@@ -1098,14 +1677,22 @@
                     }
                 }
             },
-            "put": {
+            "post": {
                 "parameters": [
                     {
                         "in": "body",
                         "name": "Receipts",
                         "schema": {
                             "$ref": "#\/definitions\/Receipt"
-                        }
+                        },
+                        "required": true
+                    },
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "ReceiptID",
+                        "type": "string",
+                        "format": "uuid"
                     }
                 ],
                 "responses": {
@@ -1134,6 +1721,28 @@
                 }
             }
         },
+        "\/RepeatingInvoices\/{RepeatingInvoiceID}": {
+            "get": {
+                "summary": "Allows you to retrieve any repeating invoice templates",
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "RepeatingInvoiceID",
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/RepeatingInvoice"
+                        }
+                    }
+                }
+            }
+        },
         "\/TaxRates": {
             "get": {
                 "summary": "GET a TaxRate",
@@ -1149,25 +1758,6 @@
                     }
                 }
             },
-            "post": {
-                "parameters": [
-                    {
-                        "in": "body",
-                        "name": "TaxRates",
-                        "schema": {
-                            "$ref": "#\/definitions\/TaxRate"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "",
-                        "schema": {
-                            "$ref": "#\/definitions\/TaxRate"
-                        }
-                    }
-                }
-            },
             "put": {
                 "parameters": [
                     {
@@ -1175,7 +1765,8 @@
                         "name": "TaxRates",
                         "schema": {
                             "$ref": "#\/definitions\/TaxRate"
-                        }
+                        },
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -1203,14 +1794,37 @@
                     }
                 }
             },
-            "post": {
+            "put": {
                 "parameters": [
                     {
                         "in": "body",
                         "name": "TrackingCategories",
                         "schema": {
                             "$ref": "#\/definitions\/TrackingCategory"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/TrackingCategory"
                         }
+                    }
+                }
+            }
+        },
+        "\/TrackingCategories\/{TrackingCategoryID}": {
+            "get": {
+                "summary": "Retrieve tracking categories and options for a Xero organisation",
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "TrackingCategoryID",
+                        "type": "string",
+                        "format": "uuid"
                     }
                 ],
                 "responses": {
@@ -1222,14 +1836,22 @@
                     }
                 }
             },
-            "put": {
+            "post": {
                 "parameters": [
                     {
                         "in": "body",
                         "name": "TrackingCategories",
                         "schema": {
                             "$ref": "#\/definitions\/TrackingCategory"
-                        }
+                        },
+                        "required": true
+                    },
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "TrackingCategoryID",
+                        "type": "string",
+                        "format": "uuid"
                     }
                 ],
                 "responses": {
@@ -1242,6 +1864,15 @@
                 }
             },
             "delete": {
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "TrackingCategoryID",
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": ""
@@ -1266,7 +1897,6 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "collectionFormat": "csv",
                         "name": "If-Modified-Since",
                         "description": "Only records created or modified since this timestamp will be returned",
                         "type": "string",
@@ -1274,19 +1904,39 @@
                     },
                     {
                         "in": "query",
-                        "collectionFormat": "csv",
                         "name": "where",
                         "description": "Filter by an any element",
                         "type": "string"
                     },
                     {
                         "in": "query",
-                        "collectionFormat": "csv",
                         "name": "order",
                         "description": "Order by an any element",
                         "type": "string"
                     }
                 ]
+            }
+        },
+        "\/Users\/{UserID}": {
+            "get": {
+                "summary": "GET a User",
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "UserID",
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/User"
+                        }
+                    }
+                }
             }
         }
     },
@@ -2562,6 +3212,11 @@
                     "description": "Last modified date in UTC format",
                     "type": "string",
                     "format": "date-time"
+                },
+                "ItemID": {
+                    "description": "The Xero identifier for an Item",
+                    "type": "string",
+                    "format": "uuid"
                 }
             },
             "required": [
@@ -2783,6 +3438,11 @@
                     "readOnly": true,
                     "type": "string",
                     "format": "date-time"
+                },
+                "JournalID": {
+                    "description": "The Xero identifier for a Manual Journal",
+                    "type": "string",
+                    "format": "uuid"
                 }
             },
             "required": [

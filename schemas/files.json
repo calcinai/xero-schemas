@@ -31,26 +31,15 @@
                             }
                         }
                     }
-                }
-            },
-            "post": {
+                },
                 "parameters": [
                     {
-                        "in": "body",
-                        "name": "Files",
-                        "schema": {
-                            "$ref": "#\/definitions\/File"
-                        }
+                        "in": "query",
+                        "name": "page",
+                        "description": "e.g. page=1 \u2013 Up to 100 records will be returned in a single API call",
+                        "type": "number"
                     }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "",
-                        "schema": {
-                            "$ref": "#\/definitions\/File"
-                        }
-                    }
-                }
+                ]
             },
             "put": {
                 "parameters": [
@@ -59,7 +48,8 @@
                         "name": "Files",
                         "schema": {
                             "$ref": "#\/definitions\/File"
-                        }
+                        },
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -68,13 +58,6 @@
                         "schema": {
                             "$ref": "#\/definitions\/File"
                         }
-                    }
-                }
-            },
-            "delete": {
-                "responses": {
-                    "200": {
-                        "description": ""
                     }
                 }
             }
@@ -94,25 +77,6 @@
                     }
                 }
             },
-            "post": {
-                "parameters": [
-                    {
-                        "in": "body",
-                        "name": "Folders",
-                        "schema": {
-                            "$ref": "#\/definitions\/Folder"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "",
-                        "schema": {
-                            "$ref": "#\/definitions\/Folder"
-                        }
-                    }
-                }
-            },
             "put": {
                 "parameters": [
                     {
@@ -120,7 +84,8 @@
                         "name": "Folders",
                         "schema": {
                             "$ref": "#\/definitions\/Folder"
-                        }
+                        },
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -129,13 +94,6 @@
                         "schema": {
                             "$ref": "#\/definitions\/Folder"
                         }
-                    }
-                }
-            },
-            "delete": {
-                "responses": {
-                    "200": {
-                        "description": ""
                     }
                 }
             }
@@ -152,32 +110,6 @@
                                 "$ref": "#\/definitions\/Association"
                             }
                         }
-                    }
-                }
-            },
-            "post": {
-                "parameters": [
-                    {
-                        "in": "body",
-                        "name": "Associations",
-                        "schema": {
-                            "$ref": "#\/definitions\/Association"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "",
-                        "schema": {
-                            "$ref": "#\/definitions\/Association"
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "responses": {
-                    "200": {
-                        "description": ""
                     }
                 }
             }
@@ -223,6 +155,10 @@
                     "description": "Xero unique identifier for a file",
                     "type": "string",
                     "format": "uuid"
+                },
+                "RecordFilterFileId": {
+                    "description": "You can specify an individual record by appending the FileId to the endpoint, i.e. GET https:\/\/\u2026\/Files\/{FileId}",
+                    "type": "string"
                 }
             }
         },
@@ -258,6 +194,10 @@
                     "items": {
                         "$ref": "#\/definitions\/File"
                     }
+                },
+                "FolderId": {
+                    "description": "You can specify an individual record by appending the FolderId to the endpoint, i.e. GET https:\/\/\u2026\/Folders\/{FolderId}",
+                    "type": "string"
                 }
             },
             "required": [

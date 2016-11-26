@@ -172,16 +172,21 @@ class Property extends ParsedObject
      *
      * @return string
      */
-    private function parseType()
+    public function parseType()
     {
 
         if ($this->getParentModel()->getSingularName() . 'ID' == $this->getName()) {
-            $this->getParentModel()->setGUIDProperty($this);
+            $this->getParentModel()->setIdentifyingProperty($this);
             return self::TYPE_GUID;
         }
 
         if (preg_match('/Xero (generated )?(unique )?identifier/i', $this->description)) {
             return self::TYPE_GUID;
+        }
+
+        if (preg_match(sprintf('/A unique identifier for.+(%s)/i', $this->getParentModel()->getSingularName()), $this->description)) {
+            $this->getParentModel()->setIdentifyingProperty($this);
+            return self::TYPE_STRING;
         }
 
         if (preg_match('/ID$/', $this->name)) {

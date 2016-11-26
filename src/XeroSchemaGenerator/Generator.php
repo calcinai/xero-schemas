@@ -54,6 +54,11 @@ class Generator
 
         foreach ($api->getModels() as $model) {
 
+            //Make sure all property types are parsed first, as some have run-on effects.
+            foreach ($model->getProperties() as $property) {
+                $property->parseType();
+            }
+
             $definitions->set($model->getSingularName(),
                 $schema_model = Schema::create()
                     ->setExternalDocs(ExternalDocs::create()
@@ -70,45 +75,35 @@ class Generator
 
                 //GET
                 if ($model->supportsMethod(Model::METHOD_GET)) {
-                    $path_item_schema->setGet($this->buildGetOperation($model));
-                }
-
-                //POST - not correct yet
-                if ($model->supportsMethod(Model::METHOD_POST)) {
-                    $path_item_schema->setPost($this->buildPostOperation($model));
+                    $path_item_schema->setGet($this->buildGetAllOperation($model));
                 }
 
                 //PUT - not correct yet
                 if ($model->supportsMethod(Model::METHOD_PUT)) {
-
-                    $path_item_schema->setPut(Operation::create()
-                        ->addParameter(BodyParameter::create()
-                            ->setName($model->getCollectiveName())
-                            ->setSchema(Schema::create()
-                                ->setRef(sprintf('#/definitions/%s', $model->getSingularName())) //Not sure about this one yet
-                            )
-                        )
-                        ->setResponses(Responses::create()
-                            ->set('200', Response::create()
-                                ->setDescription('')
-                                ->setSchema(Schema::create()->setRef(sprintf('#/definitions/%s', $model->getSingularName())))
-                            )
-                        )
-                    );
-
+                    $path_item_schema->setPut($this->buildPutOperation($model));
                 }
 
-                //DELETE - not correct yet
-                if ($model->supportsMethod(Model::METHOD_DELETE)) {
 
-                    $path_item_schema->setDelete(Operation::create()
-                        ->setResponses(Responses::create()
-                            ->set('200', Response::create()
-                                ->setDescription('')
-                            )
-                        )
+                if ($model->getIdentifyingProperty() !== null) {
+
+                    $paths->set(sprintf('%s/{%s}', $model->getResourceURI(), $model->getIdentifyingProperty()->getSingularName()),
+                        $path_item_specific_schema = PathItem::create()
                     );
 
+                    //GET
+                    if ($model->supportsMethod(Model::METHOD_GET)) {
+                        $path_item_specific_schema->setGet($this->buildGetOperation($model));
+                    }
+
+                    //POST
+                    if ($model->supportsMethod(Model::METHOD_POST)) {
+                        $path_item_specific_schema->setPost($this->buildPostOperation($model));
+                    }
+
+                    //DELETE
+                    if ($model->supportsMethod(Model::METHOD_DELETE)) {
+                        $path_item_specific_schema->setDelete($this->buildDeleteOperation($model));
+                    }
                 }
 
             }
@@ -224,7 +219,7 @@ class Generator
      * @param Model $model
      * @return Operation
      */
-    public function buildGetOperation(Model $model)
+    public function buildGetAllOperation(Model $model)
     {
 
         $get_operation = Operation::create()
@@ -281,15 +276,45 @@ class Generator
      * @param Model $model
      * @return Operation
      */
-    public function buildPostOperation(Model $model)
+    public function buildGetOperation(Model $model)
     {
 
-        $post_operation = Operation::create()
+        return Operation::create()
+            ->setSummary($model->getDescriptionForMethod(Model::METHOD_GET))
+            ->addParameter(PathParameterSubSchema::create()
+                ->setName($model->getIdentifyingProperty()->getSingularName())
+                ->setType('string')->setFormat('uuid')
+            )
+            ->setResponses(Responses::create()
+                ->set('200', Response::create()
+                    ->setDescription('')
+                    ->setSchema(
+                        Schema::create()->setRef(sprintf('#/definitions/%s', $model->getSingularName()))
+                    )
+                )
+            );
+
+    }
+
+
+    /**
+     * @param Model $model
+     * @return Operation
+     */
+    public function buildPostOperation(Model $model)
+    {
+        return Operation::create()
             ->addParameter(BodyParameter::create()
                 ->setName($model->getCollectiveName())
                 ->setSchema(Schema::create()
                     ->setRef(sprintf('#/definitions/%s', $model->getSingularName()))
                 )
+                ->setRequired(true)
+            )
+            ->addParameter(PathParameterSubSchema::create()
+                ->setName($model->getIdentifyingProperty()->getSingularName())
+                ->setType('string')->setFormat('uuid')
+                ->setRequired(true)
             )
             ->setResponses(Responses::create()
                 ->set('200', Response::create()
@@ -297,8 +322,47 @@ class Generator
                     ->setSchema(Schema::create()->setRef(sprintf('#/definitions/%s', $model->getSingularName())))
                 )
             );
+    }
 
-        return $post_operation;
+    /**
+     * @param Model $model
+     * @return Operation
+     */
+    private function buildDeleteOperation(Model $model)
+    {
+        return Operation::create()
+            ->addParameter(PathParameterSubSchema::create()
+                ->setName($model->getIdentifyingProperty()->getSingularName())
+                ->setType('string')->setFormat('uuid')
+                ->setRequired(true)
+            )
+            ->setResponses(Responses::create()
+                ->set('200', Response::create()
+                    ->setDescription('')
+                )
+            );
+    }
+
+    /**
+     * @param Model $model
+     * @return Operation
+     */
+    private function buildPutOperation(Model $model)
+    {
+        return Operation::create()
+            ->addParameter(BodyParameter::create()
+                ->setName($model->getCollectiveName())
+                ->setSchema(Schema::create()
+                    ->setRef(sprintf('#/definitions/%s', $model->getSingularName())) //Not sure about this one yet
+                )
+                ->setRequired(true)
+            )
+            ->setResponses(Responses::create()
+                ->set('200', Response::create()
+                    ->setDescription('')
+                    ->setSchema(Schema::create()->setRef(sprintf('#/definitions/%s', $model->getSingularName())))
+                )
+            );
     }
 
 }

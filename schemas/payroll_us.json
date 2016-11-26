@@ -32,6 +32,28 @@
                         }
                     }
                 }
+            }
+        },
+        "\/Employees\/{EmployeeID}": {
+            "get": {
+                "summary": "Allows you to retrieve, add and update payroll employees in a Xero organisation",
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "EmployeeID",
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/Employee"
+                        }
+                    }
+                }
             },
             "post": {
                 "parameters": [
@@ -40,7 +62,15 @@
                         "name": "Employees",
                         "schema": {
                             "$ref": "#\/definitions\/Employee"
-                        }
+                        },
+                        "required": true
+                    },
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "EmployeeID",
+                        "type": "string",
+                        "format": "uuid"
                     }
                 ],
                 "responses": {
@@ -66,6 +96,48 @@
                             }
                         }
                     }
+                },
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "description": "e.g. page=1 \u2013 Up to 100 records will be returned in a single API call",
+                        "type": "number"
+                    },
+                    {
+                        "in": "query",
+                        "name": "where",
+                        "description": "Filter by an any element",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "order",
+                        "description": "Order by an any element",
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        "\/Worklocations\/{WorkLocationID}": {
+            "get": {
+                "summary": "Allows you to retrieve, add and update a Work Location in a Xero US organisation",
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "WorkLocationID",
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/WorkLocation"
+                        }
+                    }
                 }
             },
             "post": {
@@ -75,7 +147,15 @@
                         "name": "WorkLocations",
                         "schema": {
                             "$ref": "#\/definitions\/WorkLocation"
-                        }
+                        },
+                        "required": true
+                    },
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "WorkLocationID",
+                        "type": "string",
+                        "format": "uuid"
                     }
                 ],
                 "responses": {
@@ -102,25 +182,6 @@
                         }
                     }
                 }
-            },
-            "post": {
-                "parameters": [
-                    {
-                        "in": "body",
-                        "name": "PayItems",
-                        "schema": {
-                            "$ref": "#\/definitions\/PayItem"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "",
-                        "schema": {
-                            "$ref": "#\/definitions\/PayItem"
-                        }
-                    }
-                }
             }
         },
         "\/PayRuns": {
@@ -136,6 +197,55 @@
                             }
                         }
                     }
+                },
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "If-Modified-Since",
+                        "description": "Only records created or modified since this timestamp will be returned",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "description": "e.g. page=1 \u2013 Up to 100 records will be returned in a single API call",
+                        "type": "number"
+                    },
+                    {
+                        "in": "query",
+                        "name": "where",
+                        "description": "Filter by an any element",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "order",
+                        "description": "Order by an any element",
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        "\/PayRuns\/{PayRunID}": {
+            "get": {
+                "summary": "Allows you to retrieve, add and update pay runs in a Xero organisation",
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "PayRunID",
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/PayRun"
+                        }
+                    }
                 }
             },
             "post": {
@@ -145,7 +255,15 @@
                         "name": "PayRuns",
                         "schema": {
                             "$ref": "#\/definitions\/PayRun"
-                        }
+                        },
+                        "required": true
+                    },
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "PayRunID",
+                        "type": "string",
+                        "format": "uuid"
                     }
                 ],
                 "responses": {
@@ -171,6 +289,55 @@
                             }
                         }
                     }
+                },
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "If-Modified-Since",
+                        "description": "Only records created or modified since this timestamp will be returned",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "description": "e.g. page=1 \u2013 Up to 100 records will be returned in a single API call",
+                        "type": "number"
+                    },
+                    {
+                        "in": "query",
+                        "name": "where",
+                        "description": "Filter by an any element",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "order",
+                        "description": "Order by an any element",
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        "\/PaySchedules\/{PayScheduleID}": {
+            "get": {
+                "summary": "Allows you to retrieve and add Pay schedules in a Xero organisation",
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "PayScheduleID",
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/PaySchedule"
+                        }
+                    }
                 }
             },
             "post": {
@@ -180,7 +347,15 @@
                         "name": "PaySchedules",
                         "schema": {
                             "$ref": "#\/definitions\/PaySchedule"
-                        }
+                        },
+                        "required": true
+                    },
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "PayScheduleID",
+                        "type": "string",
+                        "format": "uuid"
                     }
                 ],
                 "responses": {
@@ -207,6 +382,28 @@
                         }
                     }
                 }
+            }
+        },
+        "\/Paystubs\/{PaystubID}": {
+            "get": {
+                "summary": "Allows you to retrieve and update paystubs in a Xero organisation",
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "PaystubID",
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/Paystub"
+                        }
+                    }
+                }
             },
             "post": {
                 "parameters": [
@@ -215,7 +412,15 @@
                         "name": "Paystubs",
                         "schema": {
                             "$ref": "#\/definitions\/Paystub"
-                        }
+                        },
+                        "required": true
+                    },
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "PaystubID",
+                        "type": "string",
+                        "format": "uuid"
                     }
                 ],
                 "responses": {
@@ -258,6 +463,28 @@
                         }
                     }
                 }
+            }
+        },
+        "\/Timesheets\/{TimesheetID}": {
+            "get": {
+                "summary": "Allows you to retrieve, add and update Payroll Timesheets in a Xero organisation",
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "TimesheetID",
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/Timesheet"
+                        }
+                    }
+                }
             },
             "post": {
                 "parameters": [
@@ -266,7 +493,15 @@
                         "name": "Timesheets",
                         "schema": {
                             "$ref": "#\/definitions\/Timesheet"
-                        }
+                        },
+                        "required": true
+                    },
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "TimesheetID",
+                        "type": "string",
+                        "format": "uuid"
                     }
                 ],
                 "responses": {
@@ -552,7 +787,7 @@
                     "type": "string"
                 },
                 "WorkLocationID": {
-                    "description": "Xero identifier for a work location",
+                    "description": "The Xero identifier for a work location\ne.g. 297c2dc5-cc47-4afd-0000-74990b8761e9",
                     "type": "string",
                     "format": "uuid"
                 },
@@ -563,6 +798,10 @@
                 },
                 "IsPrimary": {
                     "description": "Set to true to make this the primary work location",
+                    "type": "string"
+                },
+                "": {
+                    "description": "You can get all work locations by just calling the endpoint.GET https:\/\/\u2026\/worklocations",
                     "type": "string"
                 }
             },
@@ -669,6 +908,57 @@
                     "items": {
                         "$ref": "#\/definitions\/BenefitLine"
                     }
+                },
+                "EarningsTypeID": {
+                    "description": "Xero earnings rate identifier",
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "UnitsOrHours": {
+                    "description": "The Units or Hours for the earnings line",
+                    "type": "string"
+                },
+                "RatePerUnit": {
+                    "description": "Rate per unit for the EarningsLine.",
+                    "type": "number",
+                    "format": "float"
+                },
+                "Amount": {
+                    "description": "The amount of the reimbursement type",
+                    "type": "number",
+                    "format": "float"
+                },
+                "DeductionTypeID": {
+                    "description": "Xero deduction type identifier",
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "CalculationType": {
+                    "description": "See Benefit Line Calculation Type",
+                    "type": "string"
+                },
+                "EmployeeMax": {
+                    "description": "Maximum amount an employee can receive",
+                    "type": "number",
+                    "format": "float"
+                },
+                "Percentage": {
+                    "description": "The percentage of deduction line",
+                    "type": "string"
+                },
+                "ReimbursementTypeID": {
+                    "description": "Xero identifier for reimbursement type",
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "Description": {
+                    "description": "The description of the reimbursement line",
+                    "type": "string"
+                },
+                "BenefitTypeID": {
+                    "description": "Xero identifier for benefit type",
+                    "type": "string",
+                    "format": "uuid"
                 }
             }
         },
@@ -761,6 +1051,11 @@
                     "items": {
                         "$ref": "#\/definitions\/TimeOffType"
                     }
+                },
+                "EmployeeID": {
+                    "description": "The Xero identifier for an employee e.g. 297c2dc5-cc47-4afd-8ec8-74990b8761e9",
+                    "type": "string",
+                    "format": "uuid"
                 }
             }
         },
@@ -1148,8 +1443,7 @@
                     ]
                 },
                 "PayRunID": {
-                    "description": "Xero identifier for pay run",
-                    "readOnly": true,
+                    "description": "The Xero identifier for a Pay run e.g. 297c2dc5-cc47-4afd-0000-74990b8761e9",
                     "type": "string",
                     "format": "uuid"
                 },
@@ -1195,6 +1489,10 @@
                     "description": "See PayStubs",
                     "readOnly": true,
                     "type": "string"
+                },
+                "": {
+                    "description": "You can get all reimbursement types by appending list at the end of super fund endpoint.GET https:\/\/\u2026\/payruns",
+                    "type": "string"
                 }
             },
             "required": [
@@ -1237,6 +1535,15 @@
                     "description": "Xero Identifier",
                     "type": "string",
                     "format": "uuid"
+                },
+                "PayScheduleID": {
+                    "description": "The Xero identifier for a Pay Schedule\ne.g. 297c2dc5-cc47-4afd-8ec8-74990b8761e9",
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "": {
+                    "description": "You can get all pay schedules by just calling the endpoint.GET https:\/\/\u2026\/PaySchedules",
+                    "type": "string"
                 }
             },
             "required": [
@@ -1509,6 +1816,11 @@
                 "Balance": {
                     "description": "Balance for the time off type",
                     "type": "string"
+                },
+                "PaystubID": {
+                    "description": "The Xero identifier for a Paystub e.g. GET https:\/\/\u2026\/Paystubs\/{identifier}",
+                    "type": "string",
+                    "format": "uuid"
                 }
             }
         },
@@ -1645,6 +1957,15 @@
                     "description": "The Xero identifier for a Work Location, which must have been added for this employee under Payroll -> Employees -> Employment.",
                     "type": "string",
                     "format": "uuid"
+                },
+                "TimesheetID": {
+                    "description": "The Xero identifier for a payroll timesheet\ne.g. 297c2dc5-cc47-4afd-0000-74990b8761e9",
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "": {
+                    "description": "You can get all timesheets by calling the endpoint.GET https:\/\/\u2026\/timesheets",
+                    "type": "string"
                 }
             }
         }

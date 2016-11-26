@@ -25,7 +25,7 @@ class Model extends ParsedObject
     /**
      * @var
      */
-    private $guid_property;
+    private $identifying_property;
 
     /**
      * @var array
@@ -199,17 +199,17 @@ class Model extends ParsedObject
     /**
      * @param Property $property
      */
-    public function setGUIDProperty(Property $property)
+    public function setIdentifyingProperty(Property $property)
     {
-        $this->guid_property = $property;
+        $this->identifying_property = $property;
     }
 
     /**
      * @return Property
      */
-    public function getGUIDProperty()
+    public function getIdentifyingProperty()
     {
-        return $this->guid_property;
+        return $this->identifying_property;
     }
 
     public function supportsMethod($method)

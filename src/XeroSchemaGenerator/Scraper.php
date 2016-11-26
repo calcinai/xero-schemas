@@ -160,7 +160,8 @@ class Scraper
                                 $primary_model->setMethods($table_columns->eq(1)->text());
                                 break;
                             case 'description':
-                                $primary_model->setDescription($table_columns->eq(1)->text());
+                                $description = preg_replace('#<br( ?/)?>#', "\n", $table_columns->eq(1)->html());
+                                $primary_model->setDescription($description);
                                 break;
                         }
                     });

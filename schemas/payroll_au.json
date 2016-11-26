@@ -32,6 +32,28 @@
                         }
                     }
                 }
+            }
+        },
+        "\/Employees\/{EmployeeID}": {
+            "get": {
+                "summary": "Allows you to retrieve, add and update payroll employees in a Xero organisation",
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "EmployeeID",
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/Employee"
+                        }
+                    }
+                }
             },
             "post": {
                 "parameters": [
@@ -40,7 +62,15 @@
                         "name": "Employees",
                         "schema": {
                             "$ref": "#\/definitions\/Employee"
-                        }
+                        },
+                        "required": true
+                    },
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "EmployeeID",
+                        "type": "string",
+                        "format": "uuid"
                     }
                 ],
                 "responses": {
@@ -67,25 +97,6 @@
                         }
                     }
                 }
-            },
-            "post": {
-                "parameters": [
-                    {
-                        "in": "body",
-                        "name": "LeaveApplications",
-                        "schema": {
-                            "$ref": "#\/definitions\/LeaveApplication"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "",
-                        "schema": {
-                            "$ref": "#\/definitions\/LeaveApplication"
-                        }
-                    }
-                }
             }
         },
         "\/PayItems": {
@@ -99,25 +110,6 @@
                             "items": {
                                 "$ref": "#\/definitions\/PayItem"
                             }
-                        }
-                    }
-                }
-            },
-            "post": {
-                "parameters": [
-                    {
-                        "in": "body",
-                        "name": "PayItems",
-                        "schema": {
-                            "$ref": "#\/definitions\/PayItem"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "",
-                        "schema": {
-                            "$ref": "#\/definitions\/PayItem"
                         }
                     }
                 }
@@ -136,26 +128,34 @@
                             }
                         }
                     }
-                }
-            },
-            "post": {
+                },
                 "parameters": [
                     {
-                        "in": "body",
-                        "name": "PayrollCalendars",
-                        "schema": {
-                            "$ref": "#\/definitions\/PayrollCalendar"
-                        }
+                        "in": "header",
+                        "name": "If-Modified-Since",
+                        "description": "Only records created or modified since this timestamp will be returned",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "description": "e.g. page=1 \u2013 Up to 100 records will be returned in a single API call",
+                        "type": "number"
+                    },
+                    {
+                        "in": "query",
+                        "name": "where",
+                        "description": "Filter by an any element",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "order",
+                        "description": "Order by an any element",
+                        "type": "string"
                     }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "",
-                        "schema": {
-                            "$ref": "#\/definitions\/PayrollCalendar"
-                        }
-                    }
-                }
+                ]
             }
         },
         "\/PayRuns": {
@@ -171,6 +171,55 @@
                             }
                         }
                     }
+                },
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "If-Modified-Since",
+                        "description": "Only records created or modified since this timestamp will be returned",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "description": "e.g. page=1 \u2013 Up to 100 records will be returned in a single API call",
+                        "type": "number"
+                    },
+                    {
+                        "in": "query",
+                        "name": "where",
+                        "description": "Filter by an any element",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "order",
+                        "description": "Order by an any element",
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        "\/PayRuns\/{PayRunID}": {
+            "get": {
+                "summary": "Allows you to retrieve, add and update pay runs in a Xero organisation",
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "PayRunID",
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/PayRun"
+                        }
+                    }
                 }
             },
             "post": {
@@ -180,7 +229,15 @@
                         "name": "PayRuns",
                         "schema": {
                             "$ref": "#\/definitions\/PayRun"
-                        }
+                        },
+                        "required": true
+                    },
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "PayRunID",
+                        "type": "string",
+                        "format": "uuid"
                     }
                 ],
                 "responses": {
@@ -207,6 +264,28 @@
                         }
                     }
                 }
+            }
+        },
+        "\/Payslip\/{PayslipID}": {
+            "get": {
+                "summary": "Allows you to retrieve and update payslips in a Xero organisation",
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "PayslipID",
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/Payslip"
+                        }
+                    }
+                }
             },
             "post": {
                 "parameters": [
@@ -215,7 +294,15 @@
                         "name": "Payslips",
                         "schema": {
                             "$ref": "#\/definitions\/Payslip"
-                        }
+                        },
+                        "required": true
+                    },
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "PayslipID",
+                        "type": "string",
+                        "format": "uuid"
                     }
                 ],
                 "responses": {
@@ -258,6 +345,28 @@
                         }
                     }
                 }
+            }
+        },
+        "\/SuperFunds\/{SuperFundID}": {
+            "get": {
+                "summary": "Allows you to retrieve, add and update Payroll Super Funds in a Xero organisation",
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "SuperFundID",
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/SuperFund"
+                        }
+                    }
+                }
             },
             "post": {
                 "parameters": [
@@ -266,7 +375,15 @@
                         "name": "SuperFunds",
                         "schema": {
                             "$ref": "#\/definitions\/SuperFund"
-                        }
+                        },
+                        "required": true
+                    },
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "SuperFundID",
+                        "type": "string",
+                        "format": "uuid"
                     }
                 ],
                 "responses": {
@@ -297,7 +414,7 @@
         },
         "\/Timesheets": {
             "get": {
-                "summary": "Allows you to retrieve, add and update Payroll Timesheet in a Xero organisationAllows you to retrieve, add and update Payroll Timesheet Lines in a Xero organisation.",
+                "summary": "Allows you to retrieve, add and update Payroll Timesheet in a Xero organisation",
                 "responses": {
                     "200": {
                         "description": "",
@@ -309,6 +426,28 @@
                         }
                     }
                 }
+            }
+        },
+        "\/Timesheets\/{TimesheetID}": {
+            "get": {
+                "summary": "Allows you to retrieve, add and update Payroll Timesheet in a Xero organisation",
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "TimesheetID",
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/Timesheet"
+                        }
+                    }
+                }
             },
             "post": {
                 "parameters": [
@@ -317,7 +456,15 @@
                         "name": "Timesheets",
                         "schema": {
                             "$ref": "#\/definitions\/Timesheet"
-                        }
+                        },
+                        "required": true
+                    },
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "TimesheetID",
+                        "type": "string",
+                        "format": "uuid"
                     }
                 ],
                 "responses": {
@@ -548,6 +695,57 @@
                         "LABOURHIRE",
                         "SUPERINCOMESTREAM"
                     ]
+                },
+                "TFNExemptionType": {
+                    "description": "See TFN Exemption Types",
+                    "type": "string",
+                    "enum": [
+                        "NOTQUOTED",
+                        "PENDING",
+                        "PENSIONER",
+                        "UNDER18"
+                    ]
+                },
+                "TaxFileNumber": {
+                    "description": "The tax file number e.g 123123123",
+                    "type": "string"
+                },
+                "AustralianResidentForTaxPurposes": {
+                    "description": "If the employee is Australian resident for tax purposes. e.g true or false",
+                    "type": "string"
+                },
+                "TaxFreeThresholdClaimed": {
+                    "description": "If tax free threshold claimed. e.g true or false",
+                    "type": "string"
+                },
+                "TaxOffsetEstimatedAmount": {
+                    "description": "If has tax offset estimated then the tax offset estimated amount. e.g 100",
+                    "type": "number",
+                    "format": "float"
+                },
+                "HasHELPDebt": {
+                    "description": "If employee has HECS or HELP dept. e.g true or false",
+                    "type": "boolean"
+                },
+                "HasSFSSDebt": {
+                    "description": "If employee has financial supplement dept. e.g true or false",
+                    "type": "boolean"
+                },
+                "HasTradeSupportLoanDebt": {
+                    "description": "If employee has trade support loan. e.g true or false",
+                    "type": "boolean"
+                },
+                "UpwardVariationTaxWithholdingAmount": {
+                    "description": "If the employee has requested that additional tax be withheld each pay run. e.g 50",
+                    "type": "string"
+                },
+                "EligibleToReceiveLeaveLoading": {
+                    "description": "If the employee is eligible to receive an additional percentage on top of ordinary earnings when they take leave (typically 17.5%). e.g true or false",
+                    "type": "string"
+                },
+                "ApprovedWithholdingVariationPercentage": {
+                    "description": "If the employee has approved withholding variation. e.g (0 \u2013 100)",
+                    "type": "string"
                 }
             },
             "required": [
@@ -856,6 +1054,11 @@
                 },
                 "SuperMembershipID": {
                     "description": "Xero unique identifier for Super membership",
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "EmployeeID": {
+                    "description": "The Xero identifier for an employee e.g. 297c2dc5-cc47-4afd-8ec8-74990b8761e9",
                     "type": "string",
                     "format": "uuid"
                 }
@@ -1184,6 +1387,11 @@
                     "description": "The date on which employees will be paid for the upcoming pay period (YYYY-MM-DD), more details.",
                     "type": "string",
                     "format": "date"
+                },
+                "EmployeeID": {
+                    "description": "The Xero identifier for a Payroll Calendar e.g. 297c2dc5-cc47-4afd-8ec8-74990b8761e9",
+                    "type": "string",
+                    "format": "uuid"
                 }
             },
             "required": [
@@ -1204,7 +1412,7 @@
                     "format": "uuid"
                 },
                 "PayRunID": {
-                    "description": "Xero identifier for pay run",
+                    "description": "The Xero identifier for a Pay run e.g. 297c2dc5-cc47-4afd-0000-74990b8761e9",
                     "type": "string",
                     "format": "uuid"
                 },
@@ -1619,6 +1827,11 @@
                 "LiabilityAccount": {
                     "description": "The tax line liability account code. For posted pay run you should be able to see liability account code",
                     "type": "string"
+                },
+                "PayslipID": {
+                    "description": "The Xero identifier for a Pay slip e.g. GET https:\/\/\u2026\/Payslip\/{identifier}",
+                    "type": "string",
+                    "format": "uuid"
                 }
             }
         },
@@ -1756,11 +1969,11 @@
             },
             "properties": {
                 "ABN": {
-                    "description": "The ABN of the Regulated SuperFund\u00a0(e.g 839182848805)",
+                    "description": "The ABN of the Regulated SuperFund\u00a0(e.g 40022701955)",
                     "type": "string"
                 },
                 "USI": {
-                    "description": "The USI of the Regulated SuperFund",
+                    "description": "The USI of the Regulated SuperFund (e.g 40022701955001)",
                     "type": "string"
                 },
                 "SPIN": {
@@ -1838,6 +2051,11 @@
                 "NumberOfUnits": {
                     "description": "Number of units of a Timesheet line",
                     "type": "string"
+                },
+                "TimesheetID": {
+                    "description": "The Xero identifier for a payroll timesheete.g. 297c2dc5-cc47-4afd-0000-74990b8761e9\n",
+                    "type": "string",
+                    "format": "uuid"
                 }
             }
         }

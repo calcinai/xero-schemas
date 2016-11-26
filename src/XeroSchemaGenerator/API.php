@@ -92,6 +92,13 @@ class API
         return $this->models;
     }
 
+    /**
+     * @param $name
+     * @return Model
+     */
+    public function getModel($name){
+        return $this->models[$name];
+    }
 
     /**
      * @return ParsedObject\Enum[]
