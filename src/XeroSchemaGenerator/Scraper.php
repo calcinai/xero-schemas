@@ -209,8 +209,10 @@ class Scraper
             //PUT CreditNotes/{CreditNoteID}/Allocations
             $crawler->filter('p')->each(function (Crawler $p_node) use ($primary_model) {
                 if (preg_match('#(?<method>GET|PUT|DELETE)\s?/?(?<primary_model>[a-z]+)/[^/]+/(?<secondary_model>[a-z]+)/?#i', $p_node->text(), $matches)) {
-                    if ($primary_model->getCollectiveName() === $matches['primary_model'] && $primary_model->hasProperty($matches['secondary_model'])) {
-                        $primary_model->getProperty($matches['secondary_model'])->saves_directly = true;
+                    if ($primary_model->getCollectiveName() === $matches['primary_model'] &&
+                        $primary_model->hasProperty($matches['secondary_model'])
+                    ) {
+                        $primary_model->getProperty($matches['secondary_model'])->addSubResourceMethod($matches['method']);
                     }
                 }
 

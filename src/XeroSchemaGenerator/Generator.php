@@ -67,20 +67,26 @@ class Generator
             );
 
 
+            //TODO - de-nest some of these.
             if ($model->getResourceURI() !== null) {
 
                 $paths->set($model->getResourceURI(),
                     $path_item_schema = PathItem::create()
                 );
 
-                //GET
-                if ($model->supportsMethod(Model::METHOD_GET)) {
+                //GET /PrimaryModel
+                if ($model->hasMethod(Model::METHOD_GET)) {
                     $path_item_schema->setGet($this->buildGetAllOperation($model));
                 }
 
-                //PUT - not correct yet
-                if ($model->supportsMethod(Model::METHOD_PUT)) {
+                //PUT /PrimaryModel
+                if ($model->hasMethod(Model::METHOD_PUT)) {
                     $path_item_schema->setPut($this->buildPutOperation($model));
+                }
+
+                //POST /PrimaryModel
+                if ($model->hasMethod(Model::METHOD_POST)) {
+                    $path_item_schema->setPost($this->buildPostOperation($model));
                 }
 
 
@@ -90,21 +96,100 @@ class Generator
                         $path_item_specific_schema = PathItem::create()
                     );
 
-                    //GET
-                    if ($model->supportsMethod(Model::METHOD_GET)) {
-                        $path_item_specific_schema->setGet($this->buildGetOperation($model));
+                    $model_path_item_parameter = PathParameterSubSchema::create()
+                        ->setName($model->getIdentifyingProperty()->getSingularName())
+                        ->setType('string')->setFormat('uuid')
+                        ->setRequired(true);
+
+                    //GET /PrimaryModel/{PrimaryModelID}
+                    if ($model->hasMethod(Model::METHOD_GET)) {
+                        $path_item_specific_schema->setGet(
+                            $this->buildGetOperation($model)->addParameter($model_path_item_parameter)
+                        );
                     }
 
-                    //POST
-                    if ($model->supportsMethod(Model::METHOD_POST)) {
-                        $path_item_specific_schema->setPost($this->buildPostOperation($model));
+                    //POST /PrimaryModel/{PrimaryModelID}
+                    if ($model->hasMethod(Model::METHOD_POST)) {
+                        $path_item_specific_schema->setPost(
+                            $this->buildPostOperation($model)->addParameter($model_path_item_parameter)
+                        );
                     }
 
-                    //DELETE
-                    if ($model->supportsMethod(Model::METHOD_DELETE)) {
-                        $path_item_specific_schema->setDelete($this->buildDeleteOperation($model));
+                    //DELETE /PrimaryModel/{PrimaryModelID}
+                    if ($model->hasMethod(Model::METHOD_DELETE)) {
+                        $path_item_specific_schema->setDelete(
+                            $this->buildDeleteOperation($model)->addParameter($model_path_item_parameter)
+                        );
+                    }
+
+
+                    foreach ($model->getProperties() as $property) {
+                        if (count($property->getSubResourceMethods()) === 0) {
+                            continue;
+                        }
+
+                        $sub_model = $property->getChildObject();
+
+                        $paths->set(sprintf('%s/{%s}/%s',
+                            $model->getResourceURI(), $model->getIdentifyingProperty()->getSingularName(),
+                            $property->getCollectiveName()),
+                            $path_item_sub_schema = PathItem::create()
+                        );
+
+                        //PUT /PrimaryModel/{PrimaryModelID}/SubModel
+                        if ($property->hasSubResourceMethod(Model::METHOD_PUT)) {
+                            $path_item_sub_schema->setPut(
+                                $this->buildPutOperation($sub_model)->addParameter($model_path_item_parameter)
+                            );
+                        }
+
+                        //DELETE /PrimaryModel/{PrimaryModelID}/SubModel
+                        if ($property->hasSubResourceMethod(Model::METHOD_DELETE)) {
+                            $path_item_sub_schema->setDelete(
+                                $this->buildDeleteOperation($sub_model)->addParameter($model_path_item_parameter)
+                            );
+                        }
+
+
+                        //Direct sub resource manipulation
+                        if ($sub_model->getIdentifyingProperty() !== null &&
+                            (
+                                $property->hasSubResourceMethod(Model::METHOD_DELETE) ||
+                                $property->hasSubResourceMethod(Model::METHOD_POST)
+                            )
+                        ) {
+                            $paths->set(sprintf('%s/{%s}/%s/{%s}',
+                                $model->getResourceURI(), $model->getIdentifyingProperty()->getSingularName(),
+                                $property->getCollectiveName(), $sub_model->getIdentifyingProperty()->getSingularName()), //Maybe this will always work!!
+                                $path_item_sub_specific_schema = PathItem::create()
+                            );
+
+                            $sub_model_path_item_parameter = PathParameterSubSchema::create()
+                                ->setName($sub_model->getIdentifyingProperty()->getSingularName())
+                                ->setType('string')->setFormat('uuid')
+                                ->setRequired(true);
+
+                            //POST /PrimaryModel/{PrimaryModelID}/SubModel/{SubModelID}
+                            if ($property->hasSubResourceMethod(Model::METHOD_POST)) {
+                                $path_item_sub_specific_schema->setPost(
+                                    $this->buildPostOperation($sub_model)
+                                        ->addParameter($model_path_item_parameter)
+                                        ->addParameter($sub_model_path_item_parameter)
+                                );
+                            }
+
+                            //DELETE /PrimaryModel/{PrimaryModelID}/SubModel/{SubModelID}
+                            if ($property->hasSubResourceMethod(Model::METHOD_DELETE)) {
+                                $path_item_sub_specific_schema->setDelete(
+                                    $this->buildDeleteOperation($sub_model)
+                                        ->addParameter($model_path_item_parameter)
+                                        ->addParameter($sub_model_path_item_parameter)
+                                );
+                            }
+                        }
                     }
                 }
+
 
             }
 
@@ -281,10 +366,6 @@ class Generator
 
         return Operation::create()
             ->setSummary($model->getDescriptionForMethod(Model::METHOD_GET))
-            ->addParameter(PathParameterSubSchema::create()
-                ->setName($model->getIdentifyingProperty()->getSingularName())
-                ->setType('string')->setFormat('uuid')
-            )
             ->setResponses(Responses::create()
                 ->set('200', Response::create()
                     ->setDescription('')
@@ -311,11 +392,6 @@ class Generator
                 )
                 ->setRequired(true)
             )
-            ->addParameter(PathParameterSubSchema::create()
-                ->setName($model->getIdentifyingProperty()->getSingularName())
-                ->setType('string')->setFormat('uuid')
-                ->setRequired(true)
-            )
             ->setResponses(Responses::create()
                 ->set('200', Response::create()
                     ->setDescription('')
@@ -331,11 +407,6 @@ class Generator
     private function buildDeleteOperation(Model $model)
     {
         return Operation::create()
-            ->addParameter(PathParameterSubSchema::create()
-                ->setName($model->getIdentifyingProperty()->getSingularName())
-                ->setType('string')->setFormat('uuid')
-                ->setRequired(true)
-            )
             ->setResponses(Responses::create()
                 ->set('200', Response::create()
                     ->setDescription('')

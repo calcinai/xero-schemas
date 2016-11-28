@@ -32,18 +32,16 @@
                         }
                     }
                 }
-            }
-        },
-        "\/Employees\/{EmployeeID}": {
-            "get": {
-                "summary": "Allows you to retrieve, add and update payroll employees in a Xero organisation",
+            },
+            "post": {
                 "parameters": [
                     {
-                        "required": true,
-                        "in": "path",
-                        "name": "EmployeeID",
-                        "type": "string",
-                        "format": "uuid"
+                        "in": "body",
+                        "name": "Employees",
+                        "schema": {
+                            "$ref": "#\/definitions\/Employee"
+                        },
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -54,6 +52,28 @@
                         }
                     }
                 }
+            }
+        },
+        "\/Employees\/{EmployeeID}": {
+            "get": {
+                "summary": "Allows you to retrieve, add and update payroll employees in a Xero organisation",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/Employee"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "EmployeeID",
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ]
             },
             "post": {
                 "parameters": [
@@ -117,18 +137,16 @@
                         "type": "string"
                     }
                 ]
-            }
-        },
-        "\/Worklocations\/{WorkLocationID}": {
-            "get": {
-                "summary": "Allows you to retrieve, add and update a Work Location in a Xero US organisation",
+            },
+            "post": {
                 "parameters": [
                     {
-                        "required": true,
-                        "in": "path",
-                        "name": "WorkLocationID",
-                        "type": "string",
-                        "format": "uuid"
+                        "in": "body",
+                        "name": "WorkLocations",
+                        "schema": {
+                            "$ref": "#\/definitions\/WorkLocation"
+                        },
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -139,6 +157,28 @@
                         }
                     }
                 }
+            }
+        },
+        "\/Worklocations\/{WorkLocationID}": {
+            "get": {
+                "summary": "Allows you to retrieve, add and update a Work Location in a Xero US organisation",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/WorkLocation"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "WorkLocationID",
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ]
             },
             "post": {
                 "parameters": [
@@ -179,6 +219,26 @@
                             "items": {
                                 "$ref": "#\/definitions\/PayItem"
                             }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "PayItems",
+                        "schema": {
+                            "$ref": "#\/definitions\/PayItem"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/PayItem"
                         }
                     }
                 }
@@ -225,18 +285,16 @@
                         "type": "string"
                     }
                 ]
-            }
-        },
-        "\/PayRuns\/{PayRunID}": {
-            "get": {
-                "summary": "Allows you to retrieve, add and update pay runs in a Xero organisation",
+            },
+            "post": {
                 "parameters": [
                     {
-                        "required": true,
-                        "in": "path",
-                        "name": "PayRunID",
-                        "type": "string",
-                        "format": "uuid"
+                        "in": "body",
+                        "name": "PayRuns",
+                        "schema": {
+                            "$ref": "#\/definitions\/PayRun"
+                        },
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -247,6 +305,28 @@
                         }
                     }
                 }
+            }
+        },
+        "\/PayRuns\/{PayRunID}": {
+            "get": {
+                "summary": "Allows you to retrieve, add and update pay runs in a Xero organisation",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/PayRun"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "PayRunID",
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ]
             },
             "post": {
                 "parameters": [
@@ -317,18 +397,16 @@
                         "type": "string"
                     }
                 ]
-            }
-        },
-        "\/PaySchedules\/{PayScheduleID}": {
-            "get": {
-                "summary": "Allows you to retrieve and add Pay schedules in a Xero organisation",
+            },
+            "post": {
                 "parameters": [
                     {
-                        "required": true,
-                        "in": "path",
-                        "name": "PayScheduleID",
-                        "type": "string",
-                        "format": "uuid"
+                        "in": "body",
+                        "name": "PaySchedules",
+                        "schema": {
+                            "$ref": "#\/definitions\/PaySchedule"
+                        },
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -339,6 +417,28 @@
                         }
                     }
                 }
+            }
+        },
+        "\/PaySchedules\/{PayScheduleID}": {
+            "get": {
+                "summary": "Allows you to retrieve and add Pay schedules in a Xero organisation",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/PaySchedule"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "PayScheduleID",
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ]
             },
             "post": {
                 "parameters": [
@@ -382,18 +482,16 @@
                         }
                     }
                 }
-            }
-        },
-        "\/Paystubs\/{PaystubID}": {
-            "get": {
-                "summary": "Allows you to retrieve and update paystubs in a Xero organisation",
+            },
+            "post": {
                 "parameters": [
                     {
-                        "required": true,
-                        "in": "path",
-                        "name": "PaystubID",
-                        "type": "string",
-                        "format": "uuid"
+                        "in": "body",
+                        "name": "Paystubs",
+                        "schema": {
+                            "$ref": "#\/definitions\/Paystub"
+                        },
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -404,6 +502,28 @@
                         }
                     }
                 }
+            }
+        },
+        "\/Paystubs\/{PaystubID}": {
+            "get": {
+                "summary": "Allows you to retrieve and update paystubs in a Xero organisation",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/Paystub"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "PaystubID",
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ]
             },
             "post": {
                 "parameters": [
@@ -463,18 +583,16 @@
                         }
                     }
                 }
-            }
-        },
-        "\/Timesheets\/{TimesheetID}": {
-            "get": {
-                "summary": "Allows you to retrieve, add and update Payroll Timesheets in a Xero organisation",
+            },
+            "post": {
                 "parameters": [
                     {
-                        "required": true,
-                        "in": "path",
-                        "name": "TimesheetID",
-                        "type": "string",
-                        "format": "uuid"
+                        "in": "body",
+                        "name": "Timesheets",
+                        "schema": {
+                            "$ref": "#\/definitions\/Timesheet"
+                        },
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -485,6 +603,28 @@
                         }
                     }
                 }
+            }
+        },
+        "\/Timesheets\/{TimesheetID}": {
+            "get": {
+                "summary": "Allows you to retrieve, add and update Payroll Timesheets in a Xero organisation",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/Timesheet"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "TimesheetID",
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ]
             },
             "post": {
                 "parameters": [
@@ -1037,7 +1177,7 @@
                             "description": "Identifier of the leave type (see PayItems)"
                         },
                         {
-                            "$ref": "#\/definitions\/TimeOffType"
+                            "$ref": "#\/definitions\/PayItem"
                         }
                     ]
                 },
@@ -1049,7 +1189,7 @@
                     "description": "The type of units as specified by the LeaveType\u00a0(see PayItems)",
                     "type": "array",
                     "items": {
-                        "$ref": "#\/definitions\/TimeOffType"
+                        "$ref": "#\/definitions\/PayItem"
                     }
                 },
                 "EmployeeID": {

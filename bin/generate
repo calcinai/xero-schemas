@@ -99,6 +99,10 @@ $accounting_api->getModel('Item')->addProperty(new Model\Property('ItemID', 'The
 $accounting_api->getModel('ManualJournal')->addProperty(new Model\Property('JournalID', 'The Xero identifier for a Manual Journal'));
 $accounting_api->getModel('ManualJournal')->setIdentifyingProperty($accounting_api->getModel('ManualJournal')->getProperty('JournalID'));
 
+//This model is very very wrong
+$accounting_api->getModel('TrackingOption')->setIdentifyingProperty($accounting_api->getModel('TrackingOption')->getProperty('TrackingOptionID'));
+
+
 $generator = new Generator();
 
 file_put_contents(sprintf('%s/schemas/accounting.json', APP_ROOT), json_encode($generator->generate($accounting_api), JSON_PRETTY_PRINT));

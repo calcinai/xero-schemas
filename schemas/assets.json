@@ -32,6 +32,26 @@
                         }
                     }
                 }
+            },
+            "post": {
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "Assets",
+                        "schema": {
+                            "$ref": "#\/definitions\/Asset"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/Asset"
+                        }
+                    }
+                }
             }
         },
         "\/AssetTypes": {
@@ -45,6 +65,26 @@
                             "items": {
                                 "$ref": "#\/definitions\/AssetType"
                             }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "AssetTypes",
+                        "schema": {
+                            "$ref": "#\/definitions\/AssetType"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/AssetType"
                         }
                     }
                 }

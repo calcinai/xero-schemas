@@ -212,7 +212,7 @@ class Model extends ParsedObject
         return $this->identifying_property;
     }
 
-    public function supportsMethod($method)
+    public function hasMethod($method)
     {
         return in_array($method, $this->methods);
     }

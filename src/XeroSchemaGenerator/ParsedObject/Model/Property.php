@@ -53,6 +53,10 @@ class Property extends ParsedObject
      */
     private $is_read_only;
 
+    /**
+     * @var string[]
+     */
+    private $sub_resource_methods;
 
     private $max_length;
 
@@ -69,6 +73,7 @@ class Property extends ParsedObject
         $this->name = preg_replace('/[^a-z\d]+/i', '', ucwords($name));
         $this->description = $description;
         $this->links = [];
+        $this->sub_resource_methods = [];
 
         $this->is_deprecated = $deprecated;
         $this->is_read_only = $read_only;
@@ -159,6 +164,8 @@ class Property extends ParsedObject
             //This to to improve detection of names that are the same plural/sing
             case preg_match('/maximum of [2-9] <(?<model>[a-z]+)> elements/i', $this->getDescription()):
                 return true;
+            case in_array($this->name, ['PaymentTerms', 'Bills', 'Sales']):
+                return false;
             default:
                 return $this->getSingularName() !== $this->getName();
         }
@@ -235,7 +242,8 @@ class Property extends ParsedObject
 
 
         //This point on searches for related models/enums
-        $search_names = [];
+        //Then the property name itself (root ns then child)
+        $search_names[] = $this->getName();
 
         if (preg_match('/see\s(?<model>[^.]+)/i', $this->getDescription(), $matches)) {
             $search_names[] = $matches['model'];
@@ -245,9 +253,6 @@ class Property extends ParsedObject
         if (preg_match('/<(?<model>[^>]+)>/i', $this->getDescription(), $matches)) {
             $search_names[] = $matches['model'];
         }
-
-        //Then the property name itself (root ns then child)
-        $search_names[] = $this->getName();
 
         //Stupid exception
         if (preg_match('/^(?<model>Purchase|Sale)s?Details/i', $this->getName(), $matches)) {
@@ -260,13 +265,13 @@ class Property extends ParsedObject
 
         foreach ($this->links as $href => $name) {
             //Catch anchors - they're likely to be refences to types and codes (subschemas)
-            if (preg_match('/#(?<anchor>.+)/i', $href, $matches)) {
+            //Don't allow circular refs
+            if (preg_match('/#(?<anchor>.+)/i', $href, $matches) && $matches['anchor'] !== $this->getParentModel()->getName()) {
                 $search_names[] = $matches['anchor'];
             } else {
                 $search_links[] = $href;
             }
         }
-
 
         foreach ($search_names as $search_name) {
             //search for it
@@ -320,6 +325,35 @@ class Property extends ParsedObject
     public function getMaxLength()
     {
         return $this->max_length;
+    }
+
+    /**
+     * @param $method
+     * @return Property
+     */
+    public function addSubResourceMethod($method)
+    {
+        $method = strtoupper($method);
+        if(in_array($method, Model::$ALL_METHODS) && !in_array($method, $this->sub_resource_methods)){
+            $this->sub_resource_methods[] = $method;
+        }
+        return $this;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getSubResourceMethods()
+    {
+        return $this->sub_resource_methods;
+    }
+
+    /**
+     * @param $method
+     * @return bool
+     */
+    public function hasSubResourceMethod($method){
+        return in_array($method, $this->sub_resource_methods);
     }
 
 }

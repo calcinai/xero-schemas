@@ -60,6 +60,26 @@
                         }
                     }
                 }
+            },
+            "post": {
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "Files",
+                        "schema": {
+                            "$ref": "#\/definitions\/File"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/File"
+                        }
+                    }
+                }
             }
         },
         "\/Folders": {
@@ -96,6 +116,26 @@
                         }
                     }
                 }
+            },
+            "post": {
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "Folders",
+                        "schema": {
+                            "$ref": "#\/definitions\/Folder"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/Folder"
+                        }
+                    }
+                }
             }
         },
         "\/Files\/{FileId}\/Associations": {
@@ -109,6 +149,26 @@
                             "items": {
                                 "$ref": "#\/definitions\/Association"
                             }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "Associations",
+                        "schema": {
+                            "$ref": "#\/definitions\/Association"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/Association"
                         }
                     }
                 }

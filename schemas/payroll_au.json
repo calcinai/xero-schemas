@@ -32,18 +32,16 @@
                         }
                     }
                 }
-            }
-        },
-        "\/Employees\/{EmployeeID}": {
-            "get": {
-                "summary": "Allows you to retrieve, add and update payroll employees in a Xero organisation",
+            },
+            "post": {
                 "parameters": [
                     {
-                        "required": true,
-                        "in": "path",
-                        "name": "EmployeeID",
-                        "type": "string",
-                        "format": "uuid"
+                        "in": "body",
+                        "name": "Employees",
+                        "schema": {
+                            "$ref": "#\/definitions\/Employee"
+                        },
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -54,6 +52,28 @@
                         }
                     }
                 }
+            }
+        },
+        "\/Employees\/{EmployeeID}": {
+            "get": {
+                "summary": "Allows you to retrieve, add and update payroll employees in a Xero organisation",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/Employee"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "EmployeeID",
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ]
             },
             "post": {
                 "parameters": [
@@ -97,6 +117,26 @@
                         }
                     }
                 }
+            },
+            "post": {
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "LeaveApplications",
+                        "schema": {
+                            "$ref": "#\/definitions\/LeaveApplication"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/LeaveApplication"
+                        }
+                    }
+                }
             }
         },
         "\/PayItems": {
@@ -110,6 +150,26 @@
                             "items": {
                                 "$ref": "#\/definitions\/PayItem"
                             }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "PayItems",
+                        "schema": {
+                            "$ref": "#\/definitions\/PayItem"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/PayItem"
                         }
                     }
                 }
@@ -156,6 +216,26 @@
                         "type": "string"
                     }
                 ]
+            },
+            "post": {
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "PayrollCalendars",
+                        "schema": {
+                            "$ref": "#\/definitions\/PayrollCalendar"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/PayrollCalendar"
+                        }
+                    }
+                }
             }
         },
         "\/PayRuns": {
@@ -199,18 +279,16 @@
                         "type": "string"
                     }
                 ]
-            }
-        },
-        "\/PayRuns\/{PayRunID}": {
-            "get": {
-                "summary": "Allows you to retrieve, add and update pay runs in a Xero organisation",
+            },
+            "post": {
                 "parameters": [
                     {
-                        "required": true,
-                        "in": "path",
-                        "name": "PayRunID",
-                        "type": "string",
-                        "format": "uuid"
+                        "in": "body",
+                        "name": "PayRuns",
+                        "schema": {
+                            "$ref": "#\/definitions\/PayRun"
+                        },
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -221,6 +299,28 @@
                         }
                     }
                 }
+            }
+        },
+        "\/PayRuns\/{PayRunID}": {
+            "get": {
+                "summary": "Allows you to retrieve, add and update pay runs in a Xero organisation",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/PayRun"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "PayRunID",
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ]
             },
             "post": {
                 "parameters": [
@@ -264,18 +364,16 @@
                         }
                     }
                 }
-            }
-        },
-        "\/Payslip\/{PayslipID}": {
-            "get": {
-                "summary": "Allows you to retrieve and update payslips in a Xero organisation",
+            },
+            "post": {
                 "parameters": [
                     {
-                        "required": true,
-                        "in": "path",
-                        "name": "PayslipID",
-                        "type": "string",
-                        "format": "uuid"
+                        "in": "body",
+                        "name": "Payslips",
+                        "schema": {
+                            "$ref": "#\/definitions\/Payslip"
+                        },
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -286,6 +384,28 @@
                         }
                     }
                 }
+            }
+        },
+        "\/Payslip\/{PayslipID}": {
+            "get": {
+                "summary": "Allows you to retrieve and update payslips in a Xero organisation",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/Payslip"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "PayslipID",
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ]
             },
             "post": {
                 "parameters": [
@@ -345,18 +465,16 @@
                         }
                     }
                 }
-            }
-        },
-        "\/SuperFunds\/{SuperFundID}": {
-            "get": {
-                "summary": "Allows you to retrieve, add and update Payroll Super Funds in a Xero organisation",
+            },
+            "post": {
                 "parameters": [
                     {
-                        "required": true,
-                        "in": "path",
-                        "name": "SuperFundID",
-                        "type": "string",
-                        "format": "uuid"
+                        "in": "body",
+                        "name": "SuperFunds",
+                        "schema": {
+                            "$ref": "#\/definitions\/SuperFund"
+                        },
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -367,6 +485,28 @@
                         }
                     }
                 }
+            }
+        },
+        "\/SuperFunds\/{SuperFundID}": {
+            "get": {
+                "summary": "Allows you to retrieve, add and update Payroll Super Funds in a Xero organisation",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/SuperFund"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "SuperFundID",
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ]
             },
             "post": {
                 "parameters": [
@@ -426,18 +566,16 @@
                         }
                     }
                 }
-            }
-        },
-        "\/Timesheets\/{TimesheetID}": {
-            "get": {
-                "summary": "Allows you to retrieve, add and update Payroll Timesheet in a Xero organisation",
+            },
+            "post": {
                 "parameters": [
                     {
-                        "required": true,
-                        "in": "path",
-                        "name": "TimesheetID",
-                        "type": "string",
-                        "format": "uuid"
+                        "in": "body",
+                        "name": "Timesheets",
+                        "schema": {
+                            "$ref": "#\/definitions\/Timesheet"
+                        },
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -448,6 +586,28 @@
                         }
                     }
                 }
+            }
+        },
+        "\/Timesheets\/{TimesheetID}": {
+            "get": {
+                "summary": "Allows you to retrieve, add and update Payroll Timesheet in a Xero organisation",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#\/definitions\/Timesheet"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "TimesheetID",
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ]
             },
             "post": {
                 "parameters": [
@@ -1033,7 +1193,7 @@
                     "description": "The type of units as specified by the LeaveType\u00a0(see PayItems)",
                     "type": "array",
                     "items": {
-                        "$ref": "#\/definitions\/LeaveType"
+                        "$ref": "#\/definitions\/PayItem"
                     }
                 }
             }

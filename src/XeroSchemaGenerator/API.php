@@ -65,7 +65,6 @@ class API
     }
 
 
-
     /**
      * @param Model $model
      */
@@ -96,8 +95,18 @@ class API
      * @param $name
      * @return Model
      */
-    public function getModel($name){
+    public function getModel($name)
+    {
         return $this->models[$name];
+    }
+
+    /**
+     * @param $name
+     * @return bool
+     */
+    public function hasModel($name)
+    {
+        return isset($this->models[$name]);
     }
 
     /**
@@ -121,10 +130,11 @@ class API
      *
      * @return \Generator
      */
-    public function getStrayEnums(){
+    public function getStrayEnums()
+    {
 
-        foreach($this->enums as $enum){
-            if(! $enum->getTarget() instanceof Model){
+        foreach ($this->enums as $enum) {
+            if (!$enum->getTarget() instanceof Model) {
                 yield $enum;
             }
         }
@@ -135,23 +145,26 @@ class API
     {
 
         $inflector = Inflector::get();
+
+        $search_name = preg_replace('/[^\w\d]+/', '', $search_name);
+
         $search_arr = [
             $search_name,
             $inflector->singularize($search_name),
             $inflector->pluralize($search_name)
         ];
 
-        foreach($this->models as $model){
-            if(in_array($model->getName(), $search_arr)){
+        foreach ($this->models as $model) {
+            if (in_array($model->getName(), $search_arr)) {
                 return $model;
             }
         }
 
         foreach ($this->enums as $enum) {
-            if(in_array($enum->getName(), $search_arr)){
+            if (in_array($enum->getName(), $search_arr)) {
                 return $enum;
             }
-            if(in_array($enum->getTargetName(), $search_arr)){
+            if (in_array($enum->getTargetName(), $search_arr)) {
                 return $enum;
             }
         }
@@ -164,12 +177,13 @@ class API
     {
         $parsed_search_url = parse_url($url);
 
-        foreach($this->models as $model){
+        foreach ($this->models as $model) {
             $parsed_model_url = parse_url($model->getDocumentationURI());
 
             //Some real inconsistencies in the documentation
             if ($parsed_model_url['host'] === $parsed_search_url['host'] &&
-                trim($parsed_model_url['path'], '/') === trim($parsed_search_url['path'], '/')){
+                trim($parsed_model_url['path'], '/') === trim($parsed_search_url['path'], '/')
+            ) {
                 return $model;
             }
         }
