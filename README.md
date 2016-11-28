@@ -16,7 +16,7 @@ The generated OpenAPI/Swagger files in the `schemas` folder.
 
 ## Actual Documentation
 
-It would be nice to find soemthing to integrate into the build process to automatically render the generated swagger files out to html - in the mean time, you can head to [editor.swagger.io](http://editor.swagger.io) and load any of the schemas above.
+It would be nice to find something to integrate into the build process to automatically render the generated swagger files out to html - in the mean time, you can head to [editor.swagger.io](http://editor.swagger.io) and load any of the schemas above.
 
 ## Installation and Generation
 
