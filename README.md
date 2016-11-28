@@ -6,13 +6,17 @@ These schemas are currently being used in the `2.0` branch of [xero-php](https:/
 At this point the schemas are 100% generated from the developer documentation, but there is provision for an 'overrides' file to help out where the documentation is not completely correct or indicative of how it actually works (namely the behaviour around `TrackingCategories`).
 
 ## APIs supported
-* Accounting API
-* Payroll API (AU)
-* Payroll API (US)
-* Files API
-* Assets API
+* [Accounting API](https://raw.githubusercontent.com/calcinai/xero-schemas/master/schemas/accounting.json)
+* [Payroll API (AU)](https://raw.githubusercontent.com/calcinai/xero-schemas/master/schemas/payroll_au.json)
+* [Payroll API (US)](https://raw.githubusercontent.com/calcinai/xero-schemas/master/schemas/payroll_us.json)
+* [Files API](https://raw.githubusercontent.com/calcinai/xero-schemas/master/schemas/files.json)
+* [Assets API](https://raw.githubusercontent.com/calcinai/xero-schemas/master/schemas/assets.json)
 
 The generated OpenAPI/Swagger files in the `schemas` folder.
+
+## Actual Documentation
+
+It would be nice to find soemthing to integrate into the build process to automatically render the generated swagger files out to html - in the mean time, you can head to [editor.swagger.io](http://editor.swagger.io) and load any of the schemas above.
 
 ## Installation and Generation
 
