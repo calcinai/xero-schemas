@@ -30,6 +30,7 @@ class Generator
 
     public function generate(API $api)
     {
+        $related_model_tag = 'x-related-model';
 
         $swagger = new Swagger();
         $swagger->setInfo(
@@ -71,10 +72,9 @@ class Generator
             if ($model->getResourceURI() !== null) {
 
                 $paths->set($model->getResourceURI(),
-                    $path_item_schema = PathItem::create()
+                    $path_item_schema = PathItem::create()->set($related_model_tag, $model->getSingularName())
                 );
 
-                $path_item_schema->set('x-related-model', $model->getSingularName());
 
                 //GET /PrimaryModel
                 if ($model->hasMethod(Model::METHOD_GET)) {
@@ -95,7 +95,7 @@ class Generator
                 if ($model->getIdentifyingProperty() !== null) {
 
                     $paths->set(sprintf('%s/{%s}', $model->getResourceURI(), $model->getIdentifyingProperty()->getSingularName()),
-                        $path_item_specific_schema = PathItem::create()
+                        $path_item_specific_schema = PathItem::create()->set($related_model_tag, $model->getSingularName())
                     );
 
                     $model_path_item_parameter = PathParameterSubSchema::create()
@@ -135,7 +135,7 @@ class Generator
                         $paths->set(sprintf('%s/{%s}/%s',
                             $model->getResourceURI(), $model->getIdentifyingProperty()->getSingularName(),
                             $property->getCollectiveName()),
-                            $path_item_sub_schema = PathItem::create()
+                            $path_item_sub_schema = PathItem::create()->set($related_model_tag, $model->getSingularName())
                         );
 
                         //PUT /PrimaryModel/{PrimaryModelID}/SubModel
@@ -163,7 +163,7 @@ class Generator
                             $paths->set(sprintf('%s/{%s}/%s/{%s}',
                                 $model->getResourceURI(), $model->getIdentifyingProperty()->getSingularName(),
                                 $property->getCollectiveName(), $sub_model->getIdentifyingProperty()->getSingularName()), //Maybe this will always work!!
-                                $path_item_sub_specific_schema = PathItem::create()
+                                $path_item_sub_specific_schema = PathItem::create()->set($related_model_tag, $model->getSingularName())
                             );
 
                             $sub_model_path_item_parameter = PathParameterSubSchema::create()

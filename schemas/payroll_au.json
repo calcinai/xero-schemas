@@ -56,6 +56,7 @@
             }
         },
         "\/Employees\/{EmployeeID}": {
+            "x-related-model": "Employee",
             "get": {
                 "summary": "Allows you to retrieve, add and update payroll employees in a Xero organisation",
                 "responses": {
@@ -307,6 +308,7 @@
             }
         },
         "\/PayRuns\/{PayRunID}": {
+            "x-related-model": "PayRun",
             "get": {
                 "summary": "Allows you to retrieve, add and update pay runs in a Xero organisation",
                 "responses": {
@@ -393,6 +395,7 @@
             }
         },
         "\/Payslip\/{PayslipID}": {
+            "x-related-model": "Payslip",
             "get": {
                 "summary": "Allows you to retrieve and update payslips in a Xero organisation",
                 "responses": {
@@ -496,6 +499,7 @@
             }
         },
         "\/SuperFunds\/{SuperFundID}": {
+            "x-related-model": "SuperFund",
             "get": {
                 "summary": "Allows you to retrieve, add and update Payroll Super Funds in a Xero organisation",
                 "responses": {
@@ -599,6 +603,7 @@
             }
         },
         "\/Timesheets\/{TimesheetID}": {
+            "x-related-model": "Timesheet",
             "get": {
                 "summary": "Allows you to retrieve, add and update Payroll Timesheet in a Xero organisation",
                 "responses": {

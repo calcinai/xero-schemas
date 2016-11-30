@@ -97,6 +97,7 @@
             }
         },
         "\/Accounts\/{AccountID}": {
+            "x-related-model": "Account",
             "get": {
                 "summary": "Allows you to retrieve the full chart of accounts",
                 "responses": {
@@ -219,6 +220,7 @@
             }
         },
         "\/BankTransactions\/{BankTransactionID}": {
+            "x-related-model": "BankTransaction",
             "get": {
                 "summary": "Allows you to retrieve any spend or receive money transactions",
                 "responses": {
@@ -305,6 +307,7 @@
             }
         },
         "\/BankTransfers\/{BankTransferID}": {
+            "x-related-model": "BankTransfer",
             "get": {
                 "summary": "Allows you to retrieve any bank transfers",
                 "responses": {
@@ -344,6 +347,7 @@
             }
         },
         "\/BrandingThemes\/{BrandingThemeID}": {
+            "x-related-model": "BrandingTheme",
             "get": {
                 "summary": "GET a BrandingTheme",
                 "responses": {
@@ -423,6 +427,7 @@
             }
         },
         "\/Contacts\/{ContactID}": {
+            "x-related-model": "Contact",
             "get": {
                 "summary": "Allows you to retrieve, add and update contacts in a Xero organisation",
                 "responses": {
@@ -543,6 +548,7 @@
             }
         },
         "\/ContactGroups\/{ContactGroupID}": {
+            "x-related-model": "ContactGroup",
             "get": {
                 "summary": "Allows you to retrieve the ContactID and Name of all the contacts in a contact group",
                 "responses": {
@@ -608,6 +614,7 @@
             }
         },
         "\/ContactGroups\/{ContactGroupID}\/Contacts": {
+            "x-related-model": "ContactGroup",
             "put": {
                 "parameters": [
                     {
@@ -653,6 +660,7 @@
             }
         },
         "\/ContactGroups\/{ContactGroupID}\/Contacts\/{ContactID}": {
+            "x-related-model": "ContactGroup",
             "delete": {
                 "responses": {
                     "200": {
@@ -735,6 +743,7 @@
             }
         },
         "\/CreditNotes\/{CreditNoteID}": {
+            "x-related-model": "CreditNote",
             "get": {
                 "summary": "Allows you to retrieve any credit notes",
                 "responses": {
@@ -784,6 +793,7 @@
             }
         },
         "\/CreditNotes\/{CreditNoteID}\/Allocations": {
+            "x-related-model": "CreditNote",
             "put": {
                 "parameters": [
                     {
@@ -922,6 +932,7 @@
             }
         },
         "\/Employees\/{EmployeeID}": {
+            "x-related-model": "Employee",
             "get": {
                 "summary": "Allows you to retrieve, add and update employees used in Xero payrun functionality",
                 "responses": {
@@ -1049,6 +1060,7 @@
             }
         },
         "\/ExpenseClaims\/{ExpenseClaimID}": {
+            "x-related-model": "ExpenseClaim",
             "get": {
                 "summary": "Allows you to retrieve expense claims to see their status",
                 "responses": {
@@ -1155,6 +1167,7 @@
             }
         },
         "\/Invoices\/{InvoiceID}": {
+            "x-related-model": "Invoice",
             "get": {
                 "summary": "Allows you to retrieve any sales invoices or purchase bills",
                 "responses": {
@@ -1261,6 +1274,7 @@
             }
         },
         "\/Items\/{ItemID}": {
+            "x-related-model": "Item",
             "get": {
                 "summary": "Allows you to retrieve any items",
                 "responses": {
@@ -1352,6 +1366,7 @@
             }
         },
         "\/Journals\/{JournalID}": {
+            "x-related-model": "Journal",
             "get": {
                 "summary": "Allows you to retrieve any journals.",
                 "responses": {
@@ -1439,6 +1454,7 @@
             }
         },
         "\/LinkedTransactions\/{LinkedTransactionID}": {
+            "x-related-model": "LinkedTransaction",
             "get": {
                 "summary": "Retrieve linked transactions (billable expenses)",
                 "responses": {
@@ -1561,6 +1577,7 @@
             }
         },
         "\/ManualJournals\/{JournalID}": {
+            "x-related-model": "ManualJournal",
             "get": {
                 "summary": "Allows you to retrieve any manual journals",
                 "responses": {
@@ -1627,6 +1644,7 @@
             }
         },
         "\/Organisation\/{ShortCode}": {
+            "x-related-model": "Organisation",
             "get": {
                 "summary": "GET a Organisation",
                 "responses": {
@@ -1686,6 +1704,7 @@
             }
         },
         "\/Overpayments\/{OverpaymentID}": {
+            "x-related-model": "Overpayment",
             "get": {
                 "summary": "Allows you to retrieve overpayments",
                 "responses": {
@@ -1708,6 +1727,7 @@
             }
         },
         "\/Overpayments\/{OverpaymentID}\/Allocations": {
+            "x-related-model": "Overpayment",
             "put": {
                 "parameters": [
                     {
@@ -1815,6 +1835,7 @@
             }
         },
         "\/Payments\/{PaymentID}": {
+            "x-related-model": "Payment",
             "get": {
                 "summary": "Retrieve either one or many payments for invoices and credit notes",
                 "responses": {
@@ -1901,6 +1922,7 @@
             }
         },
         "\/Prepayments\/{PrepaymentID}": {
+            "x-related-model": "Prepayment",
             "get": {
                 "summary": "Allows you to retrieve prepayments",
                 "responses": {
@@ -1923,6 +1945,7 @@
             }
         },
         "\/Prepayments\/{PrepaymentID}\/Allocations": {
+            "x-related-model": "Prepayment",
             "put": {
                 "parameters": [
                     {
@@ -2009,6 +2032,7 @@
             }
         },
         "\/PurchaseOrders\/{PurchaseOrderID}": {
+            "x-related-model": "PurchaseOrder",
             "get": {
                 "summary": "Allows you to retrieve purchase orders",
                 "responses": {
@@ -2115,6 +2139,7 @@
             }
         },
         "\/Receipts\/{ReceiptID}": {
+            "x-related-model": "Receipt",
             "get": {
                 "summary": "Allows you to retrieve draft expense claim receipts for any user",
                 "responses": {
@@ -2181,6 +2206,7 @@
             }
         },
         "\/RepeatingInvoices\/{RepeatingInvoiceID}": {
+            "x-related-model": "RepeatingInvoice",
             "get": {
                 "summary": "Allows you to retrieve any repeating invoice templates",
                 "responses": {
@@ -2317,6 +2343,7 @@
             }
         },
         "\/TrackingCategories\/{TrackingCategoryID}": {
+            "x-related-model": "TrackingCategory",
             "get": {
                 "summary": "Retrieve tracking categories and options for a Xero organisation",
                 "responses": {
@@ -2382,6 +2409,7 @@
             }
         },
         "\/TrackingCategories\/{TrackingCategoryID}\/Options": {
+            "x-related-model": "TrackingCategory",
             "put": {
                 "parameters": [
                     {
@@ -2427,6 +2455,7 @@
             }
         },
         "\/TrackingCategories\/{TrackingCategoryID}\/Options\/{TrackingOptionID}": {
+            "x-related-model": "TrackingCategory",
             "delete": {
                 "responses": {
                     "200": {
@@ -2490,6 +2519,7 @@
             }
         },
         "\/Users\/{UserID}": {
+            "x-related-model": "User",
             "get": {
                 "summary": "GET a User",
                 "responses": {

@@ -56,6 +56,7 @@
             }
         },
         "\/Employees\/{EmployeeID}": {
+            "x-related-model": "Employee",
             "get": {
                 "summary": "Allows you to retrieve, add and update payroll employees in a Xero organisation",
                 "responses": {
@@ -162,6 +163,7 @@
             }
         },
         "\/Worklocations\/{WorkLocationID}": {
+            "x-related-model": "WorkLocation",
             "get": {
                 "summary": "Allows you to retrieve, add and update a Work Location in a Xero US organisation",
                 "responses": {
@@ -312,6 +314,7 @@
             }
         },
         "\/PayRuns\/{PayRunID}": {
+            "x-related-model": "PayRun",
             "get": {
                 "summary": "Allows you to retrieve, add and update pay runs in a Xero organisation",
                 "responses": {
@@ -425,6 +428,7 @@
             }
         },
         "\/PaySchedules\/{PayScheduleID}": {
+            "x-related-model": "PaySchedule",
             "get": {
                 "summary": "Allows you to retrieve and add Pay schedules in a Xero organisation",
                 "responses": {
@@ -511,6 +515,7 @@
             }
         },
         "\/Paystubs\/{PaystubID}": {
+            "x-related-model": "Paystub",
             "get": {
                 "summary": "Allows you to retrieve and update paystubs in a Xero organisation",
                 "responses": {
@@ -614,6 +619,7 @@
             }
         },
         "\/Timesheets\/{TimesheetID}": {
+            "x-related-model": "Timesheet",
             "get": {
                 "summary": "Allows you to retrieve, add and update Payroll Timesheets in a Xero organisation",
                 "responses": {
