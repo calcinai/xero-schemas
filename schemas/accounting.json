@@ -19,6 +19,7 @@
     ],
     "paths": {
         "\/Accounts": {
+            "x-related-model": "Account",
             "get": {
                 "summary": "Allows you to retrieve the full chart of accounts",
                 "responses": {
@@ -161,6 +162,7 @@
             }
         },
         "\/BankTransactions": {
+            "x-related-model": "BankTransaction",
             "get": {
                 "summary": "Allows you to retrieve any spend or receive money transactions",
                 "responses": {
@@ -266,6 +268,7 @@
             }
         },
         "\/BankTransfers": {
+            "x-related-model": "BankTransfer",
             "get": {
                 "summary": "Allows you to retrieve any bank transfers",
                 "responses": {
@@ -324,6 +327,7 @@
             }
         },
         "\/BrandingThemes": {
+            "x-related-model": "BrandingTheme",
             "get": {
                 "summary": "GET a BrandingTheme",
                 "responses": {
@@ -362,6 +366,7 @@
             }
         },
         "\/Contacts": {
+            "x-related-model": "Contact",
             "get": {
                 "summary": "Allows you to retrieve, add and update contacts in a Xero organisation",
                 "responses": {
@@ -467,6 +472,7 @@
             }
         },
         "\/ContactGroups": {
+            "x-related-model": "ContactGroup",
             "get": {
                 "summary": "Allows you to retrieve the ContactID and Name of all the contacts in a contact group",
                 "responses": {
@@ -672,6 +678,7 @@
             }
         },
         "\/CreditNotes": {
+            "x-related-model": "CreditNote",
             "get": {
                 "summary": "Allows you to retrieve any credit notes",
                 "responses": {
@@ -806,6 +813,7 @@
             }
         },
         "\/Currencies": {
+            "x-related-model": "Currency",
             "get": {
                 "summary": "Allows you to retrieve currencies for your organisation",
                 "responses": {
@@ -836,6 +844,7 @@
             }
         },
         "\/Employees": {
+            "x-related-model": "Employee",
             "get": {
                 "summary": "Allows you to retrieve, add and update employees used in Xero payrun functionality",
                 "responses": {
@@ -962,6 +971,7 @@
             }
         },
         "\/ExpenseClaims": {
+            "x-related-model": "ExpenseClaim",
             "get": {
                 "summary": "Allows you to retrieve expense claims to see their status",
                 "responses": {
@@ -1088,6 +1098,7 @@
             }
         },
         "\/Invoices": {
+            "x-related-model": "Invoice",
             "get": {
                 "summary": "Allows you to retrieve any sales invoices or purchase bills",
                 "responses": {
@@ -1193,6 +1204,7 @@
             }
         },
         "\/Items": {
+            "x-related-model": "Item",
             "get": {
                 "summary": "Allows you to retrieve any items",
                 "responses": {
@@ -1314,6 +1326,7 @@
             }
         },
         "\/Journals": {
+            "x-related-model": "Journal",
             "get": {
                 "summary": "Allows you to retrieve any journals.",
                 "responses": {
@@ -1361,6 +1374,7 @@
             }
         },
         "\/LinkedTransactions": {
+            "x-related-model": "LinkedTransaction",
             "get": {
                 "summary": "Retrieve linked transactions (billable expenses)",
                 "responses": {
@@ -1490,6 +1504,7 @@
             }
         },
         "\/ManualJournals": {
+            "x-related-model": "ManualJournal",
             "get": {
                 "summary": "Allows you to retrieve any manual journals",
                 "responses": {
@@ -1595,6 +1610,7 @@
             }
         },
         "\/Organisation": {
+            "x-related-model": "Organisation",
             "get": {
                 "summary": "GET a Organisation",
                 "responses": {
@@ -1633,6 +1649,7 @@
             }
         },
         "\/Overpayments": {
+            "x-related-model": "Overpayment",
             "get": {
                 "summary": "Allows you to retrieve overpayments",
                 "responses": {
@@ -1720,6 +1737,7 @@
             }
         },
         "\/Payments": {
+            "x-related-model": "Payment",
             "get": {
                 "summary": "Retrieve either one or many payments for invoices and credit notes",
                 "responses": {
@@ -1846,6 +1864,7 @@
             }
         },
         "\/Prepayments": {
+            "x-related-model": "Prepayment",
             "get": {
                 "summary": "Allows you to retrieve prepayments",
                 "responses": {
@@ -1933,6 +1952,7 @@
             }
         },
         "\/PurchaseOrders": {
+            "x-related-model": "PurchaseOrder",
             "get": {
                 "summary": "Allows you to retrieve purchase orders",
                 "responses": {
@@ -2038,6 +2058,7 @@
             }
         },
         "\/Receipts": {
+            "x-related-model": "Receipt",
             "get": {
                 "summary": "Allows you to retrieve draft expense claim receipts for any user",
                 "responses": {
@@ -2143,6 +2164,7 @@
             }
         },
         "\/RepeatingInvoices": {
+            "x-related-model": "RepeatingInvoice",
             "get": {
                 "summary": "Allows you to retrieve any repeating invoice templates",
                 "responses": {
@@ -2181,6 +2203,7 @@
             }
         },
         "\/TaxRates": {
+            "x-related-model": "TaxRate",
             "get": {
                 "summary": "GET a TaxRate",
                 "responses": {
@@ -2237,6 +2260,7 @@
             }
         },
         "\/TrackingCategories": {
+            "x-related-model": "TrackingCategory",
             "get": {
                 "summary": "Retrieve tracking categories and options for a Xero organisation",
                 "responses": {
@@ -2428,6 +2452,7 @@
             }
         },
         "\/Users": {
+            "x-related-model": "User",
             "get": {
                 "summary": "GET a User",
                 "responses": {
@@ -3253,7 +3278,7 @@
                     ]
                 },
                 "Date": {
-                    "description": "The date the credit note is issued YYYY-MM-DD",
+                    "description": "The date the credit note is issued YYYY-MM-DD. If the Date element is not specified then it will default to the current date based on the timezone setting of the organisation",
                     "type": "string",
                     "format": "date"
                 },
@@ -3540,7 +3565,7 @@
                     }
                 },
                 "Date": {
-                    "description": "Date invoice was issued \u2013 YYYY-MM-DD. Learn more",
+                    "description": "Date invoice was issued \u2013 YYYY-MM-DD. If the Date element is not specified it will default to the current date based on the timezone setting of the organisation",
                     "type": "string",
                     "format": "date"
                 },
@@ -4587,7 +4612,7 @@
                     }
                 },
                 "Date": {
-                    "description": "Date purchase order was issued \u2013 YYYY-MM-DD. Learn more",
+                    "description": "Date purchase order was issued \u2013 YYYY-MM-DD. If the Date element is not specified then it will default to the current date based on the timezone setting of the organisation",
                     "type": "string",
                     "format": "date"
                 },

@@ -19,6 +19,7 @@
     ],
     "paths": {
         "\/Employees": {
+            "x-related-model": "Employee",
             "get": {
                 "summary": "Allows you to retrieve, add and update payroll employees in a Xero organisation",
                 "responses": {
@@ -104,6 +105,7 @@
             }
         },
         "\/LeaveApplications": {
+            "x-related-model": "LeaveApplication",
             "get": {
                 "summary": "Allows you to retrieve, add and update Payroll leave applications in a Xero organisation",
                 "responses": {
@@ -140,6 +142,7 @@
             }
         },
         "\/PayItems": {
+            "x-related-model": "PayItem",
             "get": {
                 "summary": "Allows you to retrieve, add, update and delete Payroll Items in a Xero organisation",
                 "responses": {
@@ -176,6 +179,7 @@
             }
         },
         "\/PayrollCalendars": {
+            "x-related-model": "PayrollCalendar",
             "get": {
                 "summary": "Allows you to retrieve and add Payroll Calendars in a Xero organisation",
                 "responses": {
@@ -239,6 +243,7 @@
             }
         },
         "\/PayRuns": {
+            "x-related-model": "PayRun",
             "get": {
                 "summary": "Allows you to retrieve, add and update pay runs in a Xero organisation",
                 "responses": {
@@ -351,6 +356,7 @@
             }
         },
         "\/Payslip": {
+            "x-related-model": "Payslip",
             "get": {
                 "summary": "Allows you to retrieve and update payslips in a Xero organisation",
                 "responses": {
@@ -436,6 +442,7 @@
             }
         },
         "\/Settings": {
+            "x-related-model": "Setting",
             "get": {
                 "summary": "Allows you to retrieve the Payroll settings of a Xero organisation",
                 "responses": {
@@ -452,6 +459,7 @@
             }
         },
         "\/SuperFunds": {
+            "x-related-model": "SuperFund",
             "get": {
                 "summary": "Allows you to retrieve, add and update Payroll Super Funds in a Xero organisation",
                 "responses": {
@@ -537,6 +545,7 @@
             }
         },
         "\/SuperFundProducts": {
+            "x-related-model": "SuperFundProduct",
             "get": {
                 "summary": "GET a SuperFundProduct",
                 "responses": {
@@ -553,6 +562,7 @@
             }
         },
         "\/Timesheets": {
+            "x-related-model": "Timesheet",
             "get": {
                 "summary": "Allows you to retrieve, add and update Payroll Timesheet in a Xero organisation",
                 "responses": {

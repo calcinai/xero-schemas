@@ -74,6 +74,8 @@ class Generator
                     $path_item_schema = PathItem::create()
                 );
 
+                $path_item_schema->set('x-related-model', $model->getSingularName());
+
                 //GET /PrimaryModel
                 if ($model->hasMethod(Model::METHOD_GET)) {
                     $path_item_schema->setGet($this->buildGetAllOperation($model));

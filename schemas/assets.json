@@ -19,6 +19,7 @@
     ],
     "paths": {
         "\/Assets": {
+            "x-related-model": "Asset",
             "get": {
                 "summary": "Allows you to retrieve assets",
                 "responses": {
@@ -55,6 +56,7 @@
             }
         },
         "\/AssetTypes": {
+            "x-related-model": "AssetType",
             "get": {
                 "summary": "Allows you to retrieve asset types",
                 "responses": {
@@ -91,6 +93,7 @@
             }
         },
         "\/Settings": {
+            "x-related-model": "Setting",
             "get": {
                 "summary": "Allows you to retrieve the organisation settings for fixed assets",
                 "responses": {

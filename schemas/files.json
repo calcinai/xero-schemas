@@ -19,6 +19,7 @@
     ],
     "paths": {
         "\/Files": {
+            "x-related-model": "File",
             "get": {
                 "summary": "Allows you to retrieve, upload, update and delete files.",
                 "responses": {
@@ -83,6 +84,7 @@
             }
         },
         "\/Folders": {
+            "x-related-model": "Folder",
             "get": {
                 "summary": "Allows you to retrieve, add, update and delete folders.",
                 "responses": {
@@ -139,6 +141,7 @@
             }
         },
         "\/Files\/{FileId}\/Associations": {
+            "x-related-model": "Association",
             "get": {
                 "summary": "GET a Association",
                 "responses": {
