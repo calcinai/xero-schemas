@@ -2219,7 +2219,7 @@
                     "format": "uuid"
                 },
                 "TrackingItemID": {
-                    "description": "The Xero identifier for a Tracking Category <TrackingOptionID>. The <TrackingOptionID> must belong to the TrackingCategory selected as <TimesheetCategories> under Payroll Settings. ",
+                    "description": "The Xero identifier for a Tracking Category <TrackingOptionID>. The <TrackingOptionID> must belong to the TrackingCategory selected as <TimesheetCategories> under Payroll Settings.",
                     "type": "string",
                     "format": "uuid"
                 },
@@ -2228,7 +2228,7 @@
                     "type": "string"
                 },
                 "TimesheetID": {
-                    "description": "The Xero identifier for a payroll timesheete.g. 297c2dc5-cc47-4afd-0000-74990b8761e9\n",
+                    "description": "The Xero identifier for a payroll timesheete.g. 297c2dc5-cc47-4afd-0000-74990b8761e9",
                     "type": "string",
                     "format": "uuid"
                 }

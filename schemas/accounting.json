@@ -2549,47 +2549,47 @@
             },
             "properties": {
                 "AddressLine1": {
-                    "description": " max length = 500",
+                    "description": "max length = 500",
                     "maxLength": 500,
                     "type": "string"
                 },
                 "AddressLine2": {
-                    "description": " max length = 500",
+                    "description": "max length = 500",
                     "maxLength": 500,
                     "type": "string"
                 },
                 "AddressLine3": {
-                    "description": " max length = 500",
+                    "description": "max length = 500",
                     "maxLength": 500,
                     "type": "string"
                 },
                 "AddressLine4": {
-                    "description": " max length = 500",
+                    "description": "max length = 500",
                     "maxLength": 500,
                     "type": "string"
                 },
                 "City": {
-                    "description": " max length = 255",
+                    "description": "max length = 255",
                     "maxLength": 255,
                     "type": "string"
                 },
                 "Region": {
-                    "description": " max length = 255",
+                    "description": "max length = 255",
                     "maxLength": 255,
                     "type": "string"
                 },
                 "PostalCode": {
-                    "description": " max length = 50",
+                    "description": "max length = 50",
                     "maxLength": 50,
                     "type": "string"
                 },
                 "Country": {
-                    "description": " max length = 50, [A-Z], [a-z] only",
+                    "description": "max length = 50, [A-Z], [a-z] only",
                     "maxLength": 50,
                     "type": "string"
                 },
                 "AttentionTo": {
-                    "description": " max length = 255",
+                    "description": "max length = 255",
                     "maxLength": 255,
                     "type": "string"
                 }
@@ -2601,17 +2601,17 @@
             },
             "properties": {
                 "PhoneNumber": {
-                    "description": " max length = 50",
+                    "description": "max length = 50",
                     "maxLength": 50,
                     "type": "string"
                 },
                 "PhoneAreaCode": {
-                    "description": " max length = 10",
+                    "description": "max length = 10",
                     "maxLength": 10,
                     "type": "string"
                 },
                 "PhoneCountryCode": {
-                    "description": " max length = 20",
+                    "description": "max length = 20",
                     "maxLength": 20,
                     "type": "string"
                 }
@@ -2895,7 +2895,7 @@
                     "type": "string"
                 },
                 "TaxAmount": {
-                    "description": "The tax amount is auto calculated as a percentage of the line amount (see below) based on the tax rate. This value can be overriden if the calculated <TaxAmount> is not correct. ",
+                    "description": "The tax amount is auto calculated as a percentage of the line amount (see below) based on the tax rate. This value can be overriden if the calculated <TaxAmount> is not correct.",
                     "type": "number",
                     "format": "float"
                 },
@@ -2912,7 +2912,7 @@
                     }
                 },
                 "DiscountRate": {
-                    "description": "Percentage discount being applied to a line item (only supported on ACCREC invoices \u2013 ACC PAY invoices and credit notes in Xero do not support discounts ",
+                    "description": "Percentage discount being applied to a line item (only supported on ACCREC invoices \u2013 ACC PAY invoices and credit notes in Xero do not support discounts",
                     "type": "string"
                 },
                 "RepeatingInvoiceID": {
@@ -3271,7 +3271,7 @@
                     "type": "string"
                 },
                 "Status": {
-                    "description": "The Status of a contact group. To delete a contact group update the status to DELETED. Only contact groups with a status of ACTIVE are returned on GETs. ",
+                    "description": "The Status of a contact group. To delete a contact group update the status to DELETED. Only contact groups with a status of ACTIVE are returned on GETs.",
                     "type": "string"
                 },
                 "ContactGroupID": {
@@ -4627,7 +4627,7 @@
                 "Contact": {
                     "allOf": [
                         {
-                            "description": "The PurchaseOrders endpoint does not create new contacts. You need to provide the ContactID or ContactNumber of an existing contact. For more information on creating contacts see Contacts. "
+                            "description": "The PurchaseOrders endpoint does not create new contacts. You need to provide the ContactID or ContactNumber of an existing contact. For more information on creating contacts see Contacts."
                         },
                         {
                             "$ref": "#\/definitions\/Contact"
@@ -4958,7 +4958,7 @@
                 "DueDateType": {
                     "allOf": [
                         {
-                            "description": " See Payment Terms"
+                            "description": "See Payment Terms"
                         },
                         {
                             "$ref": "#\/definitions\/PaymentTerm"

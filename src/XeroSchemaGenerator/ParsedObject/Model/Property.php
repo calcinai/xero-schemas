@@ -71,7 +71,7 @@ class Property extends ParsedObject
         }
 
         $this->name = preg_replace('/[^a-z\d]+/i', '', ucwords($name));
-        $this->description = $description;
+        $this->description = trim($description);
         $this->links = [];
         $this->sub_resource_methods = [];
 
