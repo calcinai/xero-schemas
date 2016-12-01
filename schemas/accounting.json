@@ -24,7 +24,7 @@
                 "summary": "Allows you to retrieve the full chart of accounts",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful response",
                         "schema": {
                             "type": "array",
                             "items": {
@@ -68,7 +68,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/Account"
                         }
@@ -88,7 +88,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/Account"
                         }
@@ -102,7 +102,7 @@
                 "summary": "Allows you to retrieve the full chart of accounts",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/Account"
                         }
@@ -138,7 +138,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/Account"
                         }
@@ -148,7 +148,7 @@
             "delete": {
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "A successful request"
                     }
                 },
                 "parameters": [
@@ -168,7 +168,7 @@
                 "summary": "Allows you to retrieve any spend or receive money transactions",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful response",
                         "schema": {
                             "type": "array",
                             "items": {
@@ -191,7 +191,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/BankTransaction"
                         }
@@ -211,7 +211,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/BankTransaction"
                         }
@@ -225,7 +225,7 @@
                 "summary": "Allows you to retrieve any spend or receive money transactions",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/BankTransaction"
                         }
@@ -261,7 +261,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/BankTransaction"
                         }
@@ -275,7 +275,7 @@
                 "summary": "Allows you to retrieve any bank transfers",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful response",
                         "schema": {
                             "type": "array",
                             "items": {
@@ -298,7 +298,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/BankTransfer"
                         }
@@ -312,7 +312,7 @@
                 "summary": "Allows you to retrieve any bank transfers",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/BankTransfer"
                         }
@@ -335,7 +335,7 @@
                 "summary": "GET a BrandingTheme",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful response",
                         "schema": {
                             "type": "array",
                             "items": {
@@ -352,7 +352,7 @@
                 "summary": "GET a BrandingTheme",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/BrandingTheme"
                         }
@@ -375,7 +375,7 @@
                 "summary": "Allows you to retrieve, add and update contacts in a Xero organisation",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful response",
                         "schema": {
                             "type": "array",
                             "items": {
@@ -398,7 +398,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/Contact"
                         }
@@ -418,7 +418,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/Contact"
                         }
@@ -432,7 +432,7 @@
                 "summary": "Allows you to retrieve, add and update contacts in a Xero organisation",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/Contact"
                         }
@@ -468,7 +468,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/Contact"
                         }
@@ -482,7 +482,7 @@
                 "summary": "Allows you to retrieve the ContactID and Name of all the contacts in a contact group",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful response",
                         "schema": {
                             "type": "array",
                             "items": {
@@ -519,7 +519,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/ContactGroup"
                         }
@@ -539,7 +539,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/ContactGroup"
                         }
@@ -553,7 +553,7 @@
                 "summary": "Allows you to retrieve the ContactID and Name of all the contacts in a contact group",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/ContactGroup"
                         }
@@ -589,7 +589,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/ContactGroup"
                         }
@@ -599,7 +599,7 @@
             "delete": {
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "A successful request"
                     }
                 },
                 "parameters": [
@@ -635,7 +635,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/Contact"
                         }
@@ -645,7 +645,7 @@
             "delete": {
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "A successful request"
                     }
                 },
                 "parameters": [
@@ -664,7 +664,7 @@
             "delete": {
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "A successful request"
                     }
                 },
                 "parameters": [
@@ -691,7 +691,7 @@
                 "summary": "Allows you to retrieve any credit notes",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful response",
                         "schema": {
                             "type": "array",
                             "items": {
@@ -714,7 +714,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/CreditNote"
                         }
@@ -734,7 +734,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/CreditNote"
                         }
@@ -748,7 +748,7 @@
                 "summary": "Allows you to retrieve any credit notes",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/CreditNote"
                         }
@@ -784,7 +784,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/CreditNote"
                         }
@@ -814,7 +814,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/Allocation"
                         }
@@ -828,7 +828,7 @@
                 "summary": "Allows you to retrieve currencies for your organisation",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful response",
                         "schema": {
                             "type": "array",
                             "items": {
@@ -859,7 +859,7 @@
                 "summary": "Allows you to retrieve, add and update employees used in Xero payrun functionality",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful response",
                         "schema": {
                             "type": "array",
                             "items": {
@@ -903,7 +903,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/Employee"
                         }
@@ -923,7 +923,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/Employee"
                         }
@@ -937,7 +937,7 @@
                 "summary": "Allows you to retrieve, add and update employees used in Xero payrun functionality",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/Employee"
                         }
@@ -973,7 +973,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/Employee"
                         }
@@ -987,7 +987,7 @@
                 "summary": "Allows you to retrieve expense claims to see their status",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful response",
                         "schema": {
                             "type": "array",
                             "items": {
@@ -1031,7 +1031,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/ExpenseClaim"
                         }
@@ -1051,7 +1051,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/ExpenseClaim"
                         }
@@ -1065,7 +1065,7 @@
                 "summary": "Allows you to retrieve expense claims to see their status",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/ExpenseClaim"
                         }
@@ -1101,7 +1101,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/ExpenseClaim"
                         }
@@ -1115,7 +1115,7 @@
                 "summary": "Allows you to retrieve any sales invoices or purchase bills",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful response",
                         "schema": {
                             "type": "array",
                             "items": {
@@ -1138,7 +1138,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/Invoice"
                         }
@@ -1158,7 +1158,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/Invoice"
                         }
@@ -1172,7 +1172,7 @@
                 "summary": "Allows you to retrieve any sales invoices or purchase bills",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/Invoice"
                         }
@@ -1208,7 +1208,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/Invoice"
                         }
@@ -1222,7 +1222,7 @@
                 "summary": "Allows you to retrieve any items",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful response",
                         "schema": {
                             "type": "array",
                             "items": {
@@ -1245,7 +1245,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/Item"
                         }
@@ -1265,7 +1265,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/Item"
                         }
@@ -1279,7 +1279,7 @@
                 "summary": "Allows you to retrieve any items",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/Item"
                         }
@@ -1315,7 +1315,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/Item"
                         }
@@ -1325,7 +1325,7 @@
             "delete": {
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "A successful request"
                     }
                 },
                 "parameters": [
@@ -1345,7 +1345,7 @@
                 "summary": "Allows you to retrieve any journals.",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful response",
                         "schema": {
                             "type": "array",
                             "items": {
@@ -1371,7 +1371,7 @@
                 "summary": "Allows you to retrieve any journals.",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/Journal"
                         }
@@ -1394,7 +1394,7 @@
                 "summary": "Retrieve linked transactions (billable expenses)",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful response",
                         "schema": {
                             "type": "array",
                             "items": {
@@ -1425,7 +1425,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/LinkedTransaction"
                         }
@@ -1445,7 +1445,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/LinkedTransaction"
                         }
@@ -1459,7 +1459,7 @@
                 "summary": "Retrieve linked transactions (billable expenses)",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/LinkedTransaction"
                         }
@@ -1495,7 +1495,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/LinkedTransaction"
                         }
@@ -1505,7 +1505,7 @@
             "delete": {
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "A successful request"
                     }
                 },
                 "parameters": [
@@ -1525,7 +1525,7 @@
                 "summary": "Allows you to retrieve any manual journals",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful response",
                         "schema": {
                             "type": "array",
                             "items": {
@@ -1548,7 +1548,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/ManualJournal"
                         }
@@ -1568,7 +1568,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/ManualJournal"
                         }
@@ -1582,7 +1582,7 @@
                 "summary": "Allows you to retrieve any manual journals",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/ManualJournal"
                         }
@@ -1618,7 +1618,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/ManualJournal"
                         }
@@ -1632,7 +1632,7 @@
                 "summary": "GET a Organisation",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful response",
                         "schema": {
                             "type": "array",
                             "items": {
@@ -1649,7 +1649,7 @@
                 "summary": "GET a Organisation",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/Organisation"
                         }
@@ -1672,7 +1672,7 @@
                 "summary": "Allows you to retrieve overpayments",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful response",
                         "schema": {
                             "type": "array",
                             "items": {
@@ -1695,7 +1695,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/Overpayment"
                         }
@@ -1709,7 +1709,7 @@
                 "summary": "Allows you to retrieve overpayments",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/Overpayment"
                         }
@@ -1748,7 +1748,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/Allocation"
                         }
@@ -1762,7 +1762,7 @@
                 "summary": "Retrieve either one or many payments for invoices and credit notes",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful response",
                         "schema": {
                             "type": "array",
                             "items": {
@@ -1806,7 +1806,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/Payment"
                         }
@@ -1826,7 +1826,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/Payment"
                         }
@@ -1840,7 +1840,7 @@
                 "summary": "Retrieve either one or many payments for invoices and credit notes",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/Payment"
                         }
@@ -1876,7 +1876,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/Payment"
                         }
@@ -1890,7 +1890,7 @@
                 "summary": "Allows you to retrieve prepayments",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful response",
                         "schema": {
                             "type": "array",
                             "items": {
@@ -1913,7 +1913,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/Prepayment"
                         }
@@ -1927,7 +1927,7 @@
                 "summary": "Allows you to retrieve prepayments",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/Prepayment"
                         }
@@ -1966,7 +1966,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/Allocation"
                         }
@@ -1980,7 +1980,7 @@
                 "summary": "Allows you to retrieve purchase orders",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful response",
                         "schema": {
                             "type": "array",
                             "items": {
@@ -2003,7 +2003,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/PurchaseOrder"
                         }
@@ -2023,7 +2023,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/PurchaseOrder"
                         }
@@ -2037,7 +2037,7 @@
                 "summary": "Allows you to retrieve purchase orders",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/PurchaseOrder"
                         }
@@ -2073,7 +2073,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/PurchaseOrder"
                         }
@@ -2087,7 +2087,7 @@
                 "summary": "Allows you to retrieve draft expense claim receipts for any user",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful response",
                         "schema": {
                             "type": "array",
                             "items": {
@@ -2110,7 +2110,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/Receipt"
                         }
@@ -2130,7 +2130,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/Receipt"
                         }
@@ -2144,7 +2144,7 @@
                 "summary": "Allows you to retrieve draft expense claim receipts for any user",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/Receipt"
                         }
@@ -2180,7 +2180,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/Receipt"
                         }
@@ -2194,7 +2194,7 @@
                 "summary": "Allows you to retrieve any repeating invoice templates",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful response",
                         "schema": {
                             "type": "array",
                             "items": {
@@ -2211,7 +2211,7 @@
                 "summary": "Allows you to retrieve any repeating invoice templates",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/RepeatingInvoice"
                         }
@@ -2234,7 +2234,7 @@
                 "summary": "GET a TaxRate",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful response",
                         "schema": {
                             "type": "array",
                             "items": {
@@ -2257,7 +2257,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/TaxRate"
                         }
@@ -2277,7 +2277,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/TaxRate"
                         }
@@ -2291,7 +2291,7 @@
                 "summary": "Retrieve tracking categories and options for a Xero organisation",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful response",
                         "schema": {
                             "type": "array",
                             "items": {
@@ -2314,7 +2314,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/TrackingCategory"
                         }
@@ -2334,7 +2334,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/TrackingCategory"
                         }
@@ -2348,7 +2348,7 @@
                 "summary": "Retrieve tracking categories and options for a Xero organisation",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/TrackingCategory"
                         }
@@ -2384,7 +2384,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/TrackingCategory"
                         }
@@ -2394,7 +2394,7 @@
             "delete": {
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "A successful request"
                     }
                 },
                 "parameters": [
@@ -2430,7 +2430,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/TrackingOption"
                         }
@@ -2440,7 +2440,7 @@
             "delete": {
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "A successful request"
                     }
                 },
                 "parameters": [
@@ -2459,7 +2459,7 @@
             "delete": {
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "A successful request"
                     }
                 },
                 "parameters": [
@@ -2486,7 +2486,7 @@
                 "summary": "GET a User",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful response",
                         "schema": {
                             "type": "array",
                             "items": {
@@ -2524,7 +2524,7 @@
                 "summary": "GET a User",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/User"
                         }

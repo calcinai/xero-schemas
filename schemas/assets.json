@@ -24,7 +24,7 @@
                 "summary": "Allows you to retrieve assets",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful response",
                         "schema": {
                             "type": "array",
                             "items": {
@@ -47,7 +47,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/Asset"
                         }
@@ -61,7 +61,7 @@
                 "summary": "Allows you to retrieve asset types",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful response",
                         "schema": {
                             "type": "array",
                             "items": {
@@ -84,7 +84,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/AssetType"
                         }
@@ -98,7 +98,7 @@
                 "summary": "Allows you to retrieve the organisation settings for fixed assets",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful response",
                         "schema": {
                             "type": "array",
                             "items": {

@@ -24,7 +24,7 @@
                 "summary": "Allows you to retrieve, add and update payroll employees in a Xero organisation",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful response",
                         "schema": {
                             "type": "array",
                             "items": {
@@ -47,7 +47,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/Employee"
                         }
@@ -61,7 +61,7 @@
                 "summary": "Allows you to retrieve, add and update payroll employees in a Xero organisation",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/Employee"
                         }
@@ -97,7 +97,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/Employee"
                         }
@@ -111,7 +111,7 @@
                 "summary": "Allows you to retrieve, add and update Payroll leave applications in a Xero organisation",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful response",
                         "schema": {
                             "type": "array",
                             "items": {
@@ -134,7 +134,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/LeaveApplication"
                         }
@@ -148,7 +148,7 @@
                 "summary": "Allows you to retrieve, add, update and delete Payroll Items in a Xero organisation",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful response",
                         "schema": {
                             "type": "array",
                             "items": {
@@ -171,7 +171,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/PayItem"
                         }
@@ -185,7 +185,7 @@
                 "summary": "Allows you to retrieve and add Payroll Calendars in a Xero organisation",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful response",
                         "schema": {
                             "type": "array",
                             "items": {
@@ -235,7 +235,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/PayrollCalendar"
                         }
@@ -249,7 +249,7 @@
                 "summary": "Allows you to retrieve, add and update pay runs in a Xero organisation",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful response",
                         "schema": {
                             "type": "array",
                             "items": {
@@ -299,7 +299,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/PayRun"
                         }
@@ -313,7 +313,7 @@
                 "summary": "Allows you to retrieve, add and update pay runs in a Xero organisation",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/PayRun"
                         }
@@ -349,7 +349,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/PayRun"
                         }
@@ -363,7 +363,7 @@
                 "summary": "Allows you to retrieve and update payslips in a Xero organisation",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful response",
                         "schema": {
                             "type": "array",
                             "items": {
@@ -386,7 +386,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/Payslip"
                         }
@@ -400,7 +400,7 @@
                 "summary": "Allows you to retrieve and update payslips in a Xero organisation",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/Payslip"
                         }
@@ -436,7 +436,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/Payslip"
                         }
@@ -450,7 +450,7 @@
                 "summary": "Allows you to retrieve the Payroll settings of a Xero organisation",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful response",
                         "schema": {
                             "type": "array",
                             "items": {
@@ -467,7 +467,7 @@
                 "summary": "Allows you to retrieve, add and update Payroll Super Funds in a Xero organisation",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful response",
                         "schema": {
                             "type": "array",
                             "items": {
@@ -490,7 +490,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/SuperFund"
                         }
@@ -504,7 +504,7 @@
                 "summary": "Allows you to retrieve, add and update Payroll Super Funds in a Xero organisation",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/SuperFund"
                         }
@@ -540,7 +540,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/SuperFund"
                         }
@@ -554,7 +554,7 @@
                 "summary": "GET a SuperFundProduct",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful response",
                         "schema": {
                             "type": "array",
                             "items": {
@@ -571,7 +571,7 @@
                 "summary": "Allows you to retrieve, add and update Payroll Timesheet in a Xero organisation",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful response",
                         "schema": {
                             "type": "array",
                             "items": {
@@ -594,7 +594,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/Timesheet"
                         }
@@ -608,7 +608,7 @@
                 "summary": "Allows you to retrieve, add and update Payroll Timesheet in a Xero organisation",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/Timesheet"
                         }
@@ -644,7 +644,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A successful request",
                         "schema": {
                             "$ref": "#\/definitions\/Timesheet"
                         }

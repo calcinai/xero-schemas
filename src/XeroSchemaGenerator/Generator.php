@@ -313,7 +313,7 @@ class Generator
             ->setSummary($model->getDescriptionForMethod(Model::METHOD_GET))
             ->setResponses(Responses::create()
                 ->set('200', Response::create()
-                    ->setDescription('')
+                    ->setDescription('A successful response')
                     ->setSchema(Schema::create()
                         ->setType('array')
                         ->setItems(
@@ -370,7 +370,7 @@ class Generator
             ->setSummary($model->getDescriptionForMethod(Model::METHOD_GET))
             ->setResponses(Responses::create()
                 ->set('200', Response::create()
-                    ->setDescription('')
+                    ->setDescription('A successful request')
                     ->setSchema(
                         Schema::create()->setRef(sprintf('#/definitions/%s', $model->getSingularName()))
                     )
@@ -396,7 +396,7 @@ class Generator
             )
             ->setResponses(Responses::create()
                 ->set('200', Response::create()
-                    ->setDescription('')
+                    ->setDescription('A successful request')
                     ->setSchema(Schema::create()->setRef(sprintf('#/definitions/%s', $model->getSingularName())))
                 )
             );
@@ -411,7 +411,7 @@ class Generator
         return Operation::create()
             ->setResponses(Responses::create()
                 ->set('200', Response::create()
-                    ->setDescription('')
+                    ->setDescription('A successful request')
                 )
             );
     }
@@ -432,7 +432,7 @@ class Generator
             )
             ->setResponses(Responses::create()
                 ->set('200', Response::create()
-                    ->setDescription('')
+                    ->setDescription('A successful request')
                     ->setSchema(Schema::create()->setRef(sprintf('#/definitions/%s', $model->getSingularName())))
                 )
             );
