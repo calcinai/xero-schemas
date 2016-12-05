@@ -4183,9 +4183,23 @@
                     "type": "string",
                     "format": "date-time"
                 },
-                "OrganisationEntityType": {
+                "Timezone": {
                     "description": "Timezone specifications",
                     "type": "string"
+                },
+                "OrganisationEntityType": {
+                    "description": "Organisation Type",
+                    "type": "string",
+                    "enum": [
+                        "COMPANY",
+                        "CHARITY",
+                        "CLUBSOCIETY",
+                        "PARTNERSHIP",
+                        "PRACTICE",
+                        "PERSON",
+                        "SOLETRADER",
+                        "TRUST"
+                    ]
                 },
                 "ShortCode": {
                     "description": "A unique identifier for the organisation. Potential uses.",
